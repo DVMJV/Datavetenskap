@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d40100ee9f76ad4ca6f39bf48c64ded, type: 3}
-  m_Name: Smack
+  m_Script: {fileID: 11500000, guid: 21723f59cc07f3b4e92ac3640dd7afc5, type: 3}
+  m_Name: Crush
   m_EditorClassIdentifier: 
-  attackName: Smack
-  damage: 5
-  range: 5
-  type: 0
+  attackName: 
+  damage: 10
+  range: 1
+  type: 3

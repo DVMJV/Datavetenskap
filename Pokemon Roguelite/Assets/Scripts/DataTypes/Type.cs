@@ -6,6 +6,6 @@ public enum Type
 {
     LIGHTNING, 
     WATER,
-    GROUND,
+    METAL,
     NEUTRAL
 }

@@ -1,9 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class PokemonContainer : MonoBehaviour
 {
+    EventSystem eventSystem;
+    
+    [SerializeField]
+    GameObject attackCanvasContainer;
+
+    [SerializeField]
+    GameObject attackPrefab;
 
     [SerializeField]
     Pokemon pokemon;
@@ -12,6 +22,8 @@ public class PokemonContainer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        eventSystem = EventSystem.current;
+
         learnset = new Dictionary<PokemonAttack, int>();
         GetComponent<MeshFilter>().mesh = pokemon.mesh;
 
@@ -21,14 +33,12 @@ public class PokemonContainer : MonoBehaviour
         }
     }
 
-    private void OnMouseEnter()
-    {
-        Destroy(gameObject);
-    }
-
     // Update is called once per frame
     void Update()
     {
-        
+        EventHandler.current.AllySelected(gameObject);
     }
+
+    
+
 }

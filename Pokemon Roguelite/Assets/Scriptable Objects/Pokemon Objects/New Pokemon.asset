@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 214e2ace70ad6c5409122ba37bba601b, type: 3}
-  m_Name: StarterGround
+  m_Name: New Pokemon
   m_EditorClassIdentifier: 
-  pokemonName: Uwuer
-  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  currentLevel: 5
+  pokemonName: Goldfish
+  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   levelToLearnAt: 05000000
   attackToLearn:
   - {fileID: 11400000, guid: fdbfeaaba19ff5c44b798daf59ecfdc6, type: 2}
-  type: 1
+  type: 2

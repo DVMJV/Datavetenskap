@@ -7,7 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Pokemon", menuName = "ScriptableObjects/PokemonObjects", order = 1)]
 public class Pokemon : ScriptableObject
 {
-    
+    public int currentLevel;
 
     public string pokemonName;
 
