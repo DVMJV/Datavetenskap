@@ -17,5 +17,21 @@ public class Pokemon : ScriptableObject
 
     public List<PokemonAttack> attackToLearn;
 
+    public Dictionary<PokemonAttack, int> learnset;
+
     public Type type;
+
+
+    public void OnStart()
+    {
+        Debug.Log("Start");
+
+        learnset = new Dictionary<PokemonAttack, int>();
+
+        for (int i = 0; i < attackToLearn.Count; i++)
+        {
+            EventHandler.current.onChangeSelectedObject += attackToLearn[i].ResetEvent;
+            learnset.Add(attackToLearn[i], levelToLearnAt[i]);
+        }
+    }
 }

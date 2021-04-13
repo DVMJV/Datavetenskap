@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21723f59cc07f3b4e92ac3640dd7afc5, type: 3}
   m_Name: Crush
   m_EditorClassIdentifier: 
-  attackName: 
+  attackName: Crush
   damage: 10
   range: 1
   type: 3

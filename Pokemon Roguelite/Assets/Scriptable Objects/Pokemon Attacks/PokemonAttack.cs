@@ -8,7 +8,13 @@ public abstract class PokemonAttack : ScriptableObject
     public int damage;
     public int range;
     public Type type;
+    public int id;
 
-
-    public abstract void Attack();
+    public abstract void Attack(int id);
+    public void ResetEvent()
+    {
+        id = 0;
+        EventHandler.current.onMoveSelected -= Attack;
+    }
+    
 }

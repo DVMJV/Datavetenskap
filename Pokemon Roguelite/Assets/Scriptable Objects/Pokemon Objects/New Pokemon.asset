@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 5
   pokemonName: Goldfish
-  mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  mesh: {fileID: 4300000, guid: 9d0d902f71acfe646a46cb625f815a49, type: 3}
   levelToLearnAt: 05000000
   attackToLearn:
   - {fileID: 11400000, guid: fdbfeaaba19ff5c44b798daf59ecfdc6, type: 2}

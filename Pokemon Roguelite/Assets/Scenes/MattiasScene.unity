@@ -588,6 +588,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1384154609}
+  - component: {fileID: 1384154610}
   m_Layer: 5
   m_Name: AttackContainer
   m_TagString: Untagged
@@ -614,6 +615,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1384154610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1384154608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97b5758d006d0c9498228b9b63296d0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDisplayPrefab: {fileID: 358351451037823559, guid: e00e8f02ab6677a4b9f25d265c71f68e, type: 3}
 --- !u!1 &1692086724
 GameObject:
   m_ObjectHideFlags: 0

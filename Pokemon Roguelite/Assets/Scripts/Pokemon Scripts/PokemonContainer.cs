@@ -7,38 +7,25 @@ using UnityEngine.UI;
 
 public class PokemonContainer : MonoBehaviour
 {
-    EventSystem eventSystem;
-    
-    [SerializeField]
-    GameObject attackCanvasContainer;
-
-    [SerializeField]
-    GameObject attackPrefab;
-
     [SerializeField]
     Pokemon pokemon;
 
-    Dictionary<PokemonAttack, int> learnset;
     // Start is called before the first frame update
     void Start()
     {
-        eventSystem = EventSystem.current;
-
-        learnset = new Dictionary<PokemonAttack, int>();
         GetComponent<MeshFilter>().mesh = pokemon.mesh;
-
-        for(int i = 0; i < pokemon.attackToLearn.Count; i++)
-        {
-            learnset.Add(pokemon.attackToLearn[i], pokemon.levelToLearnAt[i]);
-        }
+        EventHandler.current.onStart += pokemon.OnStart;
+        EventHandler.current.OnStart();
     }
 
     // Update is called once per frame
     void Update()
     {
-        EventHandler.current.AllySelected(gameObject);
     }
 
-    
-
+    private void OnMouseDown()
+    {
+        EventHandler.current.ChangeSelectedObject();
+        EventHandler.current.AllySelected(pokemon);
+    }
 }

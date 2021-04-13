@@ -5,17 +5,16 @@ using UnityEngine.EventSystems;
 
 public class PokemonAttackContainer : MonoBehaviour, IPointerDownHandler
 {
-    public PokemonAttack attack;
-
+    public int id;
     public void OnPointerDown(PointerEventData eventData)
     {
-        attack.Attack();
+        EventHandler.current.MoveSelected(id);
     }
+
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -23,4 +22,6 @@ public class PokemonAttackContainer : MonoBehaviour, IPointerDownHandler
     {
         
     }
+
+    
 }
