@@ -38,8 +38,8 @@ public class TileMap : MonoBehaviour
         // First pass
         for (int z = 0; z < vsize_z; z++)
             for (int x = 0; x < vsize_x; x++)
-            {
-                verticies[z * vsize_x + x] = new Vector3(x * tileSize, 0, z * tileSize);
+            {                                                        
+                verticies[z * vsize_x + x] = new Vector3(x * tileSize, /*Random.Range(-1f, 1f)*/0, z * tileSize);
                 normals[z * vsize_x + x] = Vector3.up;
                 uv[z * vsize_x + x] = new Vector2( (float)x / size_x, (float)z / size_z );
             }
@@ -104,6 +104,7 @@ public class TileMap : MonoBehaviour
         MeshCollider mesh_collider = GetComponent<MeshCollider>();
 
         mesh_filter.mesh = mesh;
+        mesh_collider.sharedMesh = mesh;
     }
 
 }

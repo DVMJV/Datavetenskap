@@ -223,18 +223,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 829868692225667605, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
-      propertyPath: size_x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 829868692225667605, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
-      propertyPath: size_z
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 829868692225667605, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
-      propertyPath: tileSize
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6571562251310873387, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
       propertyPath: m_Name
       value: TileMap
@@ -286,10 +274,10 @@ PrefabInstance:
     - target: {fileID: 8677506937063175379, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 1508201372}
+      objectReference: {fileID: 1111330018}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
---- !u!43 &1508201372
+--- !u!43 &1111330018
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
