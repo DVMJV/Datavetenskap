@@ -24,8 +24,6 @@ public class Pokemon : ScriptableObject
 
     public void OnStart()
     {
-        Debug.Log("Start");
-
         learnset = new Dictionary<PokemonAttack, int>();
 
         for (int i = 0; i < attackToLearn.Count; i++)
