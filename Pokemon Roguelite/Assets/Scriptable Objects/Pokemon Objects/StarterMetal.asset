@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 214e2ace70ad6c5409122ba37bba601b, type: 3}
-  m_Name: StarterGround
+  m_Name: StarterMetal
   m_EditorClassIdentifier: 
   currentLevel: 10
   pokemonName: Uwuer
-  mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  mesh: {fileID: 5737498854828699893, guid: 01fe01f6ea797c640bf14af8bccb7014, type: 3}
   levelToLearnAt: 050000000a000000
   attackToLearn:
   - {fileID: 11400000, guid: fdbfeaaba19ff5c44b798daf59ecfdc6, type: 2}

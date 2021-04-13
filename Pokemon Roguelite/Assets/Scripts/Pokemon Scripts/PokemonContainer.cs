@@ -13,7 +13,8 @@ public class PokemonContainer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<MeshFilter>().mesh = pokemon.mesh;
+        Destroy(GetComponent<MeshRenderer>());
+        Instantiate(pokemon.mesh, transform);
         EventHandler.current.onStart += pokemon.OnStart;
         EventHandler.current.OnStart();
     }
