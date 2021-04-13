@@ -8,7 +8,6 @@ public class AttackDisplay : MonoBehaviour
     [SerializeField]
     GameObject attackDisplayPrefab;
 
-    Pokemon oldPokemon;
     // Start is called before the first frame update
     void Start()
     {
