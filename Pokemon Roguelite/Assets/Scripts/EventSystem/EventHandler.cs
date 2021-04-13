@@ -12,18 +12,10 @@ public class EventHandler : MonoBehaviour
         current = this;
     }
 
-    public event Action<Pokemon> onAllySelected;
     public event Action onStart;
     public event Action<int> onMoveSelected;
     public event Action onChangeSelectedObject;
 
-    public void AllySelected(Pokemon pokemon)
-    {
-        if(onAllySelected != null)
-        {
-            onAllySelected(pokemon);
-        }
-    }
 
     public void ChangeSelectedObject()
     {
