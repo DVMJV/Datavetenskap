@@ -24,12 +24,12 @@ public class TileMapMouse : MonoBehaviour
 
         if (coll.Raycast(ray, out hitInfo, Mathf.Infinity))
         {
-           // Debug.Log(hitInfo.point);
-            rend.material.color = highlightColor;
+            Debug.Log(transform.worldToLocalMatrix.MultiplyPoint3x4(hitInfo.point));
+           // transform.worldToLocalMatrix
         }
         else
         {
-            rend.material.color = defaultColor;
+           // rend.material.color = defaultColor;
         }
     }
 }
