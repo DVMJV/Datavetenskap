@@ -24,8 +24,8 @@ public class TileMapMouse : MonoBehaviour
 
         if (coll.Raycast(ray, out hitInfo, Mathf.Infinity))
         {
+            // Returns correct local position regardless of mesh position and rotation.
             Debug.Log(transform.worldToLocalMatrix.MultiplyPoint3x4(hitInfo.point));
-           // transform.worldToLocalMatrix
         }
         else
         {
