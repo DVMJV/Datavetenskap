@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19d6c2160d19d6e48ab09d26d6b4fda5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  size_x: 100
+  size_z: 50
+  tileSize: 1
 --- !u!33 &8677506937063175379
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -72,7 +75,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 2f0d83df0edece44985b88b046e5a09e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
