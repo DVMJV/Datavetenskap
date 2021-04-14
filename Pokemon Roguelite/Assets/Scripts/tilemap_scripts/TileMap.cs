@@ -9,30 +9,49 @@ using UnityEngine;
 [RequireComponent(typeof(MeshCollider))] 
 public class TileMap : MonoBehaviour
 {
-    public int size_x = 100;
+    public int size_x = 50;
     public int size_z = 50;
     public float tileSize = 1.0f;
+
+    public Texture2D terrainTiles;
+    public int tileResolution;
 
     void Start()
     {
         BuildMesh();
     }
 
+    Color[][] SliceTiles() 
+    {
+        int numTilesPerRow = terrainTiles.width / tileResolution;
+        int numRows = terrainTiles.height / tileResolution;
+
+        Color[][] tiles = new Color[numTilesPerRow * numRows][];
+
+        for (int y = 0; y < numRows; y++)
+            for (int x = 0; x < numTilesPerRow; x++)
+                tiles[y* numTilesPerRow +x] = terrainTiles.GetPixels(x* tileResolution, y* tileResolution, tileResolution, tileResolution);
+
+        return tiles;
+    }
+
     void BuildTexture() 
     {
-        int texWidth = 10;
-        int texHeight = 10;
+        int texWidth = size_x * tileResolution;
+        int texHeight = size_z * tileResolution;
         Texture2D texture = new Texture2D(texWidth, texHeight);
 
-        for (int y = 0; y < texHeight; y++)
-            for (int x = 0; x < texWidth; x++)
+        Color[][] tiles = SliceTiles();
+
+        for (int y = 0; y < size_z; y++)
+            for (int x = 0; x < size_x; x++)
             {
-                Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0, 1f));
-                texture.SetPixel(x, y, c);
+               Color[] p = tiles[Random.Range(0, 4)];
+               texture.SetPixels(x * tileResolution, y * tileResolution, tileResolution, tileResolution, p);
             }
 
         // can be changed to blend via bilinear.
-        texture.filterMode = FilterMode.Point;
+        texture.filterMode = FilterMode.Bilinear;
         texture.wrapMode = TextureWrapMode.Clamp;
         texture.Apply();
 

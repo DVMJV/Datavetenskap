@@ -50,6 +50,8 @@ MonoBehaviour:
   size_x: 50
   size_z: 50
   tileSize: 1
+  terrainTiles: {fileID: 2800000, guid: 05dcf4f7c9e011840be1111e2e859ed0, type: 3}
+  tileResolution: 64
 --- !u!114 &6694230887672792117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +92,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2f0d83df0edece44985b88b046e5a09e, type: 2}
+  - {fileID: 2100000, guid: 317b3e154431af24d884622e9f1289a3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

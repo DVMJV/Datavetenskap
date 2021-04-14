@@ -223,34 +223,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 829868692225667605, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
-      propertyPath: size_x
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 829868692225667605, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
-      propertyPath: size_z
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 4166028350221255889, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 436154643}
+      objectReference: {fileID: 1090083229}
     - target: {fileID: 6571562251310873387, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
       propertyPath: m_Name
       value: TileMap
       objectReference: {fileID: 0}
     - target: {fileID: 6694230887672792117, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6694230887672792117, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
       propertyPath: selectionCube
       value: 
       objectReference: {fileID: 1979341521}
-    - target: {fileID: 7690016473252360262, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 317b3e154431af24d884622e9f1289a3, type: 2}
     - target: {fileID: 8536647389232167518, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -298,10 +282,10 @@ PrefabInstance:
     - target: {fileID: 8677506937063175379, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 436154643}
+      objectReference: {fileID: 1090083229}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1c19f43fc7d22f4ca69f882cbb25a67, type: 3}
---- !u!43 &436154643
+--- !u!43 &1090083229
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
