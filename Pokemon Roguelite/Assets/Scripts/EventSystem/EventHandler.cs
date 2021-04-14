@@ -15,6 +15,7 @@ public class EventHandler : MonoBehaviour
     public event Action onStart;
     public event Action<int> onMoveSelected;
     public event Action onChangeSelectedObject;
+    public event Action<Vector3> onTileSelected;
 
 
     public void ChangeSelectedObject()
@@ -41,4 +42,11 @@ public class EventHandler : MonoBehaviour
         }
     }
 
+    public void TileSelected(Vector3 currentTilePos) 
+    {
+        if (onTileSelected != null)
+        {
+            onTileSelected(currentTilePos);
+        }
+    }
 }

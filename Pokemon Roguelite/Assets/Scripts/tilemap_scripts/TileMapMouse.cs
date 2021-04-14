@@ -44,7 +44,7 @@ public class TileMapMouse : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0)) // && target != null.
         {
-
+            EventHandler.current.TileSelected(currentTileCoord);
         }
     }
 }

@@ -18,6 +18,31 @@ public class TileMap : MonoBehaviour
         BuildMesh();
     }
 
+    void BuildTexture() 
+    {
+        int texWidth = 10;
+        int texHeight = 10;
+        Texture2D texture = new Texture2D(texWidth, texHeight);
+
+        for (int y = 0; y < texHeight; y++)
+            for (int x = 0; x < texWidth; x++)
+            {
+                Color c = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0, 1f));
+                texture.SetPixel(x, y, c);
+            }
+
+        // can be changed to blend via bilinear.
+        texture.filterMode = FilterMode.Point;
+        texture.wrapMode = TextureWrapMode.Clamp;
+        texture.Apply();
+
+        MeshRenderer mesh_renderer = GetComponent<MeshRenderer>();
+        mesh_renderer.sharedMaterials[0].mainTexture = texture;
+        // mesh_renderer.material is a copy for gameplay?
+        
+        Debug.Log("Done Texture!");
+    }
+
     public void BuildMesh() 
     {
         int numTiles = size_x * size_z;
@@ -90,7 +115,6 @@ public class TileMap : MonoBehaviour
         //uv[3] = new Vector2(1, 0);      
         }
 
-
         // Create a new Mesh and populate it with data
         Mesh mesh = new Mesh();
         mesh.vertices = verticies;
@@ -105,6 +129,8 @@ public class TileMap : MonoBehaviour
 
         mesh_filter.mesh = mesh;
         mesh_collider.sharedMesh = mesh;
+
+        BuildTexture();
     }
 
 }
