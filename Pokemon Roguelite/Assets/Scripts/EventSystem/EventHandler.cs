@@ -14,16 +14,17 @@ public class EventHandler : MonoBehaviour
     public event Action<Vector3> onTileSelected;
     #endregion
 
+
     private void Awake()
     {
         current = this;
     }
 
-    public void TileSelected(Vector3 currentTilePos)
+    public void TileSelected(Vector3 tilePos)
     {
         if(onTileSelected != null)
         {
-            onTileSelected(currentTilePos);
+            onTileSelected(tilePos);
         }
     }
 

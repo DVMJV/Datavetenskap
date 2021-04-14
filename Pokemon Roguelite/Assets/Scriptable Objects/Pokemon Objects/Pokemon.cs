@@ -21,8 +21,6 @@ public class Pokemon : ScriptableObject
 
     public Dictionary<PokemonAttack, int> learnset;
 
-    public Vector3 position;
-
     public Type type;
 
 

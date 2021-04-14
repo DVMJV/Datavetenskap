@@ -16,18 +16,10 @@ public class PokemonContainer : MonoBehaviour
     {
         Destroy(GetComponent<MeshRenderer>());
         Instantiate(pokemon.mesh, transform);
-        pokemon.position = transform.position;
         EventHandler.current.onStart += pokemon.OnStart;
         EventHandler.current.onTileSelected += Selected;
         EventHandler.current.OnStart();
     }
-
-
-    void Clicked(int value)
-    {
-
-    }
-
 
     // Update is called once per frame
     void Update()
@@ -41,7 +33,6 @@ public class PokemonContainer : MonoBehaviour
             EventHandler.current.ChangeSelectedObject();
             EventHandler.current.AllySelected(pokemon);
         }
-
     }
 
 }
