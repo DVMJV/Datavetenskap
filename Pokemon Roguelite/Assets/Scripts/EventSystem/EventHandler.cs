@@ -1,10 +1,17 @@
 using System;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class EventHandler : MonoBehaviour
 {
     public static EventHandler current;
+
+
+    #region Events
+    public event Action<Pokemon> onAllySelected;
+    public event Action onStart;
+    public event Action<int> onMoveSelected;
+    public event Action onChangeSelectedObject;
+    #endregion
 
 
     private void Awake()
@@ -12,10 +19,7 @@ public class EventHandler : MonoBehaviour
         current = this;
     }
 
-    public event Action<Pokemon> onAllySelected;
-    public event Action onStart;
-    public event Action<int> onMoveSelected;
-    public event Action onChangeSelectedObject;
+    
 
     public void AllySelected(Pokemon pokemon)
     {
