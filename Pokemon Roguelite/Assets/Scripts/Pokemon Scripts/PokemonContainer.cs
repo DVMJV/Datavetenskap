@@ -10,12 +10,14 @@ public class PokemonContainer : MonoBehaviour
     [SerializeField]
     Pokemon pokemon;
 
+
     // Start is called before the first frame update
     void Start()
     {
         Destroy(GetComponent<MeshRenderer>());
         Instantiate(pokemon.mesh, transform);
         EventHandler.current.onStart += pokemon.OnStart;
+        EventHandler.current.onTileSelected += Selected;
         EventHandler.current.OnStart();
     }
 
@@ -24,9 +26,13 @@ public class PokemonContainer : MonoBehaviour
     {
     }
 
-    private void OnMouseDown()
+    private void Selected(Vector3 tilePos)
     {
-        EventHandler.current.ChangeSelectedObject();
-        EventHandler.current.AllySelected(pokemon);
+        if(Mathf.FloorToInt(transform.position.x) == tilePos.x && Mathf.FloorToInt(transform.position.z) == tilePos.z)
+        {
+            EventHandler.current.ChangeSelectedObject();
+            EventHandler.current.AllySelected(pokemon);
+        }
     }
+
 }

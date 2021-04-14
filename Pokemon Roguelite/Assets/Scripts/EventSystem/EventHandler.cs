@@ -11,6 +11,7 @@ public class EventHandler : MonoBehaviour
     public event Action onStart;
     public event Action<int> onMoveSelected;
     public event Action onChangeSelectedObject;
+    public event Action<Vector3> onTileSelected;
     #endregion
 
 
@@ -19,7 +20,13 @@ public class EventHandler : MonoBehaviour
         current = this;
     }
 
-    
+    public void TileSelected(Vector3 tilePos)
+    {
+        if(onTileSelected != null)
+        {
+            onTileSelected(tilePos);
+        }
+    }
 
     public void AllySelected(Pokemon pokemon)
     {
