@@ -11,6 +11,8 @@ public class Pokemon : ScriptableObject
 
     public string pokemonName;
 
+    public int movementSpeed;
+
     public GameObject mesh;
 
     public List<int> levelToLearnAt;

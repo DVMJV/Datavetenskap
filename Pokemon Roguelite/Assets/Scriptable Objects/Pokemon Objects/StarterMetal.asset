@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 10
   pokemonName: Uwuer
+  movementSpeed: 2
   mesh: {fileID: 5737498854828699893, guid: 01fe01f6ea797c640bf14af8bccb7014, type: 3}
   levelToLearnAt: 050000000a000000
   attackToLearn:
