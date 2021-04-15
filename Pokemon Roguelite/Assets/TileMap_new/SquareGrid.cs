@@ -15,6 +15,9 @@ public class SquareGrid : MonoBehaviour
     SquareMesh squareMesh;
     MeshCollider meshCollider;
 
+    public Color defaultColor = Color.white;
+    public Color clickColor = Color.magenta;
+
     private void Awake()
     {
         gridCanvas = GetComponentInChildren<Canvas>();
@@ -37,10 +40,10 @@ public class SquareGrid : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetMouseButton(0))
-        //{
+        if (Input.GetMouseButton(0))
+        {
             HandleInput();
-        //}
+        }
     }
 
     void HandleInput() 
@@ -57,6 +60,12 @@ public class SquareGrid : MonoBehaviour
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
+
+        int index = (coordinates.X + coordinates.Z);
+        SquareCell cell = cells[index];
+        cell.color = clickColor;
+        squareMesh.Triangulate(cells);
+
         Debug.Log("Hit: " + coordinates.ToString());
     }
 
@@ -72,10 +81,14 @@ public class SquareGrid : MonoBehaviour
         cell.transform.localPosition = position;
         cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z); // Create struct with coordinates. Might need adjustment.
 
+        cell.color = defaultColor;
+
+
         Text label = Instantiate<Text>(cellLabelPrefab);
         label.rectTransform.SetParent(gridCanvas.transform, false);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
         label.text = cell.coordinates.ToStringOnSeparateLines();
+
 
 
     }

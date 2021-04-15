@@ -5,4 +5,5 @@ using UnityEngine;
 public class SquareCell : MonoBehaviour
 {
     public SquareCoordinates coordinates;
+    public Color color;
 }

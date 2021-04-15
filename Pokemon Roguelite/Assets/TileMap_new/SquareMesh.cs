@@ -9,6 +9,7 @@ public class SquareMesh : MonoBehaviour
     MeshCollider meshCollider;
     List<Vector3> verticies;
     List<int> triangles;
+    List<Color> colors;
 
 
     private void Awake()
@@ -18,6 +19,7 @@ public class SquareMesh : MonoBehaviour
 
         squareMesh.name = "Square Mesh";
         verticies = new List<Vector3>();
+        colors = new List<Color>();
         triangles = new List<int>();
     }
 
@@ -27,6 +29,7 @@ public class SquareMesh : MonoBehaviour
     {
         squareMesh.Clear();
         verticies.Clear();
+        colors.Clear();
         triangles.Clear();
 
         for (int i = 0; i < cells.Length; i++)
@@ -35,6 +38,7 @@ public class SquareMesh : MonoBehaviour
         }
 
         squareMesh.vertices = verticies.ToArray();
+        squareMesh.colors = colors.ToArray();
         squareMesh.triangles = triangles.ToArray();
         squareMesh.RecalculateNormals();
         meshCollider.sharedMesh= squareMesh;
@@ -45,6 +49,15 @@ public class SquareMesh : MonoBehaviour
         Vector3 center = cell.transform.localPosition;  // Counter clockwise...
         AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[1], center + SquareMetrics.corners[2]);
         AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[2], center + SquareMetrics.corners[3]);
+        AddTriangleColor(cell.color);
+        AddTriangleColor(cell.color); // ?
+    }
+
+    void AddTriangleColor(Color color) 
+    {
+        colors.Add(color);
+        colors.Add(color);
+        colors.Add(color);
     }
 
     void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3) 
