@@ -6,6 +6,7 @@ using UnityEngine;
 public class SquareMesh : MonoBehaviour
 {
     Mesh squareMesh;
+    MeshCollider meshCollider;
     List<Vector3> verticies;
     List<int> triangles;
 
@@ -13,6 +14,8 @@ public class SquareMesh : MonoBehaviour
     private void Awake()
     {
         GetComponent<MeshFilter>().mesh = squareMesh = new Mesh();
+        meshCollider = gameObject.AddComponent<MeshCollider>();
+
         squareMesh.name = "Square Mesh";
         verticies = new List<Vector3>();
         triangles = new List<int>();
@@ -34,6 +37,7 @@ public class SquareMesh : MonoBehaviour
         squareMesh.vertices = verticies.ToArray();
         squareMesh.triangles = triangles.ToArray();
         squareMesh.RecalculateNormals();
+        meshCollider.sharedMesh= squareMesh;
     }
 
     void Triangulate(SquareCell cell) 

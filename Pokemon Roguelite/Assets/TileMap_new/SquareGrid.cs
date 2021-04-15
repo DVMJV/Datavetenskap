@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class SquareGrid : MonoBehaviour
 {
-    public int width = 6;
-    public int height = 6;
+    public int width = 1;
+    public int height = 1;
 
     public SquareCell cellPrefab;
     SquareCell[] cells;
@@ -13,6 +13,7 @@ public class SquareGrid : MonoBehaviour
     Canvas gridCanvas;
 
     SquareMesh squareMesh;
+    MeshCollider meshCollider;
 
     private void Awake()
     {
@@ -34,6 +35,31 @@ public class SquareGrid : MonoBehaviour
         squareMesh.Triangulate(cells);
     }
 
+    private void Update()
+    {
+        //if (Input.GetMouseButton(0))
+        //{
+            HandleInput();
+        //}
+    }
+
+    void HandleInput() 
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit))
+        {
+            TouchCell(hit.point);
+        }
+    }
+
+    void TouchCell(Vector3 position) 
+    {
+        position = transform.InverseTransformPoint(position);
+        SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
+        Debug.Log("Hit: " + coordinates.ToString());
+        //Debug.Log("Hit: " + position.ToString());
+    }
 
     void CreateCell(int x, int z, int i)
     {
