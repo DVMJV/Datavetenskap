@@ -20,4 +20,4 @@ MonoBehaviour:
   attackToLearn:
   - {fileID: 11400000, guid: fdbfeaaba19ff5c44b798daf59ecfdc6, type: 2}
   - {fileID: 11400000, guid: 71006c00d607bdb419c5650365696413, type: 2}
-  type: 1
+  type: 2
