@@ -1,18 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class PokemonAttackContainer : MonoBehaviour, IPointerDownHandler
+public class Portrait : MonoBehaviour, IPointerDownHandler
 {
+    public PokemonContainer pokemonContainer;
 
 
-    public int id;
     public void OnPointerDown(PointerEventData eventData)
     {
-        EventHandler.current.MoveSelected(id);
+        EventHandler.current.AllySelected(pokemonContainer);
+
     }
 
 
-    
 }

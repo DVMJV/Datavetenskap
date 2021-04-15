@@ -13,6 +13,8 @@ public class EventHandler : MonoBehaviour
     public event Action onChangeSelectedObject;
     public event Action<Vector3> onTileSelected;
     public event Action<Vector3, PokemonContainer> onMovePokemon;
+    public event Action<PokemonContainer> onAddedPokemon;
+    
     #endregion
 
 
@@ -72,4 +74,11 @@ public class EventHandler : MonoBehaviour
         }
     }
 
+    public void AddPokemon(PokemonContainer pokemonContainer)
+    {
+        if(onAddedPokemon != null)
+        {
+            onAddedPokemon(pokemonContainer);
+        }
+    }
 }
