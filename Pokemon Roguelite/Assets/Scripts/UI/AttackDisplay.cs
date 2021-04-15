@@ -29,10 +29,10 @@ public class AttackDisplay : MonoBehaviour
         }
     }
 
-    void AddAttacks(Pokemon pokemon)
+    void AddAttacks(PokemonContainer pokemon)
     {
         int i = 1;
-        foreach (var item in pokemon.learnset)
+        foreach (var item in pokemon.pokemon.learnset)
         {
             if(item.Value <= pokemon.currentLevel)
             {

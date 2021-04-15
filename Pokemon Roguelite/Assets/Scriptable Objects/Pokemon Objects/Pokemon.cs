@@ -27,9 +27,8 @@ public class Pokemon : ScriptableObject
     public void OnStart()
     {
         learnset = new Dictionary<PokemonAttack, int>();
-
         for (int i = 0; i < attackToLearn.Count; i++)
-        {
+        {   
             EventHandler.current.onChangeSelectedObject += attackToLearn[i].ResetEvent;
             learnset.Add(attackToLearn[i], levelToLearnAt[i]);
         }

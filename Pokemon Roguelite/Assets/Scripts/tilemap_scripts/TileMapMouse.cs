@@ -36,7 +36,6 @@ public class TileMapMouse : MonoBehaviour
             selectionCube.GetComponent<MeshRenderer>().enabled = true;
             selectionCube.transform.position = currentTileCoord * tileMap.tileSize;
             selectionCube.transform.position += new Vector3(tileMap.tileSize / 2, 0, tileMap.tileSize / 2);                                           
-            Debug.Log("Tile:" + x + ", " + z);
         }
         else
         {
@@ -46,7 +45,9 @@ public class TileMapMouse : MonoBehaviour
         {
             if(selectionCube.GetComponent<MeshRenderer>().enabled)
             {
-                EventHandler.current.TileSelected(currentTileCoord);
+
+                Vector3 pos = new Vector3(currentTileCoord.x + tileMap.tileSize / 2, currentTileCoord.y, currentTileCoord.z + tileMap.tileSize / 2);
+                EventHandler.current.TileSelected(pos);
             }
         }
     }

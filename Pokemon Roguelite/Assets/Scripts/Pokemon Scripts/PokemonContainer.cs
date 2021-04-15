@@ -8,7 +8,9 @@ using UnityEngine.UI;
 public class PokemonContainer : MonoBehaviour
 {
     [SerializeField]
-    Pokemon pokemon;
+    public Pokemon pokemon;
+
+    public int currentLevel = 5;
 
 
     // Start is called before the first frame update
@@ -18,6 +20,7 @@ public class PokemonContainer : MonoBehaviour
         Instantiate(pokemon.mesh, transform);
         EventHandler.current.onStart += pokemon.OnStart;
         EventHandler.current.onTileSelected += Selected;
+        EventHandler.current.onMovePokemon += Move;
         EventHandler.current.OnStart();
     }
 
@@ -26,12 +29,29 @@ public class PokemonContainer : MonoBehaviour
     {
     }
 
+    private void Move(Vector3 pos, PokemonContainer pokemon)
+    {
+        if(pokemon == this)
+        {
+            Vector3 moveVector = pos - transform.position;
+
+            if(moveVector.sqrMagnitude < this.pokemon.movementSpeed * this.pokemon.movementSpeed)
+            {
+                transform.position = pos;
+            }
+        }
+    }
+
     private void Selected(Vector3 tilePos)
     {
-        if(Mathf.FloorToInt(transform.position.x) == tilePos.x && Mathf.FloorToInt(transform.position.z) == tilePos.z)
+        Debug.Log("x: " + Mathf.FloorToInt(transform.position.x) + "x2: " + Mathf.FloorToInt(tilePos.x));
+        Debug.Log("z: " + Mathf.FloorToInt(transform.position.z) + "z2: " + Mathf.FloorToInt(tilePos.z));
+
+
+        if (Mathf.FloorToInt(transform.position.x) == Mathf.FloorToInt(tilePos.x) && Mathf.FloorToInt(transform.position.z) == Mathf.FloorToInt(tilePos.z))
         {
             EventHandler.current.ChangeSelectedObject();
-            EventHandler.current.AllySelected(pokemon);
+            EventHandler.current.AllySelected(this);
         }
     }
 

@@ -7,17 +7,29 @@ public class EventHandler : MonoBehaviour
 
 
     #region Events
-    public event Action<Pokemon> onAllySelected;
+    public event Action<PokemonContainer> onAllySelected;
     public event Action onStart;
     public event Action<int> onMoveSelected;
     public event Action onChangeSelectedObject;
     public event Action<Vector3> onTileSelected;
+    public event Action<Vector3, PokemonContainer> onMovePokemon;
     #endregion
+
+
 
 
     private void Awake()
     {
         current = this;
+    }
+
+
+    public void MovePokemon(Vector3 tilePos, PokemonContainer pokemon)
+    {
+        if(onMovePokemon != null)
+        {
+            onMovePokemon(tilePos, pokemon);
+        }
     }
 
     public void TileSelected(Vector3 tilePos)
@@ -28,7 +40,7 @@ public class EventHandler : MonoBehaviour
         }
     }
 
-    public void AllySelected(Pokemon pokemon)
+    public void AllySelected(PokemonContainer pokemon)
     {
         if(onAllySelected != null)
         {
