@@ -50,7 +50,7 @@ public class SquareMesh : MonoBehaviour
         AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[1], center + SquareMetrics.corners[2]);
         AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[2], center + SquareMetrics.corners[3]);
         AddTriangleColor(cell.color);
-        AddTriangleColor(cell.color); // ?
+        AddTriangleColor(cell.color); // Done twice since it is a square.
     }
 
     void AddTriangleColor(Color color) 

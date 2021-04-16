@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class SquareGrid : MonoBehaviour
 {
-    public int width = 1;
-    public int height = 1;
+    public int width = 5;
+    public int height = 5;
 
     public SquareCell cellPrefab;
     SquareCell[] cells;
@@ -61,7 +61,7 @@ public class SquareGrid : MonoBehaviour
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
 
-        int index = (coordinates.X + coordinates.Z);
+        int index = ((coordinates.X + (coordinates.Z * width)));
         SquareCell cell = cells[index];
         cell.color = clickColor;
         squareMesh.Triangulate(cells);
