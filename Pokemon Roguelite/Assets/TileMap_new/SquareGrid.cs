@@ -16,7 +16,6 @@ public class SquareGrid : MonoBehaviour
     MeshCollider meshCollider;
 
     public Color defaultColor = Color.white;
-    public Color clickColor = Color.magenta;
 
     private void Awake()
     {
@@ -38,35 +37,18 @@ public class SquareGrid : MonoBehaviour
         squareMesh.Triangulate(cells);
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButton(0))
-        {
-            HandleInput();
-        }
-    }
-
-    void HandleInput() 
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
-        {
-            TouchCell(hit.point);
-        }
-    }
-
-    void TouchCell(Vector3 position) 
+    public void TouchCell(Vector3 position, Color color) 
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
 
         int index = ((coordinates.X + (coordinates.Z * width)));
         SquareCell cell = cells[index];
-        cell.color = clickColor;
+        cell.color = color;
+        Debug.Log("Touch cell color: " + color);
         squareMesh.Triangulate(cells);
 
-        Debug.Log("Hit: " + coordinates.ToString());
+      //  Debug.Log("Hit: " + coordinates.ToString());
     }
 
     void CreateCell(int x, int z, int i)

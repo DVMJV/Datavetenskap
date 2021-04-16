@@ -58,6 +58,7 @@ public class SquareMesh : MonoBehaviour
         colors.Add(color);
         colors.Add(color);
         colors.Add(color);
+        Debug.Log("Add triangle color: " + color);
     }
 
     void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3) 
