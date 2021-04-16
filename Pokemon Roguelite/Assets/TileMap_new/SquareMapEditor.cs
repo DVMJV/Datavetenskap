@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SquareMapEditor : MonoBehaviour
 {
     public Color[] colors;
     public SquareGrid squareGrid;
-
     private Color activeColor;
 
     private void Awake()
@@ -35,7 +32,6 @@ public class SquareMapEditor : MonoBehaviour
     public void SelectColor(int index) 
     {
         activeColor = colors[index];
-        Debug.Log(colors[index] + ", " +index);
     }
 
 

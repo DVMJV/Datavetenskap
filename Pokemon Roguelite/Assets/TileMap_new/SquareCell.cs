@@ -6,4 +6,7 @@ public class SquareCell : MonoBehaviour
 {
     public SquareCoordinates coordinates;
     public Color color;
+
+    //public int elevation;
+    //public const float elevationStep = 5f;
 }

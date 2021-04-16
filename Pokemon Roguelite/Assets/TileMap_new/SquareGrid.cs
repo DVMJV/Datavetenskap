@@ -45,9 +45,7 @@ public class SquareGrid : MonoBehaviour
         int index = ((coordinates.X + (coordinates.Z * width)));
         SquareCell cell = cells[index];
         cell.color = color;
-        Debug.Log("Touch cell color: " + color);
         squareMesh.Triangulate(cells);
-
       //  Debug.Log("Hit: " + coordinates.ToString());
     }
 
@@ -65,14 +63,10 @@ public class SquareGrid : MonoBehaviour
 
         cell.color = defaultColor;
 
-
         Text label = Instantiate<Text>(cellLabelPrefab);
         label.rectTransform.SetParent(gridCanvas.transform, false);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
         label.text = cell.coordinates.ToStringOnSeparateLines();
-
-
-
     }
 }
 
