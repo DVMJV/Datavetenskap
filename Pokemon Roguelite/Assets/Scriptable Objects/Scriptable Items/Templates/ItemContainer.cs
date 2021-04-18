@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ItemContainer : MonoBehaviour
 {
-    [SerializeField] Item item;
+    [SerializeField] ItemAbstract item;
 
-    public Item GetItem()
+    public ItemAbstract GetItem()
     {
         return item;
     }

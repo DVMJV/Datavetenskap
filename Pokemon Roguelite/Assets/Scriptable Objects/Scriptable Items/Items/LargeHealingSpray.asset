@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58df3f60ad601534a88607794ef42817, type: 3}
-  m_Name: BONK
+  m_Script: {fileID: 11500000, guid: a67b3905fe878f1418bc77bca8c0e4fa, type: 3}
+  m_Name: LargeHealingSpray
   m_EditorClassIdentifier: 
-  name: BONK
-  description: GET BONKED!
-  cost: 1
+  name: Large Healing Spray
+  description: Heal target for 40 hit points.
+  shopCost: 60
+  healAmount: 40

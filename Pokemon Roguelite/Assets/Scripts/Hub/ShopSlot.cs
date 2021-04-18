@@ -7,29 +7,40 @@ using TMPro;
 
 public class ShopSlot : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] Button slotButton;
-    [SerializeField] TMP_Text tmpText;
+    Button slotButton;
+    TMP_Text tmpText;
 
-    [HideInInspector] public Item itemForSale;
+    [HideInInspector] public GameObject itemForSalePrefab;
+    ItemAbstract itemForSale;
 
-    public void RestockSlot(Item _itemForSale)
+    void Start()
+    {
+        slotButton = GetComponent<Button>();
+        tmpText = GetComponentInChildren<TMP_Text>();
+    }
+
+    public void RestockSlot(GameObject _itemForSalePrefab)
     {
         slotButton.interactable = true;
-        itemForSale = _itemForSale;
-        tmpText.text = itemForSale.name + "\n" + itemForSale.cost + " $";
+        itemForSalePrefab = _itemForSalePrefab;
+        itemForSale = itemForSalePrefab.GetComponent<ItemContainer>().GetItem();
+        List<string> data = itemForSale.Print();
+        tmpText.text = data[0] + "\n" + data[2] + " $";
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.selectedObject == null)
             return;
-        if (Shop.money < itemForSale.cost)
+
+        if (Shop.money < itemForSale.shopCost)
         {
             Debug.Log("NOT ENOUGH FUNDS!");
             return;
         }
 
-        Shop.money -= itemForSale.cost;
+        EventHandler.current.ItemBought(itemForSalePrefab);
+        Shop.money -= itemForSale.shopCost;
         Debug.Log("FUNDS: " + Shop.money);
         slotButton.interactable = false;
     }

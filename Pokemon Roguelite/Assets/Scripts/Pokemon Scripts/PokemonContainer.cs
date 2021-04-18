@@ -12,6 +12,7 @@ public class PokemonContainer : MonoBehaviour
 
     public int currentLevel = 5;
 
+    public List<PokemonAttack> learnedMoves = new List<PokemonAttack>();
 
     // Start is called before the first frame update
     void Start()
@@ -29,13 +30,19 @@ public class PokemonContainer : MonoBehaviour
     {
     }
 
+    public void LearnMove(PokemonAttack newMove)
+    {
+        //if (!learnedMoves.Contains(newMove))
+            learnedMoves.Add(newMove);
+    }
+
     private void Move(Vector3 pos, PokemonContainer pokemon)
     {
-        if(pokemon == this)
+        if (pokemon == this)
         {
             Vector3 moveVector = pos - transform.position;
 
-            if(moveVector.sqrMagnitude < this.pokemon.movementSpeed * this.pokemon.movementSpeed)
+            if (moveVector.sqrMagnitude < this.pokemon.movementSpeed * this.pokemon.movementSpeed)
             {
                 transform.position = pos;
             }

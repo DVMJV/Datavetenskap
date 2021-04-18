@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 58df3f60ad601534a88607794ef42817, type: 3}
-  m_Name: LargeHealingSpray
-  m_EditorClassIdentifier: 
-  name: Large Healing Spray
-  description: Heal target for 40 hit points.
-  cost: 60
+  m_Script: {fileID: 11500000, guid: 82c5a221ccc089f439ca368d13112929, type: 3}
+  m_Name: ReviveStone
+  m_EditorClassIdentifier: Assembly-CSharp::ReviveSton
+  name: ReviveStone
+  description: Revive target with 10 hit points.
+  shopCost: 45

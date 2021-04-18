@@ -8,7 +8,7 @@ public class Shop : MonoBehaviour
 {
     public static int money = 100; //MOVE TO PLAYER CONTROLLER LOGIC
 
-    [SerializeField] List<ItemContainer> itemPool = new List<ItemContainer>();
+    [SerializeField] List<GameObject> itemPool = new List<GameObject>();
 
     List<ShopSlot> shopButtons = new List<ShopSlot>();
 
@@ -30,7 +30,7 @@ public class Shop : MonoBehaviour
     {
         foreach (ShopSlot slot in shopButtons)
         {
-            Item i = itemPool[Random.Range(0, itemPool.Count)].GetItem();
+            GameObject i = itemPool[Random.Range(0, itemPool.Count)];
             slot.RestockSlot(i);
         }
     }

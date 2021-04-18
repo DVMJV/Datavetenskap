@@ -81,4 +81,33 @@ public class EventHandler : MonoBehaviour
             onAddedPokemon(pokemonContainer);
         }
     }
+
+    //HUB EVENTS
+
+    public event Action<GameObject> onItemBought;
+    public void ItemBought(GameObject boughtItemPrefab)
+    {
+        if(onItemBought != null)
+        {
+            onItemBought(boughtItemPrefab);
+        }
+    }
+
+    public event Action<PokemonContainer> onUpgradeSlotFilled;
+    public void UpgradeSlotFilled(PokemonContainer pokemonContainer)
+    {
+        if (onUpgradeSlotFilled != null)
+        {
+            onUpgradeSlotFilled(pokemonContainer);
+        }
+    }
+
+    public event Action onUpgradeSlotEmpty;
+    public void UpgradeSlotEmpty()
+    {
+        if(onUpgradeSlotEmpty != null)
+        {
+            onUpgradeSlotEmpty();
+        }
+    }
 }
