@@ -37,16 +37,18 @@ public class SquareGrid : MonoBehaviour
         squareMesh.Triangulate(cells);
     }
 
-    public void TouchCell(Vector3 position, Color color) 
+    public SquareCell GetCell(Vector3 position, Color color) 
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
-
         int index = ((coordinates.X + (coordinates.Z * width)));
-        SquareCell cell = cells[index];
-        cell.color = color;
+        Debug.Log("Hit: " + coordinates.ToString());
+        return cells[index];     
+    }
+
+    public void Refresh() 
+    {
         squareMesh.Triangulate(cells);
-      //  Debug.Log("Hit: " + coordinates.ToString());
     }
 
     void CreateCell(int x, int z, int i)
@@ -63,10 +65,20 @@ public class SquareGrid : MonoBehaviour
 
         cell.color = defaultColor;
 
+        if (x > 0)
+            cell.SetNeighbor(SquareDirection.LEFT, cells[i - 1]);
+        if (z > 0)
+        {
+            cell.SetNeighbor(SquareDirection.DOWN, cells[i - width]);
+        }
+
+
+
         Text label = Instantiate<Text>(cellLabelPrefab);
         label.rectTransform.SetParent(gridCanvas.transform, false);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
         label.text = cell.coordinates.ToStringOnSeparateLines();
+        cell.uiRect = label.rectTransform;
     }
 }
 

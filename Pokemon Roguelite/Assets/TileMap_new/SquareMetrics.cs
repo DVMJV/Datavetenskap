@@ -6,6 +6,7 @@ public static class SquareMetrics
 {
     public const float width = 10f;
     public const float height = 10f;
+    public const float elevationStep = 2.5f;
 
 
     public static Vector3[] corners =
@@ -15,5 +16,12 @@ public static class SquareMetrics
             new Vector3(width/2, 0, -height/2),
             new Vector3(-width/2, 0, -height/2 )
         };
+
+    public static Vector3 GetBridge(SquareDirection direction)
+    {
+        // Redo..
+        return (corners[(int)direction] + corners[(int)direction + 1]) *
+            0.5f;
+    }
 }
 
