@@ -5,7 +5,6 @@ public class EventHandler : MonoBehaviour
 {
     public static EventHandler current;
 
-
     #region Events
     public event Action<PokemonContainer> onAllySelected;
     public event Action onStart;
@@ -14,9 +13,6 @@ public class EventHandler : MonoBehaviour
     public event Action<Vector3> onTileSelected;
     public event Action<Vector3, PokemonContainer> onMovePokemon;
     #endregion
-
-
-
 
     private void Awake()
     {

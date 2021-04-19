@@ -12,6 +12,10 @@ public class PokemonContainer : MonoBehaviour
 
     public int currentLevel = 5;
 
+    public int currentHealth = 5;
+
+    List<PokemonAttack> learnedMoves;
+
 
     // Start is called before the first frame update
     void Start()
@@ -44,8 +48,7 @@ public class PokemonContainer : MonoBehaviour
 
     private void Selected(Vector3 tilePos)
     {
-        Debug.Log("x: " + Mathf.FloorToInt(transform.position.x) + "x2: " + Mathf.FloorToInt(tilePos.x));
-        Debug.Log("z: " + Mathf.FloorToInt(transform.position.z) + "z2: " + Mathf.FloorToInt(tilePos.z));
+        Debug.Log("Current Health: " + currentHealth);
 
 
         if (Mathf.FloorToInt(transform.position.x) == Mathf.FloorToInt(tilePos.x) && Mathf.FloorToInt(transform.position.z) == Mathf.FloorToInt(tilePos.z))
