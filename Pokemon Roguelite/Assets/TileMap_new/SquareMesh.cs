@@ -53,7 +53,7 @@ public class SquareMesh : MonoBehaviour
         AddTriangleColor(cell.color); // Done twice since it is a square.
 
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             SquareCell neighbor = cell.GetNeighbor((SquareDirection)i);
             
@@ -62,35 +62,36 @@ public class SquareMesh : MonoBehaviour
 
             if (cell.Elevation - neighbor.Elevation > 0)
             {
-                float elevationDifference = cell.Elevation - neighbor.Elevation;
                 Vector3 neighborCenter = neighbor.transform.localPosition;
-
-                if (i == 3)
+                if (i == 0)
                 {
-                    AddQuad(center + SquareMetrics.corners[0],
-                    center + SquareMetrics.corners[i],
-                    center + SquareMetrics.corners[0] + new Vector3(0, -elevationDifference * SquareMetrics.elevationStep, 0),
-                    center + SquareMetrics.corners[i] + new Vector3(0, -elevationDifference * SquareMetrics.elevationStep, 0));
-         
+                    AddQuad(center + SquareMetrics.corners[1],
+                           center + SquareMetrics.corners[0],
+                           neighborCenter + SquareMetrics.corners[3],
+                           neighborCenter + SquareMetrics.corners[2]);
+                }
+                else if (i == 1)
+                {
+                    AddQuad(center + SquareMetrics.corners[1],
+                           neighborCenter + SquareMetrics.corners[0],
+                           neighborCenter + SquareMetrics.corners[3],
+                           center + SquareMetrics.corners[2]);
+                }
+                else if (i == 2)
+                {
+                    AddQuad(center + SquareMetrics.corners[3],
+                           center + SquareMetrics.corners[2],
+                           neighborCenter + SquareMetrics.corners[1],
+                           neighborCenter + SquareMetrics.corners[0]);
                 }
                 else
                 {
-                    AddQuad(center + SquareMetrics.corners[i + 1],
-                           center + SquareMetrics.corners[i],
-                           center + SquareMetrics.corners[i + 1] + new Vector3(0, -elevationDifference * SquareMetrics.elevationStep, 0),
-                           center + SquareMetrics.corners[i] + new Vector3(0, -elevationDifference * SquareMetrics.elevationStep, 0));
+                    AddQuad(center + SquareMetrics.corners[0],
+                    center + SquareMetrics.corners[3],
+                    neighborCenter + SquareMetrics.corners[2],
+                    neighborCenter + SquareMetrics.corners[1]);
                 }
                 AddQuadColor(cell.color);
-                //i != 3 ?
-
-                //:
-
-
-                //AddQuad(center + SquareMetrics.corners[i + 1],
-                //        center + SquareMetrics.corners[i],
-                //        center + SquareMetrics.corners[i + 1] + new Vector3(0, elevationDifference * SquareMetrics.elevationStep, 0),
-                //        center + SquareMetrics.corners[i] + new Vector3(0, elevationDifference * SquareMetrics.elevationStep, 0));
-
             }
         }
     }
@@ -133,10 +134,10 @@ public class SquareMesh : MonoBehaviour
         // Tri #1
         triangles.Add(vertexIndex + 0);
         triangles.Add(vertexIndex + 1);
-        triangles.Add(vertexIndex + 2);
+        triangles.Add(vertexIndex + 3);
 
         // #2
-        triangles.Add(vertexIndex + 0);
+        triangles.Add(vertexIndex + 1);
         triangles.Add(vertexIndex + 2);
         triangles.Add(vertexIndex + 3);
     }
