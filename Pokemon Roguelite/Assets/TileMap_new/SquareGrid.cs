@@ -3,14 +3,17 @@ using UnityEngine.UI;
 
 public class SquareGrid : MonoBehaviour
 {
-    public int width = 5;
-    public int height = 5;
+    int cellCountX, cellCountZ;
+    public int chunkCountX = 4, chunkCountZ = 3;
 
     public SquareCell cellPrefab;
     SquareCell[] cells;
 
     public Text cellLabelPrefab;
     Canvas gridCanvas;
+
+    public SquareGridChunk chunkPrefab;
+    SquareGridChunk[] chunks;
 
     SquareMesh squareMesh;
     MeshCollider meshCollider;
@@ -22,12 +25,34 @@ public class SquareGrid : MonoBehaviour
         gridCanvas = GetComponentInChildren<Canvas>();
         squareMesh = GetComponentInChildren<SquareMesh>();
 
-        cells = new SquareCell[height * width];
-        for (int z = 0, i = 0; z < height; z++)
+        cellCountX = chunkCountX * SquareMetrics.chunkSizeX;
+        cellCountZ = chunkCountZ * SquareMetrics.chunkSizeZ;
+        CreateChunks();
+        CreateCells();
+    }
+
+    void CreateCells() 
+    {
+        cells = new SquareCell[cellCountZ * cellCountX];
+        for (int z = 0, i = 0; z < cellCountZ; z++)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < cellCountX; x++)
             {
                 CreateCell(x, z, i++);
+            }
+        }
+    }
+
+    void CreateChunks() 
+    {
+        chunks = new SquareGridChunk[chunkCountX * chunkCountZ];
+
+        for (int z = 0, i = 0; z < chunkCountZ; z++)
+        {
+            for (int x = 0; x < chunkCountX; x++)
+            {
+                SquareGridChunk chunk = chunks[i++] = Instantiate(chunkPrefab);
+                chunk.transform.SetParent(transform);
             }
         }
     }
@@ -41,7 +66,7 @@ public class SquareGrid : MonoBehaviour
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
-        int index = ((coordinates.X + (coordinates.Z * width)));
+        int index = ((coordinates.X + (coordinates.Z * cellCountX)));
         Debug.Log("Hit: " + coordinates.ToString());
         return cells[index];     
     }
@@ -69,7 +94,7 @@ public class SquareGrid : MonoBehaviour
             cell.SetNeighbor(SquareDirection.LEFT, cells[i - 1]);
         if (z > 0)
         {
-            cell.SetNeighbor(SquareDirection.DOWN, cells[i - width]);
+            cell.SetNeighbor(SquareDirection.DOWN, cells[i - cellCountX]);
         }
 
 

@@ -7,7 +7,7 @@ public static class SquareMetrics
     public const float width = 10f;
     public const float height = 10f;
     public const float elevationStep = 2.5f;
-
+    public const int chunkSizeX = 5, chunkSizeZ = 5;
 
     public static Vector3[] corners =
         {
