@@ -4,16 +4,43 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
+    int id;
 
     private PokemonContainer selected;
+    bool turn;
     // Start is called before the first frame update
     void Start()
     {
         EventHandler.current.onAllySelected += SetSelected;
         EventHandler.current.onTileSelected += MovePokemon;
+        EventHandler.current.onTurnStart += TurnStart;
+        EventHandler.current.onTurnReset += TurnEnd;
+
+        EventHandler.current.OnStart();
     }
 
 
+    void TurnStart(int id)
+    {
+        if(this.id == id)
+        {
+            turn = true;
+            Debug.Log("My turn");
+        }
+    }
+    void TurnEnd(int id)
+    {
+        if(this.id == id)
+        {
+            turn = false;
+            //foreach (PokemonContainer pokemon in pokemons)
+            //{
+            //    //pokemon.Reset();
+            //}
+            Debug.Log("My Reset");
+        }
+    }
     void SetSelected(PokemonContainer pokemon)
     {
         selected = pokemon;
@@ -21,12 +48,11 @@ public class Player : MonoBehaviour
 
     void MovePokemon(Vector3 currentSelectedTile)
     {
-        EventHandler.current.MovePokemon(currentSelectedTile, selected);   
+        if (turn)
+        {
+            EventHandler.current.MovePokemon(currentSelectedTile, selected);   
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }

@@ -14,7 +14,10 @@ public class EventHandler : MonoBehaviour
     public event Action<Vector3> onTileSelected;
     public event Action<Vector3, PokemonContainer> onMovePokemon;
     public event Action<PokemonContainer> onAddedPokemon;
-    
+    public event Action<int> onTurnStart;
+    public event Action onTurnEnd;
+    public event Action<int> onTurnReset;
+
     #endregion
 
 
@@ -28,58 +31,37 @@ public class EventHandler : MonoBehaviour
 
     public void MovePokemon(Vector3 tilePos, PokemonContainer pokemon)
     {
-        if(onMovePokemon != null)
-        {
-            onMovePokemon(tilePos, pokemon);
-        }
+        onMovePokemon?.Invoke(tilePos, pokemon);
     }
 
     public void TileSelected(Vector3 tilePos)
     {
-        if(onTileSelected != null)
-        {
-            onTileSelected(tilePos);
-        }
+        onTileSelected?.Invoke(tilePos);
     }
 
     public void AllySelected(PokemonContainer pokemon)
     {
-        if(onAllySelected != null)
-        {
-            onAllySelected(pokemon);
-        }
+        onAllySelected?.Invoke(pokemon);
     }
 
     public void ChangeSelectedObject()
     {
-        if(onChangeSelectedObject != null)
-        {
-            onChangeSelectedObject();
-        }
+        onChangeSelectedObject?.Invoke();
     }
 
     public void OnStart()
     {
-        if(onStart != null)
-        {
-            onStart();
-        }
+        onStart?.Invoke();
     }
 
     public void MoveSelected(int id)
     {
-        if(onMoveSelected != null)
-        {
-            onMoveSelected(id);
-        }
+        onMoveSelected?.Invoke(id);
     }
 
     public void AddPokemon(PokemonContainer pokemonContainer)
     {
-        if(onAddedPokemon != null)
-        {
-            onAddedPokemon(pokemonContainer);
-        }
+        onAddedPokemon?.Invoke(pokemonContainer);
     }
 
     //HUB EVENTS
@@ -110,4 +92,23 @@ public class EventHandler : MonoBehaviour
             onUpgradeSlotEmpty();
         }
     }
+
+    #region TurnSystem
+
+    public void StartTurn(int id)
+    {
+        onTurnStart?.Invoke(id);
+    }
+
+    public void EndTurn()
+    {
+        onTurnEnd?.Invoke();
+    }
+
+    public void ResetTurn(int id)
+    {
+        onTurnReset?.Invoke(id);
+    }
+
+    #endregion
 }
