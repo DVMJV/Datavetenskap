@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 [CreateAssetMenu(fileName = "Pokemon", menuName = "ScriptableObjects/PokemonObjects", order = 1)]
@@ -22,6 +23,8 @@ public class Pokemon : ScriptableObject
     public Dictionary<PokemonAttack, int> learnset;
 
     public Type type;
+
+    public Sprite sprite;
 
 
     public void OnStart()
