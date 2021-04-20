@@ -40,6 +40,7 @@ public class SquareMesh : MonoBehaviour
         squareMesh.vertices = verticies.ToArray();
         squareMesh.colors = colors.ToArray();
         squareMesh.triangles = triangles.ToArray();
+        
         squareMesh.RecalculateNormals();
         meshCollider.sharedMesh= squareMesh;
     }
@@ -58,9 +59,42 @@ public class SquareMesh : MonoBehaviour
             SquareCell neighbor = cell.GetNeighbor((SquareDirection)i);
             
             if (neighbor == null)
-                continue;
+            {
+                Vector3 elevationDifference = new Vector3(0, (cell.Elevation + 2) * SquareMetrics.elevationStep, 0);
+                if (i == 0)
+                {
+                    AddQuad(center + SquareMetrics.corners[1],
+                            center + SquareMetrics.corners[0],
+                            center + SquareMetrics.corners[0] - elevationDifference,
+                            center + SquareMetrics.corners[1] - elevationDifference);
+                }
+                else if (i == 1)
+                {
+                    AddQuad(center + SquareMetrics.corners[2],
+                            center + SquareMetrics.corners[1],
+                            center + SquareMetrics.corners[1] - elevationDifference,
+                            center + SquareMetrics.corners[2] - elevationDifference);
+                }
+                else if (i == 2)
+                {
+                    AddQuad(center + SquareMetrics.corners[3],
+                            center + SquareMetrics.corners[2],
+                            center + SquareMetrics.corners[2] - elevationDifference,
+                            center + SquareMetrics.corners[3] - elevationDifference);
+                }
+                else
+                {
+                    AddQuad(center + SquareMetrics.corners[0],
+                    center + SquareMetrics.corners[3],
+                    center + SquareMetrics.corners[3] - elevationDifference,
+                    center + SquareMetrics.corners[0] - elevationDifference);
+                }
+                AddQuadColor(cell.color);
 
-            if (cell.Elevation - neighbor.Elevation > 0)
+               
+            }
+
+            else if (cell.Elevation - neighbor.Elevation > 0)
             {
                 Vector3 neighborCenter = neighbor.transform.localPosition;
                 if (i == 0)
@@ -72,10 +106,10 @@ public class SquareMesh : MonoBehaviour
                 }
                 else if (i == 1)
                 {
-                    AddQuad(center + SquareMetrics.corners[1],
+                    AddQuad(center + SquareMetrics.corners[2],
+                           center + SquareMetrics.corners[1],
                            neighborCenter + SquareMetrics.corners[0],
-                           neighborCenter + SquareMetrics.corners[3],
-                           center + SquareMetrics.corners[2]);
+                           neighborCenter + SquareMetrics.corners[3]);
                 }
                 else if (i == 2)
                 {
@@ -134,12 +168,12 @@ public class SquareMesh : MonoBehaviour
         // Tri #1
         triangles.Add(vertexIndex + 0);
         triangles.Add(vertexIndex + 1);
-        triangles.Add(vertexIndex + 3);
+        triangles.Add(vertexIndex + 2);
 
         // #2
-        triangles.Add(vertexIndex + 1);
         triangles.Add(vertexIndex + 2);
         triangles.Add(vertexIndex + 3);
+        triangles.Add(vertexIndex + 0);
     }
 
 }
