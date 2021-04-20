@@ -34,8 +34,7 @@ public class SquareMapEditor : MonoBehaviour
     {
         cell.color = activeColor;
         cell.Elevation = activeElevation;
-      //  Debug.Log(activeElevation);
-        squareGrid.Refresh();
+       // squareGrid.Refresh();
     }
 
     public void SelectColor(int index) 
