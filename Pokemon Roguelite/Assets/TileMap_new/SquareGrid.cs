@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,6 +53,44 @@ public class SquareGrid : MonoBehaviour
         squareMesh.Triangulate(cells);
     }
 
+    public void FindDistancesTo(SquareCell cell)
+    {
+        StopAllCoroutines();
+        StartCoroutine(Search(cell));
+    }
+
+
+    IEnumerator Search(SquareCell cell)
+    {
+        for (int i = 0; i < cells.Length; i++)
+        {
+            cells[i].Distance = int.MaxValue;
+        }
+
+        WaitForSeconds delay = new WaitForSeconds(1 / 60f);
+        cell.Distance = 0;
+
+        Queue<SquareCell> openSet = new Queue<SquareCell>();
+        openSet.Enqueue(cell);
+
+
+        while(openSet.Count > 0)
+        {
+            yield return delay;
+            SquareCell current = openSet.Dequeue();
+
+            for(SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
+            {
+                SquareCell neighbor = current.GetNeighbor(d);
+                if(neighbor != null && neighbor.Distance == int.MaxValue)
+                {
+                    neighbor.Distance = current.Distance + 1;
+                    openSet.Enqueue(neighbor);
+                }
+            }
+        }
+    }
+
     void CreateCell(int x, int z, int i)
     {
         Vector3 position;
@@ -77,7 +117,6 @@ public class SquareGrid : MonoBehaviour
         Text label = Instantiate<Text>(cellLabelPrefab);
         label.rectTransform.SetParent(gridCanvas.transform, false);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
-        label.text = cell.coordinates.ToStringOnSeparateLines();
         cell.uiRect = label.rectTransform;
     }
 }

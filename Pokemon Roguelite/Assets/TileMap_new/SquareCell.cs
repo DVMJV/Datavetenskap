@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SquareCell : MonoBehaviour
 {
@@ -8,6 +9,18 @@ public class SquareCell : MonoBehaviour
     SquareCell[] neighbors;
 
     public RectTransform uiRect;
+
+    int distance;
+
+    public int Distance
+    {
+        get { return distance; }
+        set
+        {
+            distance = value;
+            UpdateDistanceLabel();
+        }
+    }
 
     public SquareCoordinates coordinates;
     public Color color;
@@ -28,6 +41,12 @@ public class SquareCell : MonoBehaviour
     public SquareCell GetNeighbor(SquareDirection direction) 
     {
         return neighbors[(int)direction];
+    }
+
+    void UpdateDistanceLabel()
+    {
+        Text label = uiRect.GetComponent<Text>();
+        label.text = distance == int.MaxValue ? "" : distance.ToString();
     }
 
     public void SetNeighbor(SquareDirection direction, SquareCell cell) 

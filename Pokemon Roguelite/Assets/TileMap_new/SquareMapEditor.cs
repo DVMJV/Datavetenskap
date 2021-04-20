@@ -26,7 +26,9 @@ public class SquareMapEditor : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            EditCell(squareGrid.GetCell(hit.point, activeColor));
+            SquareCell currentCell = squareGrid.GetCell(hit.point, activeColor);
+            EditCell(currentCell);
+            squareGrid.FindDistancesTo(currentCell);
         }
     }
 
