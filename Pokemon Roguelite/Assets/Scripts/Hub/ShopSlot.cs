@@ -13,7 +13,7 @@ public class ShopSlot : MonoBehaviour, IPointerDownHandler
     [HideInInspector] public GameObject itemForSalePrefab;
     ItemAbstract itemForSale;
 
-    void Start()
+    void Awake()
     {
         slotButton = GetComponent<Button>();
         tmpText = GetComponentInChildren<TMP_Text>();
