@@ -7,10 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ToonShader Default
-  m_Shader: {fileID: -6465566751694194690, guid: 76434c73ba53484469162aa6906e77b2, type: 3}
-  m_ShaderKeywords: MAIN_LIGHT_CALCULATE_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
-    ADDITIONAL_LIGHT_CALCULATE_SHADOWS
+  m_Name: ToonShaderTransparent Default
+  m_Shader: {fileID: -6465566751694194690, guid: e6ab5f4f82b3e7f49ae98ce303d34faf, type: 3}
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -25,7 +24,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - Texture2D_318a05cced54469fbf8089d7774e707e:
-        m_Texture: {fileID: 2800000, guid: 1f89fed00b6bc904c861ab847a811cb8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -86,8 +85,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_725b692b45a348598cd5febba5ff361c: 0
-    - Vector1_5d53f7ea3c6149068bfea09873fb219b: 0.7
-    - Vector1_6b0cde13ad214a59bb6755a5ca0373f4: 0
+    - Vector1_5d53f7ea3c6149068bfea09873fb219b: 0.4
+    - Vector1_c2bd0704566a4894896c7eeeca77ffd1: 0.1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -115,12 +114,13 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_6b5a0d103cc74ba09e3a5a76606f9fb4: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &4961585881024666113
+--- !u!114 &5087733424381298201
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
