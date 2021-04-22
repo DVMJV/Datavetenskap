@@ -50,12 +50,22 @@ public class PokemonContainer : MonoBehaviour
     {
     }
 
+    public void Reset()
+    {
+        Debug.Log("owo");
+        currentMovement = pokemon.movementSpeed;
+    }
+
+
     private void Move(SquareCell selectedCell, PokemonContainer pokemon)
     {
-        if(pokemon == this && selectedCell.Distance <= currentMovement)
+        if (pokemon == this && selectedCell.Distance <= currentMovement)
         {
             currentMovement -= selectedCell.Distance;
             CurrentTile = selectedCell;
+        }
+    }
+
     public void LearnMove(PokemonAttack newMove)
     {
         //if (!learnedMoves.Contains(newMove))

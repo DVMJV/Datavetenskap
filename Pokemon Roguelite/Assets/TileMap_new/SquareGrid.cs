@@ -26,7 +26,6 @@ public class SquareGrid : MonoBehaviour
     {
         gridCanvas = GetComponentInChildren<Canvas>();
         squareMesh = GetComponentInChildren<SquareMesh>();
-
         cells = new SquareCell[height * width];
         for (int z = 0, i = 0; z < height; z++)
         {
@@ -37,10 +36,20 @@ public class SquareGrid : MonoBehaviour
         }
     }
 
+    private void ClearHighlights()
+    {
+        for (int i = 0; i < cells.Length; i++)
+        {
+            cells[i].Distance = int.MaxValue;
+            cells[i].DisableHighlight();
+        }
+    }
+
     private void Start()
     {
         squareMesh.Triangulate(cells);
         EventHandler.current.onAllySelected +=  FindAllPossibleTiles;
+        EventHandler.current.onTurnEnd += ClearHighlights;
     }
 
     public SquareCell GetCell(Vector3 position, Color color) 

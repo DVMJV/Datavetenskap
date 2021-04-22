@@ -8,15 +8,18 @@ public class Player : MonoBehaviour
     int id;
 
     private PokemonContainer selected;
+
+    [SerializeField]
+    private List<PokemonContainer> pokemons;
     bool turn;
     // Start is called before the first frame update
     void Start()
     {
+        turn = true;
         EventHandler.current.onAllySelected += SetSelected;
         EventHandler.current.onTileSelected += MovePokemon;
         EventHandler.current.onTurnStart += TurnStart;
         EventHandler.current.onTurnReset += TurnEnd;
-
         EventHandler.current.OnStart();
     }
 
@@ -34,21 +37,23 @@ public class Player : MonoBehaviour
         if(this.id == id)
         {
             turn = false;
-            //foreach (PokemonContainer pokemon in pokemons)
-            //{
-            //    //pokemon.Reset();
-            //}
+            foreach (PokemonContainer pokemon in pokemons)
+            {
+                pokemon.Reset();
+            }
             Debug.Log("My Reset");
         }
     }
     void SetSelected(PokemonContainer pokemon)
     {
-        selected = pokemon;
+        if(turn)
+        {
+            selected = pokemon;
+        }
     }
 
     void MovePokemon(SquareCell selectedCell)
     {
-        EventHandler.current.MovePokemon(selectedCell, selected);   
         if (turn)
         {
             EventHandler.current.MovePokemon(selectedCell, selected);   
