@@ -10,7 +10,17 @@ public class SquareCell : MonoBehaviour
 
     public RectTransform uiRect;
 
+    public SquareCell PathFrom { get; set; }
+
     int distance;
+    public int SearchHeuristic { get; set; }
+
+    public int SearchPriority
+    {
+        get { return distance + SearchHeuristic; }
+        set { SearchPriority = value; }
+    }
+    public SquareCell NextWithSamePriority { get; set; }
 
     public int Distance
     {
@@ -58,6 +68,18 @@ public class SquareCell : MonoBehaviour
     public SquareCell[] GetNeighborArray() 
     {
         return neighbors;    
+    }
+
+    public void EnableHighlight(Color color)
+    {
+        Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+        highlight.color = color;
+        highlight.enabled = true;
+    }
+    public void DisableHighlight()
+    {
+        Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+        highlight.enabled = false;
     }
 
 }

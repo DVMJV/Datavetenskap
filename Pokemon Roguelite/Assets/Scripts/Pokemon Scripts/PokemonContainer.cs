@@ -16,7 +16,7 @@ public class PokemonContainer : MonoBehaviour
 
     List<PokemonAttack> learnedMoves;
 
-
+    public SquareCell CurrentTile { get; set; }
     // Start is called before the first frame update
     void Start()
     {

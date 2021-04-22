@@ -5,6 +5,9 @@ public class SquareMapEditor : MonoBehaviour
     public Color[] colors;
     public SquareGrid squareGrid;
     private Color activeColor;
+
+    SquareCell searchFromCell, searchToCell;
+
     int activeElevation;
 
     private void Awake()
@@ -14,10 +17,8 @@ public class SquareMapEditor : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            HandleInput();
-        }
+        HandleInput();
+        
     }
 
     void HandleInput()
@@ -27,8 +28,30 @@ public class SquareMapEditor : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             SquareCell currentCell = squareGrid.GetCell(hit.point, activeColor);
-            EditCell(currentCell);
-            squareGrid.FindDistancesTo(currentCell);
+
+            if(Input.GetMouseButtonDown(0))
+            {
+                EditCell(currentCell);
+
+                if (Input.GetKey(KeyCode.LeftShift) && searchToCell != currentCell)
+                {
+                    if (searchFromCell)
+                        searchFromCell.DisableHighlight();
+                    searchFromCell = currentCell;
+                    searchFromCell.EnableHighlight(Color.blue);
+
+                    if (searchToCell)
+                    {
+                        squareGrid.FindPath(searchFromCell, searchToCell);
+                    }
+                }
+            }
+            
+            if(searchFromCell && searchFromCell != currentCell)
+            {
+                searchToCell = currentCell;
+                squareGrid.FindPath(searchFromCell, searchToCell);
+            }
         }
     }
 
