@@ -20,6 +20,8 @@ public class SquareGrid : MonoBehaviour
 
     public Color defaultColor = Color.white;
 
+    List<SquareCell> walkableTiles = new List<SquareCell>();
+
     private void Awake()
     {
         gridCanvas = GetComponentInChildren<Canvas>();
@@ -38,7 +40,7 @@ public class SquareGrid : MonoBehaviour
     private void Start()
     {
         squareMesh.Triangulate(cells);
-        EventHandler.current.onAllySelected += FindAllPossibleTiles;
+        EventHandler.current.onAllySelected +=  FindAllPossibleTiles;
     }
 
     public SquareCell GetCell(Vector3 position, Color color) 
@@ -46,7 +48,6 @@ public class SquareGrid : MonoBehaviour
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
         int index = ((coordinates.X + (coordinates.Z * width)));
-        Debug.Log("Hit: " + coordinates.ToString());
         return cells[index];     
     }
 
@@ -57,7 +58,7 @@ public class SquareGrid : MonoBehaviour
 
     public void FindAllPossibleTiles(PokemonContainer selectedPokemon)
     {
-        SearchForTiles(selectedPokemon.pokemon.movementSpeed, selectedPokemon.CurrentTile);
+        SearchForTiles(selectedPokemon.currentMovement, selectedPokemon.CurrentTile);
     }
 
     public void FindPath(SquareCell fromCell, SquareCell toCell)
@@ -67,7 +68,46 @@ public class SquareGrid : MonoBehaviour
 
     void SearchForTiles(int speed, SquareCell currentTile)
     {
+
+        for (int i = 0; i < cells.Length; i++)
+        {
+            cells[i].Distance = int.MaxValue;
+            cells[i].DisableHighlight();
+        }
+
+
         Queue<SquareCell> openSet = new Queue<SquareCell>();
+        currentTile.Distance = 0;
+        openSet.Enqueue(currentTile);
+
+        while(openSet.Count > 0)
+        {
+            SquareCell current = openSet.Dequeue();
+
+            if (current.Distance >= speed && current.Distance != int.MaxValue)
+                continue;
+
+            for(SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
+            {
+                SquareCell neighbor = current.GetNeighbor(d);
+
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1)
+                    continue;
+                else if(neighbor.Distance == int.MaxValue)
+                {
+                    neighbor.Distance = current.Distance + 1;
+                    if (neighbor.Distance > speed)
+                        continue;
+                    else
+                    {
+                        neighbor.EnableHighlight(Color.blue);
+                        openSet.Enqueue(neighbor);
+                        walkableTiles.Add(neighbor);
+                    }
+                }
+            }
+
+        }
     }
 
 

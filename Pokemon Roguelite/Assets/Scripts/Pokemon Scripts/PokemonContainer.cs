@@ -11,17 +11,36 @@ public class PokemonContainer : MonoBehaviour
     public Pokemon pokemon;
 
     public int currentLevel = 5;
-
+    public int currentMovement;
     public int currentHealth = 5;
 
     List<PokemonAttack> learnedMoves;
 
-    public SquareCell CurrentTile { get; set; }
+ 
+
+    [SerializeField]
+    SquareCell currentCell;
+    public SquareCell CurrentTile { get { return currentCell; } 
+        set
+        {
+            if (currentCell == value)
+                return;
+
+            currentCell = value;
+
+            transform.position = new Vector3(currentCell.transform.position.x, currentCell.transform.position.y * currentCell.Elevation + transform.position.y , currentCell.transform.position.z);
+            EventHandler.current.TileSelected(currentCell);
+
+        }
+
+    }
     // Start is called before the first frame update
     void Start()
     {
         Destroy(GetComponent<MeshRenderer>());
         Instantiate(pokemon.mesh, transform);
+        CurrentTile = currentCell;
+        currentMovement = pokemon.movementSpeed;
         EventHandler.current.onStart += pokemon.OnStart;
         EventHandler.current.onTileSelected += Selected;
         EventHandler.current.onMovePokemon += Move;
@@ -33,27 +52,20 @@ public class PokemonContainer : MonoBehaviour
     {
     }
 
-    private void Move(Vector3 pos, PokemonContainer pokemon)
+    private void Move(SquareCell selectedCell, PokemonContainer pokemon)
     {
-        if(pokemon == this)
+        if(pokemon == this && selectedCell.Distance <= currentMovement)
         {
-            Vector3 moveVector = pos - transform.position;
-
-            if(moveVector.sqrMagnitude < this.pokemon.movementSpeed * this.pokemon.movementSpeed)
-            {
-                transform.position = pos;
-            }
+            currentMovement -= selectedCell.Distance;
+            CurrentTile = selectedCell;
         }
     }
 
-    private void Selected(Vector3 tilePos)
+    private void Selected(SquareCell selectedTile)
     {
-        Debug.Log("Current Health: " + currentHealth);
-
-
-        if (Mathf.FloorToInt(transform.position.x) == Mathf.FloorToInt(tilePos.x) && Mathf.FloorToInt(transform.position.z) == Mathf.FloorToInt(tilePos.z))
+        if(selectedTile == currentCell)
         {
-            EventHandler.current.ChangeSelectedObject();
+            Debug.Log("Current Health: " + currentHealth);
             EventHandler.current.AllySelected(this);
         }
     }

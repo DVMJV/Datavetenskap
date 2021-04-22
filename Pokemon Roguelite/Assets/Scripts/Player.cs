@@ -19,9 +19,9 @@ public class Player : MonoBehaviour
         selected = pokemon;
     }
 
-    void MovePokemon(Vector3 currentSelectedTile)
+    void MovePokemon(SquareCell selectedCell)
     {
-        EventHandler.current.MovePokemon(currentSelectedTile, selected);   
+        EventHandler.current.MovePokemon(selectedCell, selected);   
     }
 
     // Update is called once per frame

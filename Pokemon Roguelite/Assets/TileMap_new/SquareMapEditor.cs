@@ -31,6 +31,7 @@ public class SquareMapEditor : MonoBehaviour
 
             if(Input.GetMouseButtonDown(0))
             {
+                EventHandler.current.TileSelected(currentCell);
                 EditCell(currentCell);
 
                 if (Input.GetKey(KeyCode.LeftShift) && searchToCell != currentCell)
@@ -71,7 +72,6 @@ public class SquareMapEditor : MonoBehaviour
     public void SetElevation(float elevation)
     {
         activeElevation = (int)elevation;
-        Debug.Log(activeElevation);
     }
 
 

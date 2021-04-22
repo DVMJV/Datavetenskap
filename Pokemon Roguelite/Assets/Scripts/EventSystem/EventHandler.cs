@@ -10,8 +10,8 @@ public class EventHandler : MonoBehaviour
     public event Action onStart;
     public event Action<int> onMoveSelected;
     public event Action onChangeSelectedObject;
-    public event Action<Vector3> onTileSelected;
-    public event Action<Vector3, PokemonContainer> onMovePokemon;
+    public event Action<SquareCell> onTileSelected;
+    public event Action<SquareCell, PokemonContainer> onMovePokemon;
     public event Action<PokemonContainer> onAddedPokemon;
     
     #endregion
@@ -22,19 +22,19 @@ public class EventHandler : MonoBehaviour
     }
 
 
-    public void MovePokemon(Vector3 tilePos, PokemonContainer pokemon)
+    public void MovePokemon(SquareCell selectedCell, PokemonContainer pokemon)
     {
         if(onMovePokemon != null)
         {
-            onMovePokemon(tilePos, pokemon);
+            onMovePokemon(selectedCell, pokemon);
         }
     }
 
-    public void TileSelected(Vector3 tilePos)
+    public void TileSelected(SquareCell selectedCell)
     {
         if(onTileSelected != null)
         {
-            onTileSelected(tilePos);
+            onTileSelected(selectedCell);
         }
     }
 
