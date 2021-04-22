@@ -14,9 +14,7 @@ public class PokemonContainer : MonoBehaviour
     public int currentMovement;
     public int currentHealth = 5;
 
-    List<PokemonAttack> learnedMoves;
-
- 
+    public List<PokemonAttack> learnedMoves = new List<PokemonAttack>();
 
     [SerializeField]
     SquareCell currentCell;
@@ -58,7 +56,10 @@ public class PokemonContainer : MonoBehaviour
         {
             currentMovement -= selectedCell.Distance;
             CurrentTile = selectedCell;
-        }
+    public void LearnMove(PokemonAttack newMove)
+    {
+        //if (!learnedMoves.Contains(newMove))
+            learnedMoves.Add(newMove);
     }
 
     private void Selected(SquareCell selectedTile)

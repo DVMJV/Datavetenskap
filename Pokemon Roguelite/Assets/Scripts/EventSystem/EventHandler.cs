@@ -13,7 +13,10 @@ public class EventHandler : MonoBehaviour
     public event Action<SquareCell> onTileSelected;
     public event Action<SquareCell, PokemonContainer> onMovePokemon;
     public event Action<PokemonContainer> onAddedPokemon;
-    
+    public event Action<int> onTurnStart;
+    public event Action onTurnEnd;
+    public event Action<int> onTurnReset;
+
     #endregion
 
     private void Awake()
@@ -24,57 +27,84 @@ public class EventHandler : MonoBehaviour
 
     public void MovePokemon(SquareCell selectedCell, PokemonContainer pokemon)
     {
-        if(onMovePokemon != null)
-        {
-            onMovePokemon(selectedCell, pokemon);
-        }
+        onMovePokemon?.Invoke(selectedCell, pokemon);
     }
 
     public void TileSelected(SquareCell selectedCell)
     {
-        if(onTileSelected != null)
-        {
-            onTileSelected(selectedCell);
-        }
+        onTileSelected?.Invoke(selectedCell);
     }
 
     public void AllySelected(PokemonContainer pokemon)
     {
-        if(onAllySelected != null)
-        {
-            onAllySelected(pokemon);
-        }
+        onAllySelected?.Invoke(pokemon);
     }
 
     public void ChangeSelectedObject()
     {
-        if(onChangeSelectedObject != null)
-        {
-            onChangeSelectedObject();
-        }
+        onChangeSelectedObject?.Invoke();
     }
 
     public void OnStart()
     {
-        if(onStart != null)
-        {
-            onStart();
-        }
+        onStart?.Invoke();
     }
 
     public void MoveSelected(int id)
     {
-        if(onMoveSelected != null)
-        {
-            onMoveSelected(id);
-        }
+        onMoveSelected?.Invoke(id);
     }
 
     public void AddPokemon(PokemonContainer pokemonContainer)
     {
-        if(onAddedPokemon != null)
+        onAddedPokemon?.Invoke(pokemonContainer);
+    }
+
+    //HUB EVENTS
+
+    public event Action<GameObject> onItemBought;
+    public void ItemBought(GameObject boughtItemPrefab)
+    {
+        if(onItemBought != null)
         {
-            onAddedPokemon(pokemonContainer);
+            onItemBought(boughtItemPrefab);
         }
     }
+
+    public event Action<PokemonContainer> onUpgradeSlotFilled;
+    public void UpgradeSlotFilled(PokemonContainer pokemonContainer)
+    {
+        if (onUpgradeSlotFilled != null)
+        {
+            onUpgradeSlotFilled(pokemonContainer);
+        }
+    }
+
+    public event Action onUpgradeSlotEmpty;
+    public void UpgradeSlotEmpty()
+    {
+        if(onUpgradeSlotEmpty != null)
+        {
+            onUpgradeSlotEmpty();
+        }
+    }
+
+    #region TurnSystem
+
+    public void StartTurn(int id)
+    {
+        onTurnStart?.Invoke(id);
+    }
+
+    public void EndTurn()
+    {
+        onTurnEnd?.Invoke();
+    }
+
+    public void ResetTurn(int id)
+    {
+        onTurnReset?.Invoke(id);
+    }
+
+    #endregion
 }
