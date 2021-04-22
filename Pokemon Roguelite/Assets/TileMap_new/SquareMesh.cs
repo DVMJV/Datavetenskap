@@ -7,20 +7,16 @@ public class SquareMesh : MonoBehaviour
 {
     Mesh squareMesh;
     MeshCollider meshCollider;
-    List<Vector3> verticies;
-    List<int> triangles;
-    List<Color> colors;
+    static List<Vector3> verticies = new List<Vector3>();
+    static List<int> triangles = new List<int>();
+    static List<Color> colors = new List<Color>();
 
 
     private void Awake()
     {
         GetComponent<MeshFilter>().mesh = squareMesh = new Mesh();
         meshCollider = gameObject.AddComponent<MeshCollider>();
-
         squareMesh.name = "Square Mesh";
-        verticies = new List<Vector3>();
-        colors = new List<Color>();
-        triangles = new List<int>();
     }
 
     // Loops trough all the cells triangulating them individually.
@@ -50,8 +46,8 @@ public class SquareMesh : MonoBehaviour
         Vector3 center = cell.transform.localPosition;  // Counter clockwise...
         AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[1], center + SquareMetrics.corners[2]);
         AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[2], center + SquareMetrics.corners[3]);
-        AddTriangleColor(cell.color);
-        AddTriangleColor(cell.color); // Done twice since it is a square.
+        AddTriangleColor(cell.Color);
+        AddTriangleColor(cell.Color); // Done twice since it is a square.
 
 
         for (int i = 0; i < 4; i++)
@@ -89,7 +85,7 @@ public class SquareMesh : MonoBehaviour
                     center + SquareMetrics.corners[3] - elevationDifference,
                     center + SquareMetrics.corners[0] - elevationDifference);
                 }
-                AddQuadColor(cell.color);
+                AddQuadColor(cell.Color);
 
                
             }
@@ -125,7 +121,7 @@ public class SquareMesh : MonoBehaviour
                     neighborCenter + SquareMetrics.corners[2],
                     neighborCenter + SquareMetrics.corners[1]);
                 }
-                AddQuadColor(cell.color);
+                AddQuadColor(cell.Color);
             }
         }
     }

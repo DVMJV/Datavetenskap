@@ -20,6 +20,11 @@ public class SquareMapEditor : MonoBehaviour
         }
     }
 
+    public void ShowUI(bool visible) 
+    {
+        squareGrid.ShowUI(visible);
+    }
+
     void HandleInput()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -32,9 +37,8 @@ public class SquareMapEditor : MonoBehaviour
 
     void EditCell(SquareCell cell)
     {
-        cell.color = activeColor;
+        cell.Color = activeColor;
         cell.Elevation = activeElevation;
-       // squareGrid.Refresh();
     }
 
     public void SelectColor(int index) 

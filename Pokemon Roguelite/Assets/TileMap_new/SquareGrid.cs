@@ -31,6 +31,12 @@ public class SquareGrid : MonoBehaviour
         CreateCells();
     }
 
+    public void ShowUI(bool visible) 
+    {
+        for (int i = 0; i < chunks.Length; i++)
+            chunks[i].ShowUI(visible);
+    }
+
     void CreateCells() 
     {
         cells = new SquareCell[cellCountZ * cellCountX];
@@ -57,11 +63,6 @@ public class SquareGrid : MonoBehaviour
         }
     }
 
-    //private void Start()
-    //{
-    //    squareMesh.Triangulate(cells);
-    //}
-
     public SquareCell GetCell(Vector3 position, Color color) 
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
@@ -70,11 +71,6 @@ public class SquareGrid : MonoBehaviour
         Debug.Log("Hit: " + coordinates.ToString());
         return cells[index];     
     }
-
-    //public void Refresh()
-    //{
-    //    squareMesh.Triangulate(cells);
-    //}
 
     void CreateCell(int x, int z, int i)
     {
@@ -87,7 +83,7 @@ public class SquareGrid : MonoBehaviour
         //cell.transform.SetParent(transform, false);
         cell.transform.localPosition = position;
         cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z); // Create struct with coordinates. Might need adjustment.
-        cell.color = defaultColor;
+        cell.Color = defaultColor;
 
         if (x > 0)
             cell.SetNeighbor(SquareDirection.LEFT, cells[i - 1]);
