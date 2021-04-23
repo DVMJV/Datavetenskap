@@ -35,7 +35,7 @@ public class UpdateUpgradeButtons : MonoBehaviour
                 upgradeButtons.Add(go.GetComponent<Button>());
             }
 
-            if (slottedPokemon.learnedMoves.Contains(slottedPokemonTemplate.attackToLearn[i]))
+            if (slottedPokemon.learnedMoves.Contains(new PokemonAttackContainer(slottedPokemonTemplate.attackToLearn[i], pokemonContainer)))
             {
                 upgradeButtons[i].gameObject.SetActive(false);
                 continue;

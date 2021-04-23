@@ -50,6 +50,7 @@ public class SquareGrid : MonoBehaviour
         squareMesh.Triangulate(cells);
         EventHandler.current.onAllySelected +=  FindAllPossibleTiles;
         EventHandler.current.onTurnEnd += ClearHighlights;
+        EventHandler.current.onMovePokemon += FindPath;
     }
 
     public SquareCell GetCell(Vector3 position, Color color) 
@@ -70,20 +71,20 @@ public class SquareGrid : MonoBehaviour
         SearchForTiles(selectedPokemon.currentMovement, selectedPokemon.CurrentTile);
     }
 
-    public void FindPath(SquareCell fromCell, SquareCell toCell)
+    public void FindPath(SquareCell fromCell, PokemonContainer pokemon)
     {
-        SearchForPath(fromCell, toCell);
+        SearchForPath(fromCell, pokemon);
     }
 
     void SearchForTiles(int speed, SquareCell currentTile)
     {
-
+        Debug.Log("Starting to find all tiles");
         for (int i = 0; i < cells.Length; i++)
         {
             cells[i].Distance = int.MaxValue;
             cells[i].DisableHighlight();
+            walkableTiles.Clear();
         }
-
 
         Queue<SquareCell> openSet = new Queue<SquareCell>();
         currentTile.Distance = 0;
@@ -115,22 +116,25 @@ public class SquareGrid : MonoBehaviour
                     }
                 }
             }
-
         }
+
+        Debug.Log("All tiles found");
     }
 
-
-    void SearchForPath(SquareCell fromCell, SquareCell toCell)
+    void SearchForPath(SquareCell toCell, PokemonContainer pokemon)
     {
+        SquareCell fromCell = pokemon.currentCell;
+        int speed = pokemon.currentMovement;
+
+        if (!walkableTiles.Contains(toCell))
+            return;
+
         for (int i = 0; i < cells.Length; i++)
         {
             cells[i].Distance = int.MaxValue;
-            cells[i].DisableHighlight();
         }
 
         fromCell.Distance = 0;
-        fromCell.EnableHighlight(Color.blue);
-        toCell.EnableHighlight(Color.red);
 
         SquareCellPriorityQueue openSet = new SquareCellPriorityQueue();
         openSet.Enqueue(fromCell);
@@ -138,23 +142,20 @@ public class SquareGrid : MonoBehaviour
         while(openSet.Count > 0)
         {
             SquareCell current = openSet.Dequeue();
-
+            
             if (current == toCell)
             {
-                current = current.PathFrom;
-                while(current != fromCell)
-                {
-                    current.EnableHighlight(Color.black);
-                    current = current.PathFrom;
-                }
+                Debug.Log("Path Found");
+                ConstructPath(toCell, pokemon);
                 break;
             }
 
             for(SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
             {
                 SquareCell neighbor = current.GetNeighbor(d);
-                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1)
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1 || !walkableTiles.Contains(neighbor))
                     continue;
+
                 else if(neighbor.Distance == int.MaxValue)
                 {
                     neighbor.Distance = current.Distance + 1;
@@ -171,8 +172,22 @@ public class SquareGrid : MonoBehaviour
                 }
             }
         }
+
     }
 
+    void ConstructPath(SquareCell toCell, PokemonContainer pokemon)
+    {
+        Debug.Log("Constructing Path");
+        Stack<SquareCell> stack = new Stack<SquareCell>();
+        while (toCell != pokemon.CurrentTile)
+        {
+            stack.Push(toCell);
+            toCell = toCell.PathFrom;
+        }
+
+        EventHandler.current.PathFound(stack, pokemon);
+
+    }
     void CreateCell(int x, int z, int i)
     {
         Vector3 position;

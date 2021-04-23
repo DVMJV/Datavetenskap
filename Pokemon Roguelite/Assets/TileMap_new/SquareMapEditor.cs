@@ -33,25 +33,6 @@ public class SquareMapEditor : MonoBehaviour
             {
                 EventHandler.current.TileSelected(currentCell);
                 EditCell(currentCell);
-
-                if (Input.GetKey(KeyCode.LeftShift) && searchToCell != currentCell)
-                {
-                    if (searchFromCell)
-                        searchFromCell.DisableHighlight();
-                    searchFromCell = currentCell;
-                    searchFromCell.EnableHighlight(Color.blue);
-
-                    if (searchToCell)
-                    {
-                        squareGrid.FindPath(searchFromCell, searchToCell);
-                    }
-                }
-            }
-            
-            if(searchFromCell && searchFromCell != currentCell)
-            {
-                searchToCell = currentCell;
-                squareGrid.FindPath(searchFromCell, searchToCell);
             }
         }
     }
@@ -60,7 +41,6 @@ public class SquareMapEditor : MonoBehaviour
     {
         cell.color = activeColor;
         cell.Elevation = activeElevation;
-      //  Debug.Log(activeElevation);
         squareGrid.Refresh();
     }
 

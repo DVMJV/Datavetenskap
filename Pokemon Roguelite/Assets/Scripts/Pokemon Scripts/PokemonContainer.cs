@@ -14,10 +14,10 @@ public class PokemonContainer : MonoBehaviour
     public int currentMovement;
     public int currentHealth = 5;
 
-    public List<PokemonAttack> learnedMoves = new List<PokemonAttack>();
+    public List<PokemonAttackContainer> learnedMoves = new List<PokemonAttackContainer>();
 
     [SerializeField]
-    SquareCell currentCell;
+    public SquareCell currentCell;
     public SquareCell CurrentTile { get { return currentCell; } 
         set
         {
@@ -29,8 +29,8 @@ public class PokemonContainer : MonoBehaviour
             transform.position = new Vector3(currentCell.transform.position.x, currentCell.transform.position.y * currentCell.Elevation + transform.position.y , currentCell.transform.position.z);
 
         }
-
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,8 +40,7 @@ public class PokemonContainer : MonoBehaviour
         currentMovement = pokemon.movementSpeed;
         EventHandler.current.onStart += pokemon.OnStart;
         EventHandler.current.onTileSelected += Selected;
-        EventHandler.current.onMovePokemon += Move;
-        EventHandler.current.OnStart();
+        EventHandler.current.onPathFound += Move;
     }
 
     // Update is called once per frame
@@ -55,26 +54,41 @@ public class PokemonContainer : MonoBehaviour
     }
 
 
-    private void Move(SquareCell selectedCell, PokemonContainer pokemon)
+    private void Move(Stack<SquareCell> path, PokemonContainer pokemon)
     {
-        if (pokemon == this && selectedCell.Distance <= currentMovement)
+        if (pokemon == this)
         {
-            Debug.Log("Current Movement: " + currentMovement + "Distance: " + selectedCell.Distance);
-            currentMovement -= selectedCell.Distance;
-            CurrentTile = selectedCell;
+            StartCoroutine(MoveEnumerator(path));
         }
+    }
+
+    IEnumerator MoveEnumerator(Stack<SquareCell> path)
+    {
+        WaitForSeconds delay = new WaitForSeconds(1 / 10f);
+
+        while (path.Count > 0)
+        {
+            SquareCell moveToCell = path.Pop();
+            yield return delay;
+            currentMovement -= 1;
+            CurrentTile = moveToCell;
+        }
+
+        EventHandler.current.AllySelected(this);
     }
 
     public void LearnMove(PokemonAttack newMove)
     {
-        //if (!learnedMoves.Contains(newMove))
-            learnedMoves.Add(newMove);
+        PokemonAttackContainer pokemonAttackContainer = new PokemonAttackContainer(newMove, this);
+        if (!learnedMoves.Contains(pokemonAttackContainer))
+            learnedMoves.Add(pokemonAttackContainer);
     }
 
     private void Selected(SquareCell selectedTile)
     {
         if(selectedTile == currentCell)
         {
+            Debug.Log("Set selected tile: " + selectedTile.coordinates.ToString());
             EventHandler.current.AllySelected(this);
         }
     }

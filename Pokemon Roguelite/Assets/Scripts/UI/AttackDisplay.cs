@@ -11,7 +11,7 @@ public class AttackDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        EventHandler.current.onAllySelected += AddAttacks;
+      //  EventHandler.current.onAllySelected += AddAttacks;
         EventHandler.current.onChangeSelectedObject += RemoveAttacks;
     }
 

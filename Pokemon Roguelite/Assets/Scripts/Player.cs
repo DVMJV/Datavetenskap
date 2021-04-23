@@ -44,19 +44,25 @@ public class Player : MonoBehaviour
             Debug.Log("My Reset");
         }
     }
+
     void SetSelected(PokemonContainer pokemon)
     {
         if(turn)
         {
             selected = pokemon;
         }
+
+        Debug.Log("SetSelected Path finished");
     }
 
     void MovePokemon(SquareCell selectedCell)
     {
         if (turn)
         {
-            EventHandler.current.MovePokemon(selectedCell, selected);   
+            if(selected != null)
+            {
+                EventHandler.current.MovePokemon(selectedCell, selected);   
+            }
         }
     }
 

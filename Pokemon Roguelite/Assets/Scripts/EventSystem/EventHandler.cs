@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EventHandler : MonoBehaviour
@@ -16,12 +17,17 @@ public class EventHandler : MonoBehaviour
     public event Action<int> onTurnStart;
     public event Action onTurnEnd;
     public event Action<int> onTurnReset;
-
+    public event Action<Stack<SquareCell>, PokemonContainer> onPathFound;
     #endregion
 
     private void Awake()
     {
         current = this;
+    }
+
+    public void PathFound(Stack<SquareCell> path, PokemonContainer pokemon)
+    {
+        onPathFound?.Invoke(path, pokemon);
     }
 
 
