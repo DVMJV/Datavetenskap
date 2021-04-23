@@ -6,11 +6,12 @@ using UnityEngine.EventSystems;
 public class PokemonAttackContainer : MonoBehaviour, IPointerDownHandler
 {
 
+    PokemonAttack attack;
+    PokemonContainer pokemon;
 
-    public int id;
     public void OnPointerDown(PointerEventData eventData)
     {
-        EventHandler.current.MoveSelected(id);
+        EventHandler.current.MoveSelected(pokemon, attack);
     }
 
 

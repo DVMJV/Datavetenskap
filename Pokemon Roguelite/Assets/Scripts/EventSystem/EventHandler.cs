@@ -8,7 +8,7 @@ public class EventHandler : MonoBehaviour
     #region Events
     public event Action<PokemonContainer> onAllySelected;
     public event Action onStart;
-    public event Action<int> onMoveSelected;
+    public event Action<PokemonContainer, PokemonAttack> onMoveSelected;
     public event Action onChangeSelectedObject;
     public event Action<SquareCell> onTileSelected;
     public event Action<SquareCell, PokemonContainer> onMovePokemon;
@@ -50,9 +50,9 @@ public class EventHandler : MonoBehaviour
         onStart?.Invoke();
     }
 
-    public void MoveSelected(int id)
+    public void MoveSelected(PokemonContainer fromPokemon, PokemonAttack attack)
     {
-        onMoveSelected?.Invoke(id);
+        onMoveSelected?.Invoke(fromPokemon, attack);
     }
 
     public void AddPokemon(PokemonContainer pokemonContainer)

@@ -10,11 +10,19 @@ public abstract class PokemonAttack : ScriptableObject
     public Type type;
     public int id;
 
+    public enum SecondaryEffect
+    {
+        STUN,
+        KNOCKBACK,
+        BLEED,
+        NONE
+    }
+
     public abstract void Attack(int id);
     public void ResetEvent()
     {
         id = 0;
-        EventHandler.current.onMoveSelected -= Attack;
+       // EventHandler.current.onMoveSelected -= Attack;
     }
     
 }

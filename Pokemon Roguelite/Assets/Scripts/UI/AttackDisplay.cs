@@ -37,10 +37,10 @@ public class AttackDisplay : MonoBehaviour
             if(item.Value <= pokemon.currentLevel)
             {
                 attackDisplayPrefab.GetComponentInChildren<Text>().text = item.Key.attackName;
-                attackDisplayPrefab.GetComponent<PokemonAttackContainer>().id = i;
+                //attackDisplayPrefab.GetComponent<PokemonAttackContainer>().id = i;
                 Instantiate(attackDisplayPrefab, new Vector3(i * 100, 50, 0), Quaternion.identity, gameObject.transform);
                 item.Key.id = i;
-                EventHandler.current.onMoveSelected += item.Key.Attack;
+                //EventHandler.current.onMoveSelected += item.Key.Attack;
             }
             i++;
         }

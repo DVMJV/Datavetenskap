@@ -27,7 +27,6 @@ public class PokemonContainer : MonoBehaviour
             currentCell = value;
 
             transform.position = new Vector3(currentCell.transform.position.x, currentCell.transform.position.y * currentCell.Elevation + transform.position.y , currentCell.transform.position.z);
-            EventHandler.current.TileSelected(currentCell);
 
         }
 
@@ -52,7 +51,6 @@ public class PokemonContainer : MonoBehaviour
 
     public void Reset()
     {
-        Debug.Log("owo");
         currentMovement = pokemon.movementSpeed;
     }
 
@@ -61,6 +59,7 @@ public class PokemonContainer : MonoBehaviour
     {
         if (pokemon == this && selectedCell.Distance <= currentMovement)
         {
+            Debug.Log("Current Movement: " + currentMovement + "Distance: " + selectedCell.Distance);
             currentMovement -= selectedCell.Distance;
             CurrentTile = selectedCell;
         }
@@ -76,7 +75,6 @@ public class PokemonContainer : MonoBehaviour
     {
         if(selectedTile == currentCell)
         {
-            Debug.Log("Current Health: " + currentHealth);
             EventHandler.current.AllySelected(this);
         }
     }
