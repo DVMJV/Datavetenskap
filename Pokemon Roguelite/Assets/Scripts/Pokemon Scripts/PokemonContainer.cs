@@ -64,6 +64,7 @@ public class PokemonContainer : MonoBehaviour
 
     IEnumerator MoveEnumerator(Stack<SquareCell> path)
     {
+        Player.AllowedToEndTurn = false;
         WaitForSeconds delay = new WaitForSeconds(1 / 10f);
 
         while (path.Count > 0)
@@ -75,6 +76,7 @@ public class PokemonContainer : MonoBehaviour
         }
 
         EventHandler.current.AllySelected(this);
+        Player.AllowedToEndTurn = true;
     }
 
     public void LearnMove(PokemonAttack newMove)

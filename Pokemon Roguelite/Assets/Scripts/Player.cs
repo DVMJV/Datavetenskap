@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     int id;
 
+    public static bool AllowedToEndTurn { get; set; }
+
     private PokemonContainer selected;
 
     [SerializeField]
@@ -34,7 +36,7 @@ public class Player : MonoBehaviour
     }
     void TurnEnd(int id)
     {
-        if(this.id == id)
+        if(this.id == id && AllowedToEndTurn)
         {
             turn = false;
             foreach (PokemonContainer pokemon in pokemons)
