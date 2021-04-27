@@ -7,9 +7,12 @@ public class SquareMesh : MonoBehaviour
 {
     Mesh squareMesh;
     MeshCollider meshCollider;
+    public bool useTerrainTypes;
+
     static List<Vector3> verticies = new List<Vector3>();
     static List<int> triangles = new List<int>();
     static List<Color> colors = new List<Color>();
+
 
 
     private void Awake()
