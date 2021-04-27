@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,13 @@ public class SquareMesh : MonoBehaviour
 {
     Mesh squareMesh;
     MeshCollider meshCollider;
-    public bool useTerrainTypes;
 
     static List<Vector3> verticies = new List<Vector3>();
     static List<int> triangles = new List<int>();
     static List<Color> colors = new List<Color>();
 
+    public bool useTerrainTypes;
+    [NonSerialized] List<Vector3> verticiesTerrain, terrainTypes;
 
 
     private void Awake()
