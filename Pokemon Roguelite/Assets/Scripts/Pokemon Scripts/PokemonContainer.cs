@@ -26,7 +26,7 @@ public class PokemonContainer : MonoBehaviour
 
             currentCell = value;
 
-            transform.position = new Vector3(currentCell.transform.position.x, currentCell.transform.position.y * currentCell.Elevation + transform.position.y , currentCell.transform.position.z);
+            transform.position = new Vector3(currentCell.transform.position.x, currentCell.transform.position.y + currentCell.Elevation, currentCell.transform.position.z);
 
         }
     }
@@ -46,6 +46,7 @@ public class PokemonContainer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
 
     public void Reset()

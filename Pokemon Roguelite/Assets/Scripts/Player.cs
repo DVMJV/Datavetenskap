@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
 
     private PokemonContainer selected;
 
+
     [SerializeField]
     private List<PokemonContainer> pokemons;
     bool turn;
