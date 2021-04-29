@@ -6,7 +6,6 @@ public class SquareGridChunk : MonoBehaviour
     SquareCell[] cells;
     public SquareMesh terrain;
     Canvas gridCanvas;
-    bool enabled;
 
     private void Awake()
     {
