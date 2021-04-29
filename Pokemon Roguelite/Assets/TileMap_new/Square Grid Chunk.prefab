@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 4311048401631019633}
   - component: {fileID: 1054465021295274947}
   m_Layer: 0
-  m_Name: Square Mesh
+  m_Name: Terrain
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,6 +240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b44925f5b645040a11bf8a999e939c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  terrain: {fileID: 1054465021295274947}
 --- !u!1001 &1804525753393486230
 PrefabInstance:
   m_ObjectHideFlags: 0
