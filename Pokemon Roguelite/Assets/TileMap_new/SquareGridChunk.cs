@@ -54,9 +54,11 @@ public class SquareGridChunk : MonoBehaviour
         Vector3 center = cell.transform.localPosition;  // Counter clockwise...
         terrain.AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[1], center + SquareMetrics.corners[2]);
         terrain.AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[2], center + SquareMetrics.corners[3]);
-        
-        terrain.AddTriangleColor(cell.Color);
-        terrain.AddTriangleColor(cell.Color); // Done twice since it is a square.
+
+        //terrain.AddTriangleColor(cell.Color);
+        //terrain.AddTriangleColor(cell.Color); // Done twice since it is a square.
+        terrain.AddTriangleTerrainTypes(new Vector3(0,0,0)); // works the same as add color.
+        terrain.AddTriangleTerrainTypes(new Vector3(0,0,0));
 
         for (int i = 0; i < 4; i++)
         {
