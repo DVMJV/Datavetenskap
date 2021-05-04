@@ -10,22 +10,16 @@ public class SquareGrid : MonoBehaviour
     SquareCell[] cells;
 
     public Text cellLabelPrefab;
-    //Canvas gridCanvas;
 
     public SquareGridChunk chunkPrefab;
     SquareGridChunk[] chunks;
 
-    //SquareMesh squareMesh;
     MeshCollider meshCollider;
 
-    //public Color defaultColor = Color.white;
     public float defaultTerrainIndex = 0;
 
     private void Awake()
     {
-        //gridCanvas = GetComponentInChildren<Canvas>();
-        //squareMesh = GetComponentInChildren<SquareMesh>();
-
         cellCountX = chunkCountX * SquareMetrics.chunkSizeX;
         cellCountZ = chunkCountZ * SquareMetrics.chunkSizeZ;
         CreateChunks();
@@ -81,11 +75,8 @@ public class SquareGrid : MonoBehaviour
         position.z = z * 10f;
 
         SquareCell cell = cells[i] = Instantiate<SquareCell>(cellPrefab);
-        //cell.transform.SetParent(transform, false);
         cell.transform.localPosition = position;
         cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z); // Create struct with coordinates. Might need adjustment.
-                                                                          //cell.Color = defaultColor;
-        // For testing purposes, should be default color here.
         cell.TerrainTypeIndex = Random.Range(0, 4);
 
         if (x > 0)
@@ -96,11 +87,9 @@ public class SquareGrid : MonoBehaviour
         }
 
         Text label = Instantiate<Text>(cellLabelPrefab);
-        //label.rectTransform.SetParent(gridCanvas.transform, false);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
         label.text = cell.coordinates.ToStringOnSeparateLines();
         cell.uiRect = label.rectTransform;
-
         AddCellToChunk(x, z, cell);
     }
 

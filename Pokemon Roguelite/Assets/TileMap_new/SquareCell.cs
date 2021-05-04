@@ -13,7 +13,6 @@ public class SquareCell : MonoBehaviour
 
     public SquareCoordinates coordinates;
 
-    // added
     float terrainTypeIndex;
     public float TerrainTypeIndex
     {

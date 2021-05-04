@@ -55,11 +55,6 @@ public class SquareGridChunk : MonoBehaviour
         terrain.AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[1], center + SquareMetrics.corners[2]);
         terrain.AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[2], center + SquareMetrics.corners[3]);
 
-        // Works but old.
-        //terrain.AddTriangleColor(cell.Color);
-        //terrain.AddTriangleColor(cell.Color); // Done twice since it is a square.
-
-        // Works but gives errors, new.
         Vector3 types;
         types.x = types.y = types.z = cell.TerrainTypeIndex;
         terrain.AddTriangleTerrainTypes(types);
@@ -100,7 +95,6 @@ public class SquareGridChunk : MonoBehaviour
                     center + SquareMetrics.corners[3] - elevationDifference,
                     center + SquareMetrics.corners[0] - elevationDifference);
                 }
-                //terrain.AddQuadColor(cell.Color);
                 terrain.AddQuadTerrainTypes(types);
             }
             else if (cell.Elevation - neighbor.Elevation > 0)
@@ -134,7 +128,6 @@ public class SquareGridChunk : MonoBehaviour
                     neighborCenter + SquareMetrics.corners[2],
                     neighborCenter + SquareMetrics.corners[1]);
                 }
-               // terrain.AddQuadColor(cell.Color);
                 terrain.AddQuadTerrainTypes(types);
             }
         }
