@@ -13,7 +13,7 @@ public class SquareMapEditor : MonoBehaviour
 
     private void Awake()
     {
-        SelectTerrainIndex(0);
+        SelectTerrainIndex( );
     }
 
     private void Update()
@@ -43,7 +43,6 @@ public class SquareMapEditor : MonoBehaviour
     {
         //cell.Color = Color;
         cell.terrainTypeIndex = activeTerrainIndex;
-        Debug.Log(cell.terrainTypeIndex);
         cell.Elevation = activeElevation;
     }
 
