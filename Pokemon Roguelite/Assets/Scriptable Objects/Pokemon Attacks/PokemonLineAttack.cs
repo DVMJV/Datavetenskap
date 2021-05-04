@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PokemonLineAttack : PokemonAttack
 {
-    public override void Attack(int id)
+    public override void Attack()
     {
-        // Line attack
     }
 }

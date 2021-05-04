@@ -35,11 +35,11 @@ public class UpdateUpgradeButtons : MonoBehaviour
                 upgradeButtons.Add(go.GetComponent<Button>());
             }
 
-            if (slottedPokemon.learnedMoves.Contains(new PokemonAttackContainer(slottedPokemonTemplate.attackToLearn[i], pokemonContainer)))
-            {
-                upgradeButtons[i].gameObject.SetActive(false);
-                continue;
-            }
+            //if (slottedPokemon.learnedMoves.Contains(new PokemonAttackContainer(slottedPokemonTemplate.attackToLearn[i], pokemonContainer)))
+            //{
+            //    upgradeButtons[i].gameObject.SetActive(false);
+            //    continue;
+            //}
 
             upgradeButtons[i].GetComponent<UpgradeSlot>().SetUpUpgradeSlot(slottedPokemon, slottedPokemonTemplate.attackToLearn[i]);
 

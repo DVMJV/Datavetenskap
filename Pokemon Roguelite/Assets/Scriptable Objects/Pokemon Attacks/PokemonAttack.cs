@@ -9,6 +9,7 @@ public abstract class PokemonAttack : ScriptableObject
     public int range;
     public Type type;
     public int id;
+    public int cooldown;
 
     public enum SecondaryEffect
     {
@@ -18,7 +19,7 @@ public abstract class PokemonAttack : ScriptableObject
         NONE
     }
 
-    public abstract void Attack(int id);
+    public abstract void Attack();
     public void ResetEvent()
     {
         id = 0;
