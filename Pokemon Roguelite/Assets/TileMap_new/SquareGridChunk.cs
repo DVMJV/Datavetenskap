@@ -61,7 +61,7 @@ public class SquareGridChunk : MonoBehaviour
 
         // Works but gives errors, new.
         Vector3 types;
-        types.x = types.y = types.z = cell.terrainTypeIndex;
+        types.x = types.y = types.z = cell.TerrainTypeIndex;
         terrain.AddTriangleTerrainTypes(types);
         terrain.AddTriangleTerrainTypes(types);
 

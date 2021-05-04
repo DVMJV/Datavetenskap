@@ -13,23 +13,20 @@ public class SquareCell : MonoBehaviour
 
     public SquareCoordinates coordinates;
 
-    //public Color Color
-    //{
-    //    get { return color; }
-    //    set
-    //    {
-    //        if (color == value)
-    //            return;
-
-    //        color = value;
-    //        Refresh();
-    //    }
-    //}
-    //Color color;
-
     // added
-    public float terrainTypeIndex;
+    float terrainTypeIndex;
+    public float TerrainTypeIndex
+    {
+        get { return terrainTypeIndex; }
+        set
+        {
+            if (terrainTypeIndex == value)
+                return;
 
+            terrainTypeIndex = value;
+            Refresh();
+        }
+    }
 
     public int Elevation { get { return elevation; } 
         set

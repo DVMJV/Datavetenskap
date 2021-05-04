@@ -38,5 +38,6 @@ Material:
     m_Floats:
     - Terrain_Index: 1
     - Vector1_462ddbfd9a7a42bf85332de3e77216dd: 0
+    - terrainTypeIndexRef: 0
     m_Colors: []
   m_BuildTextureStacks: []

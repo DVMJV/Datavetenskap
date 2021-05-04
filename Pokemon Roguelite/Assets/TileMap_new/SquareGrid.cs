@@ -86,7 +86,7 @@ public class SquareGrid : MonoBehaviour
         cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z); // Create struct with coordinates. Might need adjustment.
                                                                           //cell.Color = defaultColor;
         // For testing purposes, should be default color here.
-        cell.terrainTypeIndex = Random.Range(0, 4);
+        cell.TerrainTypeIndex = Random.Range(0, 4);
 
         if (x > 0)
             cell.SetNeighbor(SquareDirection.LEFT, cells[i - 1]);
