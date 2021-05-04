@@ -37,17 +37,14 @@ public class SquareMesh : MonoBehaviour
 
     public void Apply()
     {
+        squareMesh.SetVertices(verticies);
+        ListPool<Vector3>.Add(verticies);
+
         if (useTerrainTypes)
         {
             squareMesh.SetUVs(2, terrainTypes);
-         //   Debug.Log("Vert count: " + verticies.Count);
-         //   Debug.Log("UV count: " + squareMesh.uv3.Length);
-            //     squareMesh.SetUVs(2, verticies);
             ListPool<Vector3>.Add(terrainTypes);
         }
-
-        squareMesh.SetVertices(verticies);
-        ListPool<Vector3>.Add(verticies);
 
         squareMesh.SetTriangles(triangles, 0);
         ListPool<int>.Add(triangles);

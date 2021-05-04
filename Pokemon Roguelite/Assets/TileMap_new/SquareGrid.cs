@@ -18,7 +18,8 @@ public class SquareGrid : MonoBehaviour
     //SquareMesh squareMesh;
     MeshCollider meshCollider;
 
-    public Color defaultColor = Color.white;
+    //public Color defaultColor = Color.white;
+    public float defaultTerrainIndex = 0;
 
     private void Awake()
     {
@@ -63,12 +64,12 @@ public class SquareGrid : MonoBehaviour
         }
     }
 
-    public SquareCell GetCell(Vector3 position, Color color) 
+    public SquareCell GetCell(Vector3 position) 
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
         int index = ((coordinates.X + (coordinates.Z * cellCountX)));
-        Debug.Log("Hit: " + coordinates.ToString());
+       // Debug.Log("Hit: " + coordinates.ToString());
         return cells[index];     
     }
 
@@ -83,7 +84,9 @@ public class SquareGrid : MonoBehaviour
         //cell.transform.SetParent(transform, false);
         cell.transform.localPosition = position;
         cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z); // Create struct with coordinates. Might need adjustment.
-        cell.Color = defaultColor;
+                                                                          //cell.Color = defaultColor;
+        // For testing purposes, should be default color here.
+        cell.terrainTypeIndex = Random.Range(0, 4);
 
         if (x > 0)
             cell.SetNeighbor(SquareDirection.LEFT, cells[i - 1]);
