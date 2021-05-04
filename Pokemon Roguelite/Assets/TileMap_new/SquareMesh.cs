@@ -9,12 +9,11 @@ public class SquareMesh : MonoBehaviour
     MeshCollider meshCollider;
 
     [NonSerialized] List<Vector3> verticies;
-    [NonSerialized] List<Color> colors;
+   // [NonSerialized] List<Color> colors;
     [NonSerialized] List<int> triangles;
 
     public bool useTerrainTypes;
     [NonSerialized] List<Vector3> terrainTypes;
-
 
     private void Awake()
     {
@@ -27,12 +26,13 @@ public class SquareMesh : MonoBehaviour
     {
         squareMesh.Clear();
 
-        if (useTerrainTypes)
+        if (useTerrainTypes) {
             terrainTypes = ListPool<Vector3>.Get();
+        }
 
         verticies = ListPool<Vector3>.Get();
-        colors = ListPool<Color>.Get();
         triangles = ListPool<int>.Get();
+       // colors = ListPool<Color>.Get();
     }
 
     public void Apply()
@@ -40,17 +40,19 @@ public class SquareMesh : MonoBehaviour
         if (useTerrainTypes)
         {
             squareMesh.SetUVs(2, terrainTypes);
+         //   Debug.Log("Vert count: " + verticies.Count);
+         //   Debug.Log("UV count: " + squareMesh.uv3.Length);
+            //     squareMesh.SetUVs(2, verticies);
             ListPool<Vector3>.Add(terrainTypes);
         }
 
         squareMesh.SetVertices(verticies);
         ListPool<Vector3>.Add(verticies);
 
-        squareMesh.SetColors(colors);
-        ListPool<Color>.Add(colors);
-
         squareMesh.SetTriangles(triangles, 0);
         ListPool<int>.Add(triangles);
+        //squareMesh.SetColors(colors);
+        //ListPool<Color>.Add(colors);
 
         squareMesh.RecalculateNormals();
         meshCollider.sharedMesh = squareMesh;
@@ -68,12 +70,12 @@ public class SquareMesh : MonoBehaviour
         triangles.Add(vertexIndex + 2);
     }
 
-    public void AddTriangleColor(Color color) 
-    {
-        colors.Add(color);
-        colors.Add(color);
-        colors.Add(color);
-    }
+    //public void AddTriangleColor(Color color) 
+    //{
+    //    colors.Add(color);
+    //    colors.Add(color);
+    //    colors.Add(color);
+    //}
 
     public void AddTriangleTerrainTypes(Vector3 types) 
     {
@@ -101,20 +103,20 @@ public class SquareMesh : MonoBehaviour
         triangles.Add(vertexIndex + 0);
     }
 
-    public void AddQuadColor(Color c)
-    {
-        colors.Add(c);
-        colors.Add(c);
-        colors.Add(c);
-        colors.Add(c);
-    }
+    //public void AddQuadColor(Color c)
+    //{
+    //    colors.Add(c);
+    //    colors.Add(c);
+    //    colors.Add(c);
+    //    colors.Add(c);
+    //}
 
-    public void AddQuadTerrainTypes(Vector3 type) 
+    public void AddQuadTerrainTypes(Vector3 types) 
     {
-        terrainTypes.Add(type);
-        terrainTypes.Add(type);
-        terrainTypes.Add(type);
-        terrainTypes.Add(type);
+        terrainTypes.Add(types);
+        terrainTypes.Add(types);
+        terrainTypes.Add(types);
+        terrainTypes.Add(types);
     }
 
 

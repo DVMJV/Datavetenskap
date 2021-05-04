@@ -27,6 +27,9 @@ public class SquareCell : MonoBehaviour
     }
     Color color;
 
+    // added
+    public int terrainTypeIndex = 1;
+
 
     public int Elevation { get { return elevation; } 
         set
