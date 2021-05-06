@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class AttackContainer
 {
-
     PokemonAttack attack;
     int cooldown;
 
@@ -29,4 +28,8 @@ public class AttackContainer
         attack.Attack();
     }
 
+    public string GetName()
+    {
+        return attack.name;
+    }
 }

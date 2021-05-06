@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 8255725687737187320}
   - component: {fileID: 8255725687737187321}
   - component: {fileID: 8255725687737187324}
-  - component: {fileID: 2456763506225467494}
   - component: {fileID: -7942924259401246646}
   m_Layer: 0
   m_Name: MetalStarter#1
@@ -56,23 +55,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pokemon: {fileID: 11400000, guid: a325285083791ea478678dce0900f75b, type: 2}
   currentLevel: 5
+  currentMovement: 0
   currentHealth: 5
---- !u!54 &2456763506225467494
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8255725687737187325}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  currentCell: {fileID: 0}
+  attackDisplay: {fileID: 358351451037823559, guid: e00e8f02ab6677a4b9f25d265c71f68e, type: 3}
+  attackDisplayContainer: {fileID: 0}
 --- !u!23 &-7942924259401246646
 MeshRenderer:
   m_ObjectHideFlags: 0

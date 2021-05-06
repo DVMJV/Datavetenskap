@@ -17,7 +17,16 @@ public class PokemonContainer : MonoBehaviour
     [SerializeField]
     public SquareCell currentCell;
 
+    [SerializeField]
+    GameObject attackDisplay;
 
+    [SerializeField]
+    GameObject attackDisplayContainer;
+
+    List<AttackContainer> learnedMoves = new List<AttackContainer>();
+
+    [SerializeField]
+    PokemonAttack[] temp;
     public SquareCell CurrentTile { get { return currentCell; } 
         set
         {
@@ -41,6 +50,11 @@ public class PokemonContainer : MonoBehaviour
         EventHandler.current.onStart += pokemon.OnStart;
         EventHandler.current.onTileSelected += Selected;
         EventHandler.current.onPathFound += Move;
+
+        foreach(PokemonAttack attack in temp)
+        {
+            LearnMove(attack);
+        }
     }
 
     // Update is called once per frame
@@ -82,6 +96,7 @@ public class PokemonContainer : MonoBehaviour
 
     public void LearnMove(PokemonAttack newMove)
     {
+        learnedMoves.Add(new AttackContainer(newMove));
     }
 
     private void Selected(SquareCell selectedTile)
@@ -89,7 +104,18 @@ public class PokemonContainer : MonoBehaviour
         if(selectedTile == currentCell)
         {
             Debug.Log("Set selected tile: " + selectedTile.coordinates.ToString());
+            DisplayAttacks();
             EventHandler.current.AllySelected(this);
+        }
+    }
+
+    private void DisplayAttacks()
+    {
+        for(int i = 0; i < learnedMoves.Count; i++)
+        {
+            GameObject go = attackDisplay;
+            go.GetComponentInChildren<Text>().text = learnedMoves[i].GetName();
+            Instantiate(go, new Vector3(100 * (i + 1), 100, 0), Quaternion.identity, attackDisplayContainer.transform);
         }
     }
 
