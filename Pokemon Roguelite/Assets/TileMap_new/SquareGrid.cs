@@ -51,6 +51,7 @@ public class SquareGrid : MonoBehaviour
         EventHandler.current.onAllySelected +=  FindAllPossibleTiles;
         EventHandler.current.onTurnEnd += ClearHighlights;
         EventHandler.current.onMovePokemon += FindPath;
+        EventHandler.current.onFindAttackableTiles += SearchForAttackableTiles;
     }
 
     public SquareCell GetCell(Vector3 position, Color color) 
@@ -78,7 +79,6 @@ public class SquareGrid : MonoBehaviour
 
     void SearchForTiles(int speed, SquareCell currentTile)
     {
-        Debug.Log("Starting to find all tiles");
         for (int i = 0; i < cells.Length; i++)
         {
             cells[i].Distance = int.MaxValue;
@@ -117,8 +117,6 @@ public class SquareGrid : MonoBehaviour
                 }
             }
         }
-
-        Debug.Log("All tiles found");
     }
 
     void SearchForPath(SquareCell toCell, PokemonContainer pokemon)
@@ -145,7 +143,6 @@ public class SquareGrid : MonoBehaviour
             
             if (current == toCell)
             {
-                Debug.Log("Path Found");
                 ConstructPath(toCell, pokemon);
                 break;
             }
@@ -175,9 +172,31 @@ public class SquareGrid : MonoBehaviour
 
     }
 
+    void SearchForAttackableTiles(SquareCell fromCell, PokemonAttack attack)
+    {
+        if (attack is PokemonLineAttack)
+            LineAttackSearch(fromCell, attack);
+    }
+
+    void LineAttackSearch(SquareCell fromCell, PokemonAttack attack)
+    {
+        for (SquareDirection direction = SquareDirection.UP; direction <= SquareDirection.LEFT; direction++)
+        {
+            int cost = 0;
+            SquareCell neighbor = fromCell.GetNeighbor(direction);
+            if (neighbor == null)
+                continue;
+            while (cost < attack.range)
+            {
+                neighbor.EnableHighlight(Color.black);
+                neighbor = neighbor.GetNeighbor(direction);
+                cost++;
+            }
+        }
+    }
+
     void ConstructPath(SquareCell toCell, PokemonContainer pokemon)
     {
-        Debug.Log("Constructing Path");
         Stack<SquareCell> stack = new Stack<SquareCell>();
         while (toCell != pokemon.CurrentTile)
         {

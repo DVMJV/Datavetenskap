@@ -9,7 +9,7 @@ public class EventHandler : MonoBehaviour
     #region Events
     public event Action<PokemonContainer> onAllySelected;
     public event Action onStart;
-    public event Action<PokemonContainer, PokemonAttack> onMoveSelected;
+    public event Action<AttackContainer> onAttackSelected;
     public event Action onChangeSelectedObject;
     public event Action<SquareCell> onTileSelected;
     public event Action<SquareCell, PokemonContainer> onMovePokemon;
@@ -17,12 +17,18 @@ public class EventHandler : MonoBehaviour
     public event Action<int> onTurnStart;
     public event Action onTurnEnd;
     public event Action<int> onTurnReset;
+    public event Action<SquareCell, PokemonAttack> onFindAttackableTiles;
     public event Action<Stack<SquareCell>, PokemonContainer> onPathFound;
     #endregion
 
     private void Awake()
     {
         current = this;
+    }
+
+    public void FindAttackableTiles(SquareCell fromCell, PokemonAttack attack)
+    {
+        onFindAttackableTiles?.Invoke(fromCell, attack);
     }
 
     public void PathFound(Stack<SquareCell> path, PokemonContainer pokemon)
@@ -56,9 +62,9 @@ public class EventHandler : MonoBehaviour
         onStart?.Invoke();
     }
 
-    public void MoveSelected(PokemonContainer fromPokemon, PokemonAttack attack)
+    public void MoveSelected(AttackContainer attack)
     {
-        onMoveSelected?.Invoke(fromPokemon, attack);
+        onAttackSelected?.Invoke(attack);
     }
 
     public void AddPokemon(PokemonContainer pokemonContainer)

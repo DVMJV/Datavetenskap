@@ -17,16 +17,12 @@ public class PokemonContainer : MonoBehaviour
     [SerializeField]
     public SquareCell currentCell;
 
-    [SerializeField]
-    GameObject attackDisplay;
-
-    [SerializeField]
-    GameObject attackDisplayContainer;
-
-    List<AttackContainer> learnedMoves = new List<AttackContainer>();
+    public List<AttackContainer> learnedMoves = new List<AttackContainer>();
 
     [SerializeField]
     PokemonAttack[] temp;
+
+    bool attackSelected;
     public SquareCell CurrentTile { get { return currentCell; } 
         set
         {
@@ -36,7 +32,6 @@ public class PokemonContainer : MonoBehaviour
             currentCell = value;
 
             transform.position = new Vector3(currentCell.transform.position.x, currentCell.transform.position.y + currentCell.Elevation, currentCell.transform.position.z);
-
         }
     }
 
@@ -47,9 +42,11 @@ public class PokemonContainer : MonoBehaviour
         Instantiate(pokemon.mesh, transform);
         CurrentTile = currentCell;
         currentMovement = pokemon.movementSpeed;
+
         EventHandler.current.onStart += pokemon.OnStart;
-        EventHandler.current.onTileSelected += Selected;
+        EventHandler.current.onTileSelected += PokemonSelected;
         EventHandler.current.onPathFound += Move;
+        EventHandler.current.onAttackSelected += AttackSelected;
 
         foreach(PokemonAttack attack in temp)
         {
@@ -57,21 +54,16 @@ public class PokemonContainer : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void Reset()
+    public void EndTurn()
     {
         currentMovement = pokemon.movementSpeed;
+        foreach (AttackContainer attack in learnedMoves)
+            attack.LowerCooldown();
     }
-
 
     private void Move(Stack<SquareCell> path, PokemonContainer pokemon)
     {
-        if (pokemon == this)
+        if (pokemon == this && !attackSelected)
         {
             StartCoroutine(MoveEnumerator(path));
         }
@@ -94,29 +86,25 @@ public class PokemonContainer : MonoBehaviour
         Player.AllowedToEndTurn = true;
     }
 
+    public void AttackSelected(AttackContainer attack)
+    {
+        if (learnedMoves.Contains(attack))
+        {
+            attackSelected = true;
+            attack.FindAttackableTiles(currentCell);
+        }
+    }
+
     public void LearnMove(PokemonAttack newMove)
     {
         learnedMoves.Add(new AttackContainer(newMove));
     }
 
-    private void Selected(SquareCell selectedTile)
+    private void PokemonSelected(SquareCell selectedTile)
     {
         if(selectedTile == currentCell)
         {
-            Debug.Log("Set selected tile: " + selectedTile.coordinates.ToString());
-            DisplayAttacks();
             EventHandler.current.AllySelected(this);
         }
     }
-
-    private void DisplayAttacks()
-    {
-        for(int i = 0; i < learnedMoves.Count; i++)
-        {
-            GameObject go = attackDisplay;
-            go.GetComponentInChildren<Text>().text = learnedMoves[i].GetName();
-            Instantiate(go, new Vector3(100 * (i + 1), 100, 0), Quaternion.identity, attackDisplayContainer.transform);
-        }
-    }
-
 }

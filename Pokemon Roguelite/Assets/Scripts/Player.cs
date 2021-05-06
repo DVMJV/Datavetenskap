@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class Player : MonoBehaviour
 
     private PokemonContainer selected;
 
+    [SerializeField]
+    GameObject attackDisplay;
+
+    [SerializeField]
+    GameObject attackDisplayContainer;
 
     [SerializeField]
     private List<PokemonContainer> pokemons;
@@ -42,7 +48,7 @@ public class Player : MonoBehaviour
             turn = false;
             foreach (PokemonContainer pokemon in pokemons)
             {
-                pokemon.Reset();
+                pokemon.EndTurn();
             }
             Debug.Log("My Reset");
         }
@@ -52,10 +58,12 @@ public class Player : MonoBehaviour
     {
         if(turn)
         {
-            selected = pokemon;
+            if(selected != pokemon)
+            {
+                selected = pokemon;
+                DisplayAttacks(pokemon);
+            }
         }
-
-        Debug.Log("SetSelected Path finished");
     }
 
     void MovePokemon(SquareCell selectedCell)
@@ -69,5 +77,23 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void DisplayAttacks(PokemonContainer selectedPokemon)
+    {
+        ClearAttacks();
+        for (int i = 0; i < selectedPokemon.learnedMoves.Count; i++)
+        {
+            GameObject go = Instantiate(attackDisplay, new Vector3(100 * (i + 1), 100, 0), Quaternion.identity, attackDisplayContainer.transform);
+            go.GetComponentInChildren<Text>().text = selectedPokemon.learnedMoves[i].GetName();
+            go.GetComponent<AttackDisplay>().SetAttackContainer(selectedPokemon.learnedMoves[i]);
+            go.GetComponent<AttackDisplay>().id = i;
+        }
+    }
 
+    private void ClearAttacks()
+    {
+        while (attackDisplayContainer.transform.childCount != 0)
+        {
+            Destroy(attackDisplayContainer.transform.GetChild(0).gameObject);
+        }
+    }
 }

@@ -22,10 +22,14 @@ public class AttackContainer
         }
     }
 
+    public void FindAttackableTiles(SquareCell startCell)
+    {
+        EventHandler.current.FindAttackableTiles(startCell, attack);
+    }
+
     public void Attack()
     {
         cooldown = attack.cooldown;
-        attack.Attack();
     }
 
     public string GetName()

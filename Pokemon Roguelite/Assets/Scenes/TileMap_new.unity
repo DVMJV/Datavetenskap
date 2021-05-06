@@ -441,6 +441,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
+  attackDisplay: {fileID: 358351451037823559, guid: e00e8f02ab6677a4b9f25d265c71f68e, type: 3}
+  attackDisplayContainer: {fileID: 1236239529}
   pokemons:
   - {fileID: 0}
 --- !u!4 &700296489
@@ -593,11 +595,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8255725687737187320, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8255725687737187320, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.02
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8255725687737187320, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -635,6 +637,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: temp.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: temp.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 71006c00d607bdb419c5650365696413, type: 2}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: temp.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 40c221af6a48208418dea031d52b380a, type: 2}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: temp.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: fdbfeaaba19ff5c44b798daf59ecfdc6, type: 2}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: attackDisplayContainer
+      value: 
+      objectReference: {fileID: 1236239529}
     - target: {fileID: 8255725687737187325, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_Name
       value: MetalStarter#1 (3)
@@ -940,7 +962,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8255725687737187320, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8255725687737187320, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -982,6 +1004,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: temp.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: temp.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 40c221af6a48208418dea031d52b380a, type: 2}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: attackDisplayContainer
+      value: 
+      objectReference: {fileID: 1236239529}
     - target: {fileID: 8255725687737187325, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_Name
       value: MetalStarter#1 (2)
@@ -998,7 +1032,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8255725687737187320, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8255725687737187320, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1046,7 +1080,7 @@ PrefabInstance:
       objectReference: {fileID: 358351451037823559, guid: e00e8f02ab6677a4b9f25d265c71f68e, type: 3}
     - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: temp.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: temp.Array.data[0]
@@ -1056,6 +1090,10 @@ PrefabInstance:
       propertyPath: temp.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 71006c00d607bdb419c5650365696413, type: 2}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: temp.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b6a4cabde7e19449b65a73e3f43502c, type: 2}
     - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: attackDisplayContainer
       value: 
