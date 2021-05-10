@@ -51,7 +51,6 @@ public class SquareGrid : MonoBehaviour
         EventHandler.current.onAllySelected +=  FindAllPossibleTiles;
         EventHandler.current.onTurnEnd += ClearHighlights;
         EventHandler.current.onMovePokemon += FindPath;
-        EventHandler.current.onFindAttackableTiles += SearchForAttackableTiles;
     }
 
     public SquareCell GetCell(Vector3 position, Color color) 
@@ -172,29 +171,7 @@ public class SquareGrid : MonoBehaviour
 
     }
 
-    void SearchForAttackableTiles(SquareCell fromCell, PokemonAttack attack)
-    {
-        if (attack is PokemonLineAttack)
-            LineAttackSearch(fromCell, attack);
-    }
-
-    void LineAttackSearch(SquareCell fromCell, PokemonAttack attack)
-    {
-        for (SquareDirection direction = SquareDirection.UP; direction <= SquareDirection.LEFT; direction++)
-        {
-            int cost = 0;
-            SquareCell neighbor = fromCell.GetNeighbor(direction);
-            if (neighbor == null)
-                continue;
-            while (cost < attack.range)
-            {
-                neighbor.EnableHighlight(Color.black);
-                neighbor = neighbor.GetNeighbor(direction);
-                cost++;
-            }
-        }
-    }
-
+    
     void ConstructPath(SquareCell toCell, PokemonContainer pokemon)
     {
         Stack<SquareCell> stack = new Stack<SquareCell>();
@@ -205,8 +182,8 @@ public class SquareGrid : MonoBehaviour
         }
 
         EventHandler.current.PathFound(stack, pokemon);
-
     }
+
     void CreateCell(int x, int z, int i)
     {
         Vector3 position;

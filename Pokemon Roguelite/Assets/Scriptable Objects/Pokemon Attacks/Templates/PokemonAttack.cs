@@ -19,7 +19,7 @@ public abstract class PokemonAttack : ScriptableObject
         NONE
     }
 
-    public abstract void Attack();
+    public abstract void Attack(SquareCell fromCell, SquareCell toCell);
     public void ResetEvent()
     {
         id = 0;

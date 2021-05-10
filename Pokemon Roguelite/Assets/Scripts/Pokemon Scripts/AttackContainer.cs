@@ -6,7 +6,7 @@ public class AttackContainer
 {
     PokemonAttack attack;
     int cooldown;
-
+    List<SquareCell> attackableCells;
     public AttackContainer(PokemonAttack attack)
     {
         this.attack = attack;
@@ -21,15 +21,40 @@ public class AttackContainer
             cooldown--;
         }
     }
-
-    public void FindAttackableTiles(SquareCell startCell)
+    public void FindAttackableTiles(SquareCell fromCell)
     {
-        EventHandler.current.FindAttackableTiles(startCell, attack);
+        attackableCells = new List<SquareCell>();
+        if (attack is PokemonLineAttack)
+            LineAttackSearch(fromCell, attack);
     }
 
-    public void Attack()
+    void LineAttackSearch(SquareCell fromCell, PokemonAttack attack)
     {
-        cooldown = attack.cooldown;
+        for (SquareDirection direction = SquareDirection.UP; direction <= SquareDirection.LEFT; direction++)
+        {
+            int cost = 0;
+            SquareCell neighbor = fromCell.GetNeighbor(direction);
+            if (neighbor == null)
+                continue;
+            while (cost < attack.range)
+            {
+                if (neighbor == null)
+                    break;
+                attackableCells.Add(neighbor);
+                neighbor.EnableHighlight(Color.black);
+                neighbor = neighbor.GetNeighbor(direction);
+                cost++;
+            }
+        }
+    }
+
+    public void Attack(SquareCell fromCell, SquareCell toCell)
+    {
+        if(attackableCells.Contains(toCell))
+        {
+            cooldown = attack.cooldown;
+            attack.Attack(fromCell, toCell);
+        }
     }
 
     public string GetName()

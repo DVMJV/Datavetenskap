@@ -12,7 +12,7 @@ public class PokemonContainer : MonoBehaviour
 
     public int currentLevel = 5;
     public int currentMovement;
-    public int currentHealth = 5;
+    int currentHealth = 5;
 
     [SerializeField]
     public SquareCell currentCell;
@@ -22,7 +22,7 @@ public class PokemonContainer : MonoBehaviour
     [SerializeField]
     PokemonAttack[] temp;
 
-    bool attackSelected;
+    AttackContainer attackSelected;
     public SquareCell CurrentTile { get { return currentCell; } 
         set
         {
@@ -44,13 +44,30 @@ public class PokemonContainer : MonoBehaviour
         currentMovement = pokemon.movementSpeed;
 
         EventHandler.current.onStart += pokemon.OnStart;
-        EventHandler.current.onTileSelected += PokemonSelected;
+        EventHandler.current.onTileSelected += PokemonSelected; 
+        EventHandler.current.onTileSelected += AttackTile;
         EventHandler.current.onPathFound += Move;
         EventHandler.current.onAttackSelected += AttackSelected;
+        EventHandler.current.onAllySelected += Unselect;
+        EventHandler.current.onAttackTile += TileAttacked;
 
         foreach(PokemonAttack attack in temp)
         {
             LearnMove(attack);
+        }
+    }
+
+    private void Update()
+    {
+        if (currentHealth <= 0)
+            Destroy(gameObject);
+    }
+
+    private void TileAttacked(SquareCell attackedTile, PokemonAttack attack)
+    {
+        if(attackedTile == currentCell)
+        {
+            currentHealth -= attack.damage;
         }
     }
 
@@ -63,7 +80,7 @@ public class PokemonContainer : MonoBehaviour
 
     private void Move(Stack<SquareCell> path, PokemonContainer pokemon)
     {
-        if (pokemon == this && !attackSelected)
+        if (pokemon == this && attackSelected == null)
         {
             StartCoroutine(MoveEnumerator(path));
         }
@@ -90,7 +107,7 @@ public class PokemonContainer : MonoBehaviour
     {
         if (learnedMoves.Contains(attack))
         {
-            attackSelected = true;
+            attackSelected = attack;
             attack.FindAttackableTiles(currentCell);
         }
     }
@@ -105,6 +122,22 @@ public class PokemonContainer : MonoBehaviour
         if(selectedTile == currentCell)
         {
             EventHandler.current.AllySelected(this);
+        }
+    }
+
+    private void AttackTile(SquareCell selectedTile)
+    {
+        if(attackSelected != null)
+        {
+            attackSelected.Attack(currentCell, selectedTile);
+        }
+    }
+
+    private void Unselect(PokemonContainer pokemon)
+    {
+        if(pokemon != this)
+        {
+            attackSelected = null;
         }
     }
 }

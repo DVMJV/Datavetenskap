@@ -5,7 +5,39 @@ using UnityEngine;
 
 public class PokemonLineAttack : PokemonAttack
 {
-    public override void Attack()
+    public override void Attack(SquareCell fromCell, SquareCell toCell)
     {
+        List<SquareCell> cellsToAttack = ConstructAttackPath(fromCell, toCell);
+        foreach (SquareCell cell in cellsToAttack)
+            EventHandler.current.AttackTile(cell, this);
     }
+
+    private List<SquareCell> ConstructAttackPath(SquareCell fromCell, SquareCell toCell)
+    {
+        List<SquareCell> cellsToAttack = new List<SquareCell>();
+
+        for (SquareDirection direction = SquareDirection.UP; direction <= SquareDirection.LEFT; direction++)
+        {
+            int cost = 0;
+            SquareCell neighbor = fromCell.GetNeighbor(direction);
+            cellsToAttack.Add(neighbor);
+
+            if (neighbor == null)
+                continue;
+            while (cost < range)
+            {
+                if (neighbor == null)
+                    break;
+                neighbor = neighbor.GetNeighbor(direction);
+                cellsToAttack.Add(neighbor);
+                if (neighbor == toCell)
+                    return cellsToAttack;
+                cost++;
+            }
+            cellsToAttack.Clear();
+        }
+
+        return cellsToAttack;
+    }
+
 }
