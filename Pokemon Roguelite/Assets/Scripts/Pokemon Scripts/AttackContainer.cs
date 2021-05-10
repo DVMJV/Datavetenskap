@@ -48,12 +48,12 @@ public class AttackContainer
         }
     }
 
-    public void Attack(SquareCell fromCell, SquareCell toCell)
+    public void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
         if(attackableCells.Contains(toCell))
         {
             cooldown = attack.cooldown;
-            attack.Attack(fromCell, toCell);
+            attack.Attack(fromCell, toCell, tag);
         }
     }
 

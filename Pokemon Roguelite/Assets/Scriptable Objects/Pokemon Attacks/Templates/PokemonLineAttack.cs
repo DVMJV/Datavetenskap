@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class PokemonLineAttack : PokemonAttack
 {
-    public override void Attack(SquareCell fromCell, SquareCell toCell)
+    public override void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
         List<SquareCell> cellsToAttack = ConstructAttackPath(fromCell, toCell);
         foreach (SquareCell cell in cellsToAttack)
-            EventHandler.current.AttackTile(cell, this);
+            EventHandler.current.AttackTile(cell, this, tag);
     }
 
     private List<SquareCell> ConstructAttackPath(SquareCell fromCell, SquareCell toCell)

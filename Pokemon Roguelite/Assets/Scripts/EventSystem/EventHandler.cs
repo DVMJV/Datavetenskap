@@ -17,7 +17,7 @@ public class EventHandler : MonoBehaviour
     public event Action<int> onTurnStart;
     public event Action onTurnEnd;
     public event Action<int> onTurnReset;
-    public event Action<SquareCell, PokemonAttack> onAttackTile;
+    public event Action<SquareCell, PokemonAttack, string> onAttackTile;
     public event Action<Stack<SquareCell>, PokemonContainer> onPathFound;
     #endregion
 
@@ -26,9 +26,9 @@ public class EventHandler : MonoBehaviour
         current = this;
     }
 
-    public void AttackTile(SquareCell tile, PokemonAttack attack)
+    public void AttackTile(SquareCell tile, PokemonAttack attack, string tag)
     {
-        onAttackTile?.Invoke(tile, attack);
+        onAttackTile?.Invoke(tile, attack, tag);
     }
 
     public void PathFound(Stack<SquareCell> path, PokemonContainer pokemon)

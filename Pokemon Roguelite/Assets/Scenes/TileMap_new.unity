@@ -661,6 +661,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MetalStarter#1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8255725687737187325, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2456763506225467494, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
@@ -1101,6 +1105,10 @@ PrefabInstance:
     - target: {fileID: 8255725687737187325, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_Name
       value: MetalStarter#1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8255725687737187325, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: m_TagString
+      value: Friendly
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2456763506225467494, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}

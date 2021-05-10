@@ -23,6 +23,7 @@ public class PokemonContainer : MonoBehaviour
     PokemonAttack[] temp;
 
     AttackContainer attackSelected;
+
     public SquareCell CurrentTile { get { return currentCell; } 
         set
         {
@@ -63,9 +64,9 @@ public class PokemonContainer : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void TileAttacked(SquareCell attackedTile, PokemonAttack attack)
+    private void TileAttacked(SquareCell attackedTile, PokemonAttack attack, string tag)
     {
-        if(attackedTile == currentCell)
+        if(attackedTile == currentCell && tag != gameObject.tag)
         {
             currentHealth -= attack.damage;
         }
@@ -119,7 +120,7 @@ public class PokemonContainer : MonoBehaviour
 
     private void PokemonSelected(SquareCell selectedTile)
     {
-        if(selectedTile == currentCell)
+        if(selectedTile == currentCell && gameObject.CompareTag("Friendly"))
         {
             EventHandler.current.AllySelected(this);
         }
@@ -129,7 +130,7 @@ public class PokemonContainer : MonoBehaviour
     {
         if(attackSelected != null)
         {
-            attackSelected.Attack(currentCell, selectedTile);
+            attackSelected.Attack(currentCell, selectedTile, tag);
         }
     }
 
