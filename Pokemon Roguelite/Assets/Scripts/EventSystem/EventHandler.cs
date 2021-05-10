@@ -19,6 +19,7 @@ public class EventHandler : MonoBehaviour
     public event Action<int> onTurnReset;
     public event Action<SquareCell, PokemonAttack> onAttackTile;
     public event Action<Stack<SquareCell>, PokemonContainer> onPathFound;
+    public event Action onAllowedToEndTurn;
     #endregion
 
     private void Awake()
@@ -118,5 +119,9 @@ public class EventHandler : MonoBehaviour
         onTurnReset?.Invoke(id);
     }
 
+    public void AllowedToEndTurn()
+    {
+        onAllowedToEndTurn?.Invoke();
+    }
     #endregion
 }

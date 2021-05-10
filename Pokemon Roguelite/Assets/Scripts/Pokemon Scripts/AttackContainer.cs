@@ -11,6 +11,10 @@ public class AttackContainer
     {
         this.attack = attack;
     }
+    public PokemonAttack GetAttack()
+    {
+        return attack;
+    }
 
     public void LowerCooldown()
     {
