@@ -21,6 +21,7 @@ public class PokemonContainer : MonoBehaviour
 
     [SerializeField]
     PokemonAttack[] temp;
+    public bool hasAttacked = false;
 
     AttackContainer attackSelected;
 
@@ -66,7 +67,7 @@ public class PokemonContainer : MonoBehaviour
 
     private void TileAttacked(SquareCell attackedTile, PokemonAttack attack, string tag)
     {
-        if(attackedTile == currentCell && tag != gameObject.tag)
+        if(attackedTile == currentCell && !CompareTag(tag))
         {
             currentHealth -= attack.damage;
         }
@@ -75,6 +76,7 @@ public class PokemonContainer : MonoBehaviour
     public void EndTurn()
     {
         currentMovement = pokemon.movementSpeed;
+        hasAttacked = false;
         foreach (AttackContainer attack in learnedMoves)
             attack.LowerCooldown();
     }
@@ -89,7 +91,6 @@ public class PokemonContainer : MonoBehaviour
 
     IEnumerator MoveEnumerator(Stack<SquareCell> path)
     {
-        Player.AllowedToEndTurn = false;
         WaitForSeconds delay = new WaitForSeconds(1 / 10f);
 
         while (path.Count > 0)
@@ -99,22 +100,21 @@ public class PokemonContainer : MonoBehaviour
             currentMovement -= 1;
             CurrentTile = moveToCell;
         }
-
-
-        EventHandler.current.AllowedToEndTurn();
         if (CompareTag("Friendly"))
         {
             EventHandler.current.AllySelected(this);
-            Player.AllowedToEndTurn = true;
         }
+        EventHandler.current.AllowedToEndTurn();
     }
+
 
     public void AttackSelected(AttackContainer attack)
     {
-        if (learnedMoves.Contains(attack))
+        if (learnedMoves.Contains(attack) && !hasAttacked)
         {
             attackSelected = attack;
             attack.FindAttackableTiles(currentCell);
+            attack.HighlightAttack();
         }
     }
 
@@ -135,15 +135,13 @@ public class PokemonContainer : MonoBehaviour
     {
         if(attackSelected != null)
         {
+            hasAttacked = true;
             attackSelected.Attack(currentCell, selectedTile, tag);
         }
     }
 
     private void Unselect(PokemonContainer pokemon)
     {
-        if(pokemon != this)
-        {
-            attackSelected = null;
-        }
+        attackSelected = null;
     }
 }

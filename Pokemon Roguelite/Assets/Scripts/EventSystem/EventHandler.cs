@@ -20,6 +20,7 @@ public class EventHandler : MonoBehaviour
     public event Action<SquareCell, PokemonAttack, string> onAttackTile;
     public event Action<Stack<SquareCell>, PokemonContainer> onPathFound;
     public event Action onAllowedToEndTurn;
+    public event Action clearHighlights;
     #endregion
 
     private void Awake()
@@ -65,6 +66,7 @@ public class EventHandler : MonoBehaviour
 
     public void MoveSelected(AttackContainer attack)
     {
+        clearHighlights?.Invoke();
         onAttackSelected?.Invoke(attack);
     }
 

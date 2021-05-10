@@ -53,7 +53,7 @@ public class AIHandler : MonoBehaviour
                         if(target != null)
                         {
                             attack.FindAttackableTiles(pokemon.currentCell);
-                            attack.Attack(pokemon.currentCell,target.currentCell);
+                            attack.Attack(pokemon.currentCell, target.currentCell, pokemon.gameObject.tag);
                         }
                     }
                 }
@@ -92,7 +92,7 @@ public class AIHandler : MonoBehaviour
                     break;
                 foreach(PokemonContainer pokemon in VisiblePokemon)
                 {
-                    if(pokemon.currentCell = neighbor)
+                    if(pokemon.currentCell == neighbor)
                         return pokemon;
                 }
                 neighbor = neighbor.GetNeighbor(direction);

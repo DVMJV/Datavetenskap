@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     int id;
 
-    public static bool AllowedToEndTurn { get; set; }
+    private bool allowedToEndTurn;
 
     private PokemonContainer selected;
 
@@ -29,6 +29,7 @@ public class Player : MonoBehaviour
         EventHandler.current.onTileSelected += MovePokemon;
         EventHandler.current.onTurnStart += TurnStart;
         EventHandler.current.onTurnReset += TurnEnd;
+        EventHandler.current.onAllowedToEndTurn += AllowedToEndTurn;
         EventHandler.current.OnStart();
     }
 
@@ -43,13 +44,15 @@ public class Player : MonoBehaviour
     }
     void TurnEnd(int id)
     {
-        if(this.id == id && AllowedToEndTurn)
+        if(this.id == id && allowedToEndTurn)
         {
             turn = false;
             foreach (PokemonContainer pokemon in pokemons)
             {
                 pokemon.EndTurn();
             }
+            ClearAttacks();
+            selected = null;
             Debug.Log("My Reset");
         }
     }
@@ -72,9 +75,15 @@ public class Player : MonoBehaviour
         {
             if(selected != null)
             {
+                allowedToEndTurn = false;
                 EventHandler.current.MovePokemon(selectedCell, selected);   
             }
         }
+    }
+
+    void AllowedToEndTurn()
+    {
+        allowedToEndTurn = true;
     }
 
     private void DisplayAttacks(PokemonContainer selectedPokemon)

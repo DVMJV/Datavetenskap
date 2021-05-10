@@ -7,5 +7,6 @@ public class PokemonSingleAttack : PokemonAttack
 {
     public override void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
+        EventHandler.current.AttackTile(toCell, this, tag);
     }
 }

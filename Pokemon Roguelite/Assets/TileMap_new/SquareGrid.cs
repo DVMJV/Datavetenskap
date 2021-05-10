@@ -51,6 +51,7 @@ public class SquareGrid : MonoBehaviour
         EventHandler.current.onAllySelected +=  FindAllPossibleTiles;
         EventHandler.current.onTurnEnd += ClearHighlights;
         EventHandler.current.onMovePokemon += FindPath;
+        EventHandler.current.clearHighlights += ClearHighlights;
     }
 
     public SquareCell GetCell(Vector3 position, Color color) 
