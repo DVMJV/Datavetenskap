@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackName: Crush
   damage: 10
-  range: 1
+  range: 5
   type: 3
+  id: 0
+  cooldown: 0
