@@ -40,7 +40,7 @@ public class PokemonContainer : MonoBehaviour
     void Start()
     {
         Destroy(GetComponent<MeshRenderer>());
-        Instantiate(pokemon.mesh, transform);
+        GameObject go = Instantiate(pokemon.mesh, transform);
         CurrentTile = currentCell;
         currentMovement = pokemon.movementSpeed;
 
@@ -100,8 +100,13 @@ public class PokemonContainer : MonoBehaviour
             CurrentTile = moveToCell;
         }
 
-        EventHandler.current.AllySelected(this);
-        Player.AllowedToEndTurn = true;
+
+        EventHandler.current.AllowedToEndTurn();
+        if (CompareTag("Friendly"))
+        {
+            EventHandler.current.AllySelected(this);
+            Player.AllowedToEndTurn = true;
+        }
     }
 
     public void AttackSelected(AttackContainer attack)
