@@ -24,7 +24,6 @@ public class SquareGrid : MonoBehaviour
 
     private void Awake()
     {
-        int text = 5;
         gridCanvas = GetComponentInChildren<Canvas>();
         squareMesh = GetComponentInChildren<SquareMesh>();
         cells = new SquareCell[height * width];
