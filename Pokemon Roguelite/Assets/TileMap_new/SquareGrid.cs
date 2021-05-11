@@ -11,7 +11,7 @@ public class SquareGrid : MonoBehaviour
 
     public SquareCell cellPrefab;
     SquareCell[] cells;
-
+0
     public Text cellLabelPrefab;
     Canvas gridCanvas;
 
@@ -24,7 +24,7 @@ public class SquareGrid : MonoBehaviour
 
     private void Awake()
     {
-        int text;
+        int text = 5;
         gridCanvas = GetComponentInChildren<Canvas>();
         squareMesh = GetComponentInChildren<SquareMesh>();
         cells = new SquareCell[height * width];
