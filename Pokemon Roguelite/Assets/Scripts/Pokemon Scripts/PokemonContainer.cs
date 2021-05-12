@@ -12,7 +12,7 @@ public class PokemonContainer : MonoBehaviour
 
     public int currentLevel = 5;
     public int currentMovement;
-    int currentHealth = 5;
+    private int currentHealth = 5;
     private bool stunned;
 
     [SerializeField]
@@ -20,15 +20,14 @@ public class PokemonContainer : MonoBehaviour
 
     public List<AttackContainer> learnedMoves = new List<AttackContainer>();
 
-    [SerializeField]
-    PokemonAttack[] temp;
+    [SerializeField] private PokemonAttack[] temp;
     public bool hasAttacked = false;
 
     AttackContainer attackSelected;
 
     public SquareCell CurrentTile { 
-        get { return currentCell; } 
-        set
+        get => currentCell;
+        private set
         {
             if (currentCell == value)
                 return;
@@ -40,7 +39,7 @@ public class PokemonContainer : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Destroy(GetComponent<MeshRenderer>());
         GameObject go = Instantiate(pokemon.mesh, transform);
@@ -74,28 +73,26 @@ public class PokemonContainer : MonoBehaviour
 
     private void TileAttacked(SquareCell attackedTile, PokemonAttack attack, string tag)
     {
-        if(attackedTile == currentCell && !CompareTag(tag))
+        if (attackedTile != currentCell || CompareTag(tag)) return;
+        var effect = attack.effect;
+
+        switch (effect)
         {
-            PokemonAttack.SecondaryEffect effect = attack.effect;
-
-            switch (effect)
-            {
-                case PokemonAttack.SecondaryEffect.Stun:
-                    stunned = true;
-                    currentMovement = 0;
-                    break;
-                default:
-                    break;
-            }
-
-            currentHealth -= CalculateDamage(attack);
+            case PokemonAttack.SecondaryEffect.Stun:
+                stunned = true;
+                currentMovement = 0;
+                break;
+            default:
+                break;
         }
+
+        currentHealth -= CalculateDamage(attack);
     }
 
     private int CalculateDamage(PokemonAttack attack)
     {
-        int adjustedDamage = attack.damage;
-        Type attackType = attack.type;
+        var adjustedDamage = attack.damage;
+        var attackType = attack.type;
         switch (attackType)
         {
             case Type.NEUTRAL:
