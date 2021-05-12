@@ -10,22 +10,14 @@ public class SquareMapEditor : MonoBehaviour
 
     int activeElevation;
 
-    public float[] terrainTypeIndexes;
-    float activeTerrainIndex;
-
     private void Awake()
     {
-        SelectTerrainIndex(0);
+        SelectColor(0);
     }
 
     private void Update()
     {
         HandleInput();
-    }
-
-    public void ShowUI(bool visible) 
-    {
-        squareGrid.ShowUI(visible);
     }
 
     void HandleInput()
@@ -41,26 +33,24 @@ public class SquareMapEditor : MonoBehaviour
                 EventHandler.current.TileSelected(currentCell);
                 EditCell(currentCell);
             }
-            EditCell(squareGrid.GetCell(hit.point));
         }
     }
 
     void EditCell(SquareCell cell)
     {
-        cell.TerrainTypeIndex = activeTerrainIndex;
+        cell.color = activeColor;
         cell.Elevation = activeElevation;
         squareGrid.Refresh();
     }
 
-    public void SelectTerrainIndex(float index)
+    public void SelectColor(int index) 
     {
-        activeTerrainIndex = terrainTypeIndexes[(int)index];
+        activeColor = colors[index];
     }
 
     public void SetElevation(float elevation)
     {
         activeElevation = (int)elevation;
-      //  Debug.Log(activeElevation);
     }
 
 

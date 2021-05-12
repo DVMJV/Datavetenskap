@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,49 +7,137 @@ public class SquareMesh : MonoBehaviour
 {
     Mesh squareMesh;
     MeshCollider meshCollider;
+    List<Vector3> verticies;
+    List<int> triangles;
+    List<Color> colors;
 
-    [NonSerialized] List<Vector3> verticies;
-    [NonSerialized] List<int> triangles;
-
-    public bool useTerrainTypes;
-    [NonSerialized] List<Vector3> terrainTypes;
 
     private void Awake()
     {
         GetComponent<MeshFilter>().mesh = squareMesh = new Mesh();
         meshCollider = gameObject.AddComponent<MeshCollider>();
+
         squareMesh.name = "Square Mesh";
+        verticies = new List<Vector3>();
+        colors = new List<Color>();
+        triangles = new List<int>();
     }
 
-    public void Clear() 
+    // Loops trough all the cells triangulating them individually.
+    // After that is done assign the generated vertices and triangles to the mesh and calculate the normals.
+    public void Triangulate(SquareCell[] cells)
     {
         squareMesh.Clear();
-        if (useTerrainTypes) {
-            terrainTypes = ListPool<Vector3>.Get();
-        }
-        verticies = ListPool<Vector3>.Get();
-        triangles = ListPool<int>.Get();
-    }
+        verticies.Clear();
+        colors.Clear();
+        triangles.Clear();
 
-    public void Apply()
-    {
-        squareMesh.SetVertices(verticies);
-        ListPool<Vector3>.Add(verticies);
-
-        if (useTerrainTypes)
+        for (int i = 0; i < cells.Length; i++)
         {
-            squareMesh.SetUVs(2, terrainTypes);
-            ListPool<Vector3>.Add(terrainTypes);
+            Triangulate(cells[i]);
         }
 
-        squareMesh.SetTriangles(triangles, 0);
-        ListPool<int>.Add(triangles);
-
+        squareMesh.vertices = verticies.ToArray();
+        squareMesh.colors = colors.ToArray();
+        squareMesh.triangles = triangles.ToArray();
+        
         squareMesh.RecalculateNormals();
-        meshCollider.sharedMesh = squareMesh;
+        meshCollider.sharedMesh= squareMesh;
     }
 
-    public void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3)
+    void Triangulate(SquareCell cell) 
+    {
+        Vector3 center = cell.transform.localPosition;  // Counter clockwise...
+        AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[1], center + SquareMetrics.corners[2]);
+        AddTriangle(center + SquareMetrics.corners[0], center + SquareMetrics.corners[2], center + SquareMetrics.corners[3]);
+        AddTriangleColor(cell.color);
+        AddTriangleColor(cell.color); // Done twice since it is a square.
+
+
+        for (int i = 0; i < 4; i++)
+        {
+            SquareCell neighbor = cell.GetNeighbor((SquareDirection)i);
+            
+            if (neighbor == null)
+            {
+                Vector3 elevationDifference = new Vector3(0, (cell.Elevation + 2) * SquareMetrics.elevationStep, 0);
+                if (i == 0)
+                {
+                    AddQuad(center + SquareMetrics.corners[1],
+                            center + SquareMetrics.corners[0],
+                            center + SquareMetrics.corners[0] - elevationDifference,
+                            center + SquareMetrics.corners[1] - elevationDifference);
+                }
+                else if (i == 1)
+                {
+                    AddQuad(center + SquareMetrics.corners[2],
+                            center + SquareMetrics.corners[1],
+                            center + SquareMetrics.corners[1] - elevationDifference,
+                            center + SquareMetrics.corners[2] - elevationDifference);
+                }
+                else if (i == 2)
+                {
+                    AddQuad(center + SquareMetrics.corners[3],
+                            center + SquareMetrics.corners[2],
+                            center + SquareMetrics.corners[2] - elevationDifference,
+                            center + SquareMetrics.corners[3] - elevationDifference);
+                }
+                else
+                {
+                    AddQuad(center + SquareMetrics.corners[0],
+                    center + SquareMetrics.corners[3],
+                    center + SquareMetrics.corners[3] - elevationDifference,
+                    center + SquareMetrics.corners[0] - elevationDifference);
+                }
+                AddQuadColor(cell.color);
+
+               
+            }
+
+            else if (cell.Elevation - neighbor.Elevation > 0)
+            {
+                Vector3 neighborCenter = neighbor.transform.localPosition;
+                if (i == 0)
+                {
+                    AddQuad(center + SquareMetrics.corners[1],
+                           center + SquareMetrics.corners[0],
+                           neighborCenter + SquareMetrics.corners[3],
+                           neighborCenter + SquareMetrics.corners[2]);
+                }
+                else if (i == 1)
+                {
+                    AddQuad(center + SquareMetrics.corners[2],
+                           center + SquareMetrics.corners[1],
+                           neighborCenter + SquareMetrics.corners[0],
+                           neighborCenter + SquareMetrics.corners[3]);
+                }
+                else if (i == 2)
+                {
+                    AddQuad(center + SquareMetrics.corners[3],
+                           center + SquareMetrics.corners[2],
+                           neighborCenter + SquareMetrics.corners[1],
+                           neighborCenter + SquareMetrics.corners[0]);
+                }
+                else
+                {
+                    AddQuad(center + SquareMetrics.corners[0],
+                    center + SquareMetrics.corners[3],
+                    neighborCenter + SquareMetrics.corners[2],
+                    neighborCenter + SquareMetrics.corners[1]);
+                }
+                AddQuadColor(cell.color);
+            }
+        }
+    }
+
+    void AddTriangleColor(Color color) 
+    {
+        colors.Add(color);
+        colors.Add(color);
+        colors.Add(color);
+    }
+
+    void AddTriangle(Vector3 v1, Vector3 v2, Vector3 v3) 
     {
         int vertexIndex = verticies.Count;
         verticies.Add(v1);
@@ -61,14 +149,15 @@ public class SquareMesh : MonoBehaviour
         triangles.Add(vertexIndex + 2);
     }
 
-    public void AddTriangleTerrainTypes(Vector3 types) 
+    void AddQuadColor(Color c)
     {
-        terrainTypes.Add(types);
-        terrainTypes.Add(types);
-        terrainTypes.Add(types);
+        colors.Add(c);
+        colors.Add(c);
+        colors.Add(c);
+        colors.Add(c);
     }
 
-    public void AddQuad(Vector3 topLeft, Vector3 topRight, Vector3 bottomRight, Vector3 bottomLeft)
+    void AddQuad(Vector3 topLeft, Vector3 topRight, Vector3 bottomRight, Vector3 bottomLeft) 
     {
         int vertexIndex = verticies.Count;
         verticies.Add(topLeft);
@@ -86,15 +175,5 @@ public class SquareMesh : MonoBehaviour
         triangles.Add(vertexIndex + 3);
         triangles.Add(vertexIndex + 0);
     }
-
-    public void AddQuadTerrainTypes(Vector3 types) 
-    {
-        terrainTypes.Add(types);
-        terrainTypes.Add(types);
-        terrainTypes.Add(types);
-        terrainTypes.Add(types);
-    }
-
-
 
 }

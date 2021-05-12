@@ -8,8 +8,6 @@ public class SquareCell : MonoBehaviour
     [SerializeField]
     SquareCell[] neighbors;
 
-    public SquareGridChunk chunk;
-
     public RectTransform uiRect;
 
     public SquareCell PathFrom { get; set; }
@@ -35,29 +33,10 @@ public class SquareCell : MonoBehaviour
     }
 
     public SquareCoordinates coordinates;
-
-    float terrainTypeIndex;
-    public float TerrainTypeIndex
-    {
-        get { return terrainTypeIndex; }
-        set
-        {
-            if (terrainTypeIndex == value)
-                return;
-
-            terrainTypeIndex = value;
-            Refresh();
-        }
-    }
+    public Color color;
 
     public int Elevation { get { return elevation; } 
-        set
-        {
-            if (elevation == value)
-                return;
-
-            elevation = value;
-    
+        set { elevation = value;
             Vector3 position = transform.localPosition;
             position.y = value * SquareMetrics.elevationStep;
             transform.localPosition = position;
@@ -67,10 +46,7 @@ public class SquareCell : MonoBehaviour
             uiRect.localPosition = uiPosition;
             } }
 
-            Refresh();
-            } }
-    //int elevation = int.MinValue;
-    int elevation = 0;
+    int elevation;
     
     public SquareCell GetNeighbor(SquareDirection direction) 
     {
@@ -106,17 +82,4 @@ public class SquareCell : MonoBehaviour
         highlight.enabled = false;
     }
 
-    void Refresh() 
-    {
-        if (chunk)
-        {
-            chunk.Refresh();
-            for (int i = 0; i < neighbors.Length; i++)
-            {
-                SquareCell neighbor = neighbors[i];
-                if (neighbor != null && neighbor.chunk != chunk)
-                    neighbor.chunk.Refresh();
-            }
-        }
-    }
 }

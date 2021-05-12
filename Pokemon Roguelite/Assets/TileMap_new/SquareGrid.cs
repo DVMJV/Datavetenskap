@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class SquareGrid : MonoBehaviour
 {
-    int cellCountX, cellCountZ;
-    public int chunkCountX = 4, chunkCountZ = 3;
+    public int width = 5;
+    public int height = 5;
 
     public SquareCell cellPrefab;
     SquareCell[] cells;
@@ -15,12 +15,10 @@ public class SquareGrid : MonoBehaviour
     public Text cellLabelPrefab;
     Canvas gridCanvas;
 
-    public SquareGridChunk chunkPrefab;
-    SquareGridChunk[] chunks;
-
+    SquareMesh squareMesh;
     MeshCollider meshCollider;
 
-    public float defaultTerrainIndex = 0;
+    public Color defaultColor = Color.white;
 
     List<SquareCell> walkableTiles = new List<SquareCell>();
 
@@ -31,24 +29,8 @@ public class SquareGrid : MonoBehaviour
         squareMesh = GetComponentInChildren<SquareMesh>();
         cells = new SquareCell[height * width];
         for (int z = 0, i = 0; z < height; z++)
-        cellCountX = chunkCountX * SquareMetrics.chunkSizeX;
-        cellCountZ = chunkCountZ * SquareMetrics.chunkSizeZ;
-        CreateChunks();
-        CreateCells();
-    }
-
-    public void ShowUI(bool visible) 
-    {
-        for (int i = 0; i < chunks.Length; i++)
-            chunks[i].ShowUI(visible);
-    }
-
-    void CreateCells() 
-    {
-        cells = new SquareCell[cellCountZ * cellCountX];
-        for (int z = 0, i = 0; z < cellCountZ; z++)
         {
-            for (int x = 0; x < cellCountX; x++)
+            for (int x = 0; x < width; x++)
             {
                 CreateCell(x, z, i++);
             }
@@ -65,32 +47,19 @@ public class SquareGrid : MonoBehaviour
     }
 
     private void Start()
-    void CreateChunks() 
     {
         squareMesh.Triangulate(cells);
         EventHandler.current.onAllySelected +=  FindAllPossibleTiles;
         EventHandler.current.onTurnEnd += ClearHighlights;
         EventHandler.current.onMovePokemon += FindPath;
         EventHandler.current.clearHighlights += ClearHighlights;
-        chunks = new SquareGridChunk[chunkCountX * chunkCountZ];
-
-        for (int z = 0, i = 0; z < chunkCountZ; z++)
-        {
-            for (int x = 0; x < chunkCountX; x++)
-            {
-                SquareGridChunk chunk = chunks[i++] = Instantiate(chunkPrefab);
-                chunk.transform.SetParent(transform);
-            }
-        }
     }
 
-    public SquareCell GetCell(Vector3 position) 
+    public SquareCell GetCell(Vector3 position, Color color) 
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
         int index = ((coordinates.X + (coordinates.Z * width)));
-        int index = ((coordinates.X + (coordinates.Z * cellCountX)));
-       // Debug.Log("Hit: " + coordinates.ToString());
         return cells[index];     
     }
 
@@ -225,33 +194,23 @@ public class SquareGrid : MonoBehaviour
         position.z = z * 10f;
 
         SquareCell cell = cells[i] = Instantiate<SquareCell>(cellPrefab);
+        cell.transform.SetParent(transform, false);
         cell.transform.localPosition = position;
         cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z); // Create struct with coordinates. Might need adjustment.
-        cell.TerrainTypeIndex = Random.Range(0, 4);
+
+        cell.color = defaultColor;
 
         if (x > 0)
             cell.SetNeighbor(SquareDirection.LEFT, cells[i - 1]);
         if (z > 0)
         {
-            cell.SetNeighbor(SquareDirection.DOWN, cells[i - cellCountX]);
+            cell.SetNeighbor(SquareDirection.DOWN, cells[i - width]);
         }
 
         Text label = Instantiate<Text>(cellLabelPrefab);
+        label.rectTransform.SetParent(gridCanvas.transform, false);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
-        label.text = cell.coordinates.ToStringOnSeparateLines();
         cell.uiRect = label.rectTransform;
-        AddCellToChunk(x, z, cell);
-    }
-
-    void AddCellToChunk(int x, int z, SquareCell cell) 
-    {
-        int chunkX = x / SquareMetrics.chunkSizeX;
-        int chunkZ = z / SquareMetrics.chunkSizeZ;
-        SquareGridChunk chunk = chunks[chunkX + chunkZ * chunkCountX];
-      
-        int localX = x - chunkX * SquareMetrics.chunkSizeX;
-        int localZ = z - chunkZ * SquareMetrics.chunkSizeZ;
-        chunk.AddCell(localX + localZ * SquareMetrics.chunkSizeX, cell);
     }
 }
 
