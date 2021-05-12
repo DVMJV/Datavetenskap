@@ -21,7 +21,7 @@ public class SquareMapGenerator : MonoBehaviour
         RaiseTerrain(30);
         for (int i = 0; i < cellCount; i++)
         {
-            grid.GetCell(i).SearchPhase = 0;
+       //     grid.GetCell(i).SearchPhase = 0;
         }
     }
 
