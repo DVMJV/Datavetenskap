@@ -12,8 +12,7 @@ public class SquareCellPriorityQueue
     public void Enqueue(SquareCell cell) 
     {
         count++;
-        //  int priority = cell.SearchPriority;
-        int priority = 0;
+        int priority = cell.SearchPriority;
 
         if (priority < minimum)
             minimum = priority;
