@@ -40,6 +40,9 @@ public class AIHandler : MonoBehaviour
     {
         foreach (PokemonContainer pokemon in pokemons)
         {
+            if(pokemon.IsStunned())
+                continue;
+
             CheckForPokemons(pokemon);
 
             if(VisiblePokemon.Count > 0)
@@ -49,11 +52,11 @@ public class AIHandler : MonoBehaviour
                 {
                     if(attack.GetAttack() is PokemonLineAttack)
                     {
-                        target = LineAttackSearch(pokemon.currentCell, attack.GetAttack());
+                        target = LineAttackSearch(pokemon.CurrentTile, attack.GetAttack());
                         if(target != null)
                         {
-                            attack.FindAttackableTiles(pokemon.currentCell);
-                            attack.Attack(pokemon.currentCell, target.currentCell, pokemon.gameObject.tag);
+                            attack.FindAttackableTiles(pokemon.CurrentTile);
+                            attack.Attack(pokemon.CurrentTile, target.CurrentTile, pokemon.gameObject.tag);
                         }
                     }
                 }
@@ -92,7 +95,7 @@ public class AIHandler : MonoBehaviour
                     break;
                 foreach(PokemonContainer pokemon in VisiblePokemon)
                 {
-                    if(pokemon.currentCell == neighbor)
+                    if(pokemon.CurrentTile == neighbor)
                         return pokemon;
                 }
                 neighbor = neighbor.GetNeighbor(direction);
@@ -107,7 +110,7 @@ public class AIHandler : MonoBehaviour
     {
         Stack<SquareCell> path = new Stack<SquareCell>();
         Stack<SquareCell> currentPath = new Stack<SquareCell>();
-        SquareCell newCell = pokemon.currentCell;
+        SquareCell newCell = pokemon.CurrentTile;
         for (int i = 0; i < pokemon.currentMovement; i++)
         {
             int Direction = Random.Range(0, 4);

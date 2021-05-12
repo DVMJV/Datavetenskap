@@ -122,7 +122,7 @@ public class SquareGrid : MonoBehaviour
 
     void SearchForPath(SquareCell toCell, PokemonContainer pokemon)
     {
-        SquareCell fromCell = pokemon.currentCell;
+        SquareCell fromCell = pokemon.CurrentTile;
         int speed = pokemon.currentMovement;
 
         if (!walkableTiles.Contains(toCell))

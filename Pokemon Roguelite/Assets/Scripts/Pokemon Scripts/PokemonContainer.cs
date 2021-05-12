@@ -13,9 +13,10 @@ public class PokemonContainer : MonoBehaviour
     public int currentLevel = 5;
     public int currentMovement;
     int currentHealth = 5;
+    private bool stunned;
 
     [SerializeField]
-    public SquareCell currentCell;
+    private SquareCell currentCell;
 
     public List<AttackContainer> learnedMoves = new List<AttackContainer>();
 
@@ -25,7 +26,8 @@ public class PokemonContainer : MonoBehaviour
 
     AttackContainer attackSelected;
 
-    public SquareCell CurrentTile { get { return currentCell; } 
+    public SquareCell CurrentTile { 
+        get { return currentCell; } 
         set
         {
             if (currentCell == value)
@@ -59,6 +61,11 @@ public class PokemonContainer : MonoBehaviour
         }
     }
 
+    public bool IsStunned()
+    {
+        return stunned;
+    }
+
     private void Update()
     {
         if (currentHealth <= 0)
@@ -69,6 +76,18 @@ public class PokemonContainer : MonoBehaviour
     {
         if(attackedTile == currentCell && !CompareTag(tag))
         {
+            PokemonAttack.SecondaryEffect effect = attack.effect;
+
+            switch (effect)
+            {
+                case PokemonAttack.SecondaryEffect.Stun:
+                    stunned = true;
+                    currentMovement = 0;
+                    break;
+                default:
+                    break;
+            }
+            
             currentHealth -= attack.damage;
         }
     }
@@ -77,6 +96,7 @@ public class PokemonContainer : MonoBehaviour
     {
         currentMovement = pokemon.movementSpeed;
         hasAttacked = false;
+        stunned = false;
         foreach (AttackContainer attack in learnedMoves)
             attack.LowerCooldown();
     }
@@ -110,7 +130,7 @@ public class PokemonContainer : MonoBehaviour
 
     public void AttackSelected(AttackContainer attack)
     {
-        if (learnedMoves.Contains(attack) && !hasAttacked)
+        if (learnedMoves.Contains(attack) && !hasAttacked && !stunned)
         {
             attackSelected = attack;
             attack.FindAttackableTiles(currentCell);

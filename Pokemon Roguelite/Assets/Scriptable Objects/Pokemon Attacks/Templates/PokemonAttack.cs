@@ -10,13 +10,14 @@ public abstract class PokemonAttack : ScriptableObject
     public Type type;
     public int id;
     public int cooldown;
+    public SecondaryEffect effect;
 
     public enum SecondaryEffect
     {
-        STUN,
-        KNOCKBACK,
-        BLEED,
-        NONE
+        Stun,
+        Knockback,
+        Bleed,
+        None
     }
 
     public abstract void Attack(SquareCell fromCell, SquareCell toCell, string attack);
