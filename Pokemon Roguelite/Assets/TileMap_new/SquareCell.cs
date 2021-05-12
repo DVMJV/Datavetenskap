@@ -8,10 +8,14 @@ public class SquareCell : MonoBehaviour
     SquareCell[] neighbors;
 
     public SquareGridChunk chunk;
-
     public RectTransform uiRect;
-
     public SquareCoordinates coordinates;
+
+    // For procedural generation
+    public SquareCell NextWithSamePriority { get; set; }
+    int searchPhase; // Should be properties?
+    int searchPriority;
+    //
 
     float terrainTypeIndex;
     public float TerrainTypeIndex
@@ -26,7 +30,6 @@ public class SquareCell : MonoBehaviour
             Refresh();
         }
     }
-
     public int Elevation { get { return elevation; } 
         set
         {
@@ -46,7 +49,7 @@ public class SquareCell : MonoBehaviour
             Refresh();
             } }
     int elevation = 0;
-    
+
     public SquareCell GetNeighbor(SquareDirection direction) 
     {
         return neighbors[(int)direction];
