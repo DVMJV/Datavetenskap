@@ -87,9 +87,47 @@ public class PokemonContainer : MonoBehaviour
                 default:
                     break;
             }
-            
-            currentHealth -= attack.damage;
+
+            currentHealth -= CalculateDamage(attack);
         }
+    }
+
+    private int CalculateDamage(PokemonAttack attack)
+    {
+        int adjustedDamage = attack.damage;
+        Type attackType = attack.type;
+        switch (attackType)
+        {
+            case Type.NEUTRAL:
+                adjustedDamage = attack.damage;
+                break;
+            case Type.WATER:
+                if (pokemon.type == Type.LIGHTNING)
+                    adjustedDamage = attack.damage / 2;
+                else if (pokemon.type == Type.METAL)
+                    adjustedDamage = attack.damage * 2;
+                else
+                    adjustedDamage = attack.damage;
+                break;
+            case Type.LIGHTNING:
+                if (pokemon.type == Type.WATER)
+                    adjustedDamage = attack.damage * 2;
+                else if (pokemon.type == Type.METAL)
+                    adjustedDamage = attack.damage / 2;
+                else
+                    adjustedDamage = attack.damage;
+                break;
+            case Type.METAL:
+                if (pokemon.type == Type.LIGHTNING)
+                    adjustedDamage = attack.damage / 2;
+                else if (pokemon.type == Type.WATER)
+                    adjustedDamage = attack.damage * 2;
+                else
+                    adjustedDamage = attack.damage;
+                break;
+        }
+
+        return adjustedDamage;
     }
 
     public void EndTurn()
