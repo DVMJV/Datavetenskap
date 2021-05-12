@@ -10,6 +10,7 @@ public static class ListPool<T>
             return stack.Pop();
         else
             return new List<T>();
+        
     }
 
     public static void Add(List<T> list) 
