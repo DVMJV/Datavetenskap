@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class SquareGrid : MonoBehaviour
@@ -20,8 +17,6 @@ public class SquareGrid : MonoBehaviour
     MeshCollider meshCollider;
 
     public float defaultTerrainIndex = 0;
-
-    List<SquareCell> walkableTiles = new List<SquareCell>();
 
     private void Awake()
     {
@@ -44,23 +39,6 @@ public class SquareGrid : MonoBehaviour
                 CreateCell(x, z, i++);
             }
         }
-    }
-
-    private void ClearHighlights()
-    {
-        for (int i = 0; i < cells.Length; i++)
-        {
-            cells[i].Distance = int.MaxValue;
-            cells[i].DisableHighlight();
-        }
-    }
-
-    private void Start()
-    {
-        EventHandler.current.onAllySelected += FindAllPossibleTiles;
-        EventHandler.current.onTurnEnd += ClearHighlights;
-        EventHandler.current.onMovePokemon += FindPath;
-        EventHandler.current.clearHighlights += ClearHighlights;
     }
 
     void CreateChunks() 
@@ -97,7 +75,8 @@ public class SquareGrid : MonoBehaviour
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
-        int index = ((coordinates.X + (coordinates.Z * width)));
+        int index = ((coordinates.X + (coordinates.Z * cellCountX)));
+       // Debug.Log("Hit: " + coordinates.ToString());
         return cells[index];     
     }
 
@@ -109,124 +88,6 @@ public class SquareGrid : MonoBehaviour
     public SquareCell GetCell(int cellIndex)
     {
         return cells[cellIndex];
-    }
-
-    public void FindAllPossibleTiles(PokemonContainer selectedPokemon)
-    {
-        SearchForTiles(selectedPokemon.currentMovement, selectedPokemon.CurrentTile);
-    }
-
-    public void FindPath(SquareCell fromCell, PokemonContainer pokemon)
-    {
-        SearchForPath(fromCell, pokemon);
-    }
-
-    void SearchForTiles(int speed, SquareCell currentTile)
-    {
-        for (int i = 0; i < cells.Length; i++)
-        {
-            cells[i].Distance = int.MaxValue;
-            cells[i].DisableHighlight();
-            walkableTiles.Clear();
-        }
-
-        Queue<SquareCell> openSet = new Queue<SquareCell>();
-        currentTile.Distance = 0;
-        openSet.Enqueue(currentTile);
-
-        while(openSet.Count > 0)
-        {
-            SquareCell current = openSet.Dequeue();
-
-            if (current.Distance >= speed && current.Distance != int.MaxValue)
-                continue;
-
-            for(SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
-            {
-                SquareCell neighbor = current.GetNeighbor(d);
-
-                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1)
-                    continue;
-                else if(neighbor.Distance == int.MaxValue)
-                {
-                    neighbor.Distance = current.Distance + 1;
-                    if (neighbor.Distance > speed)
-                        continue;
-                    else
-                    {
-                        neighbor.EnableHighlight(Color.blue);
-                        openSet.Enqueue(neighbor);
-                        walkableTiles.Add(neighbor);
-                    }
-                }
-            }
-        }
-    }
-
-    void SearchForPath(SquareCell toCell, PokemonContainer pokemon)
-    {
-        SquareCell fromCell = pokemon.CurrentTile;
-        int speed = pokemon.currentMovement;
-
-        if (!walkableTiles.Contains(toCell))
-            return;
-
-        for (int i = 0; i < cells.Length; i++)
-        {
-            cells[i].Distance = int.MaxValue;
-        }
-
-        fromCell.Distance = 0;
-
-        SquareCellPriorityQueue openSet = new SquareCellPriorityQueue();
-        openSet.Enqueue(fromCell);
-
-        while(openSet.Count > 0)
-        {
-            SquareCell current = openSet.Dequeue();
-            
-            if (current == toCell)
-            {
-                ConstructPath(toCell, pokemon);
-                break;
-            }
-
-            for(SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
-            {
-                SquareCell neighbor = current.GetNeighbor(d);
-                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1 || !walkableTiles.Contains(neighbor))
-                    continue;
-
-                else if(neighbor.Distance == int.MaxValue)
-                {
-                    neighbor.Distance = current.Distance + 1;
-                    neighbor.SearchHeuristic = neighbor.coordinates.DistanceTo(toCell.coordinates);
-                    neighbor.PathFrom = current;
-                    openSet.Enqueue(neighbor);
-                }
-                else if(current.Distance + 1 < neighbor.Distance)
-                {
-                    int oldPriority = neighbor.SearchPriority;
-                    neighbor.Distance = current.Distance + 1;
-                    neighbor.PathFrom = current;
-                    openSet.Change(neighbor, oldPriority);
-                }
-            }
-        }
-
-    }
-
-    
-    void ConstructPath(SquareCell toCell, PokemonContainer pokemon)
-    {
-        Stack<SquareCell> stack = new Stack<SquareCell>();
-        while (toCell != pokemon.CurrentTile)
-        {
-            stack.Push(toCell);
-            toCell = toCell.PathFrom;
-        }
-
-        EventHandler.current.PathFound(stack, pokemon);
     }
 
     void CreateCell(int x, int z, int i)
