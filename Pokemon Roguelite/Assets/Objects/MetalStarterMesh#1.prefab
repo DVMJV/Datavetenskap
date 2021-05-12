@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 609582643480673342}
   - component: {fileID: 1942720774770598760}
   - component: {fileID: 5959177231135018558}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface1_pSphere3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,8 +105,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4959695071448803919}
-  m_Layer: 0
-  m_Name: MetalStarter#1
+  m_Layer: 6
+  m_Name: MetalStarterMesh#1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4860729406118940422}
   - component: {fileID: 8943325307524913088}
   - component: {fileID: 2789599586528516280}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pSphere3_polySurface2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
