@@ -1,191 +1,84 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EventHandler : MonoBehaviour
 {
     public static EventHandler current;
 
-    #region Unity Functions
+
+    #region Events
+    public event Action<PokemonContainer> onAllySelected;
+    public event Action onStart;
+    public event Action<int> onMoveSelected;
+    public event Action onChangeSelectedObject;
+    public event Action<Vector3> onTileSelected;
+    public event Action<Vector3, PokemonContainer> onMovePokemon;
+    public event Action<PokemonContainer> onAddedPokemon;
+    
+    #endregion
+
+
+
 
     private void Awake()
     {
         current = this;
     }
 
-    #endregion
-    
-    #region Events
 
-    #region GeneralSystem
-
-    #region GeneralEvents
-    public event Action onStart;
-    #endregion
-
-    #region GeneralEventCalls
-    public void OnStart()
+    public void MovePokemon(Vector3 tilePos, PokemonContainer pokemon)
     {
-        onStart?.Invoke();
+        if(onMovePokemon != null)
+        {
+            onMovePokemon(tilePos, pokemon);
+        }
     }
-    #endregion
 
-    #endregion
-
-    #region SelectSystem
-
-    #region SelectEvents
-    public event Action<PokemonContainer> onAllySelected;
-    public event Action onChangeSelectedObject;
-    public event Action<SquareCell> onTileSelected;
-    #endregion
-
-    #region SelectEventCalls
+    public void TileSelected(Vector3 tilePos)
+    {
+        if(onTileSelected != null)
+        {
+            onTileSelected(tilePos);
+        }
+    }
 
     public void AllySelected(PokemonContainer pokemon)
     {
-        onAllySelected?.Invoke(pokemon);
+        if(onAllySelected != null)
+        {
+            onAllySelected(pokemon);
+        }
     }
-    public void TileSelected(SquareCell selectedCell)
-    {
-        onTileSelected?.Invoke(selectedCell);
-    }
+
     public void ChangeSelectedObject()
     {
-        onChangeSelectedObject?.Invoke();
+        if(onChangeSelectedObject != null)
+        {
+            onChangeSelectedObject();
+        }
     }
 
-    #endregion
-    #endregion
-    
-    #region AttackSystem
-
-    #region AttackEvents
-    public event Action<AttackContainer> onAttackSelected;
-    public event Action<SquareCell, PokemonAttack, string> onAttackTile;
-    public event Action clearHighlights;
-    #endregion
-
-    #region AttackEventCalls
-    public void AttackTile(SquareCell tile, PokemonAttack attack, string tag)
+    public void OnStart()
     {
-        onAttackTile?.Invoke(tile, attack, tag);
+        if(onStart != null)
+        {
+            onStart();
+        }
     }
-    public void MoveSelected(AttackContainer attack)
+
+    public void MoveSelected(int id)
     {
-        clearHighlights?.Invoke();
-        onAttackSelected?.Invoke(attack);
+        if(onMoveSelected != null)
+        {
+            onMoveSelected(id);
+        }
     }
-    #endregion
-    #endregion
-
-    #region MoveSystem
-    #region MoveEvents
-    public event Action<SquareCell, PokemonContainer> onMovePokemon;
-    public event Action<Stack<SquareCell>, PokemonContainer> onPathFound;
-    #endregion
-
-    #region MoveEventCalls
-
-    public void PathFound(Stack<SquareCell> path, PokemonContainer pokemon)
-    {
-        onPathFound?.Invoke(path, pokemon);
-    }
-    public void MovePokemon(SquareCell selectedCell, PokemonContainer pokemon)
-    {
-        onMovePokemon?.Invoke(selectedCell, pokemon);
-    }
-
-    #endregion
-    #endregion
-
-    #region PokemonSystem
-
-    #region PokemonEvents
-    public event Action<PokemonContainer> onAddedPokemon;
-    #endregion
-
-    #region PokemonEventCalls
 
     public void AddPokemon(PokemonContainer pokemonContainer)
     {
-        onAddedPokemon?.Invoke(pokemonContainer);
-    }
-
-    #endregion
-
-    #endregion
-
-    #region HubSystem
-
-    #region HubEvents
-    public event Action<GameObject> onItemBought;
-    public event Action<PokemonContainer> onUpgradeSlotFilled;
-    public event Action onUpgradeSlotEmpty;
-    #endregion
-
-    #region HubEventCalls
-    public void ItemBought(GameObject boughtItemPrefab)
-    {
-        if(onItemBought != null)
+        if(onAddedPokemon != null)
         {
-            onItemBought(boughtItemPrefab);
+            onAddedPokemon(pokemonContainer);
         }
     }
-
-    public void UpgradeSlotFilled(PokemonContainer pokemonContainer)
-    {
-        if (onUpgradeSlotFilled != null)
-        {
-            onUpgradeSlotFilled(pokemonContainer);
-        }
-    }
-
-    public void UpgradeSlotEmpty()
-    {
-        if(onUpgradeSlotEmpty != null)
-        {
-            onUpgradeSlotEmpty();
-        }
-    }
-
-    #endregion
-    #endregion
-
-    #region TurnSystem
-    #region TurnEvents
-    public event Action<int> onTurnStart;
-    public event Action onTurnEnd;
-    public event Action<int> onTurnReset;
-    public event Action onAllowedToEndTurn;
-    #endregion
-
-    #region TurnEventCalls
-    public void StartTurn(int id)
-    {
-        onTurnStart?.Invoke(id);
-    }
-
-    public void EndTurn()
-    {
-        onTurnEnd?.Invoke();
-    }
-
-    public void ResetTurn(int id)
-    {
-        onTurnReset?.Invoke(id);
-    }
-
-    public void AllowedToEndTurn()
-    {
-        onAllowedToEndTurn?.Invoke();
-    }
-    
-
-    #endregion
-    
-    #endregion
-    
-    #endregion
-
 }

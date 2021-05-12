@@ -18,14 +18,6 @@ public struct SquareCoordinates
         this.z = z;
     }
 
-    public int DistanceTo(SquareCoordinates other)
-    {
-        return (x < other.x ? other.x - x : x - other.x)
-            + (z < other.z ? other.z - z : z - other.z) 
-            ;
-    }
-
-
     public static SquareCoordinates FromOffsetCoordinates(int x, int z)
     {
         return new SquareCoordinates(x, z);

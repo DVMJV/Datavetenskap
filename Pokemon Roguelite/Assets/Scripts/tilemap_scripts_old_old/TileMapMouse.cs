@@ -47,6 +47,7 @@ public class TileMapMouse : MonoBehaviour
             {
 
                 Vector3 pos = new Vector3(currentTileCoord.x + tileMap.tileSize / 2, currentTileCoord.y, currentTileCoord.z + tileMap.tileSize / 2);
+                EventHandler.current.TileSelected(pos);
             }
         }
     }
