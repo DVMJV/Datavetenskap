@@ -46,7 +46,6 @@ public class SquareMapEditor : MonoBehaviour
     {
         cell.TerrainTypeIndex = activeTerrainIndex;
         cell.Elevation = activeElevation;
-        squareGrid.Refresh();
     }
 
     public void SelectTerrainIndex(float index)
