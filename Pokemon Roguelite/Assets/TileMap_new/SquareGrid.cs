@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class SquareGrid : MonoBehaviour
 {
-    int cellCountX, cellCountZ;
-    public int chunkCountX = 4, chunkCountZ = 3;
+    public int cellCountX = 20, cellCountZ = 15;
+    int chunkCountX, chunkCountZ;
 
     public SquareCell cellPrefab;
     SquareCell[] cells;
@@ -20,10 +20,7 @@ public class SquareGrid : MonoBehaviour
 
     private void Awake()
     {
-        cellCountX = chunkCountX * SquareMetrics.chunkSizeX;
-        cellCountZ = chunkCountZ * SquareMetrics.chunkSizeZ;
-        CreateChunks();
-        CreateCells();
+        CreateMap(cellCountX, cellCountZ);
     }
 
     public void ShowUI(bool visible) 
@@ -58,6 +55,22 @@ public class SquareGrid : MonoBehaviour
         }
     }
 
+    public void CreateMap(int x, int z)
+    {
+        // Clear old data
+        if (chunks!=null)
+            for (int i = 0; i < chunks.Length; i++)
+                Destroy(chunks[i].gameObject);
+
+        cellCountX = x;
+        cellCountZ = z;
+        chunkCountX = cellCountX / SquareMetrics.chunkSizeX;
+        chunkCountZ = cellCountZ / SquareMetrics.chunkSizeZ;
+        CreateChunks();
+        CreateCells();
+    }
+
+    // Different ways to get index.
     public SquareCell GetCell(Vector3 position) 
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
@@ -65,6 +78,16 @@ public class SquareGrid : MonoBehaviour
         int index = ((coordinates.X + (coordinates.Z * cellCountX)));
        // Debug.Log("Hit: " + coordinates.ToString());
         return cells[index];     
+    }
+
+    public SquareCell GetCell(int xOffset, int zOffset)
+    {
+        return cells[xOffset + zOffset * cellCountX];
+    }
+
+    public SquareCell GetCell(int cellIndex)
+    {
+        return cells[cellIndex];
     }
 
     void CreateCell(int x, int z, int i)
@@ -76,8 +99,8 @@ public class SquareGrid : MonoBehaviour
 
         SquareCell cell = cells[i] = Instantiate<SquareCell>(cellPrefab);
         cell.transform.localPosition = position;
-        cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z); // Create struct with coordinates. Might need adjustment.
-        cell.TerrainTypeIndex = Random.Range(0, 4);
+        cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z);
+       // cell.TerrainTypeIndex = Random.Range(0, 4); // Use to generate noise to test terrainTypes.
 
         if (x > 0)
             cell.SetNeighbor(SquareDirection.LEFT, cells[i - 1]);

@@ -5,14 +5,15 @@ using UnityEngine;
 public class NewMapMenu : MonoBehaviour
 {
     public SquareGrid squareGrid;
+    public SquareMapGenerator mapGenerator;
+    int x = 20;
+    int z = 15;
 
-    public void Open() 
+
+    public void CreateMap() 
     {
-        gameObject.SetActive(true);
+        mapGenerator.GenerateMap(x, z);
     }
 
-    public void Close() 
-    {
-        gameObject.SetActive(false);
-    }
+
 }

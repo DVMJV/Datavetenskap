@@ -8,6 +8,10 @@ public class SquareMapGenerator : MonoBehaviour
 
     public void GenerateMap(int x, int z) 
     {
-     //   grid.CreateMap(x, z);
+        grid.CreateMap(x, z);
+        for (int i = 0; i < z; i++)
+        { 
+            grid.GetCell(x / (int)SquareMetrics.width, i ).TerrainTypeIndex = 1;
+        }
     }
 }

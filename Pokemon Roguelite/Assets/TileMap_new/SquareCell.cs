@@ -45,7 +45,6 @@ public class SquareCell : MonoBehaviour
 
             Refresh();
             } }
-    //int elevation = int.MinValue;
     int elevation = 0;
     
     public SquareCell GetNeighbor(SquareDirection direction) 
