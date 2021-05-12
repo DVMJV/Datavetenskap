@@ -23,7 +23,7 @@ public class PokemonContainer : MonoBehaviour
     [SerializeField] private PokemonAttack[] temp;
     public bool hasAttacked = false;
 
-    AttackContainer attackSelected;
+    private AttackContainer attackSelected;
 
     public SquareCell CurrentTile { 
         get => currentCell;
@@ -34,7 +34,8 @@ public class PokemonContainer : MonoBehaviour
 
             currentCell = value;
 
-            transform.position = new Vector3(currentCell.transform.position.x, currentCell.transform.position.y + currentCell.Elevation, currentCell.transform.position.z);
+            var position = currentCell.transform.position;
+            transform.position = new Vector3(position.x, position.y + currentCell.Elevation, position.z);
         }
     }
 
@@ -163,14 +164,12 @@ public class PokemonContainer : MonoBehaviour
     }
 
 
-    public void AttackSelected(AttackContainer attack)
+    private void AttackSelected(AttackContainer attack)
     {
-        if (learnedMoves.Contains(attack) && !hasAttacked && !stunned)
-        {
-            attackSelected = attack;
-            attack.FindAttackableTiles(currentCell);
-            attack.HighlightAttack();
-        }
+        if (!learnedMoves.Contains(attack) || hasAttacked || stunned) return;
+        attackSelected = attack;
+        attack.FindAttackableTiles(currentCell);
+        attack.HighlightAttack();
     }
 
     public void LearnMove(PokemonAttack newMove)
@@ -188,11 +187,9 @@ public class PokemonContainer : MonoBehaviour
 
     private void AttackTile(SquareCell selectedTile)
     {
-        if(attackSelected != null)
-        {
-            hasAttacked = true;
-            attackSelected.Attack(currentCell, selectedTile, tag);
-        }
+        if (attackSelected == null) return;
+        hasAttacked = true;
+        attackSelected.Attack(currentCell, selectedTile, tag);
     }
 
     private void Unselect(PokemonContainer pokemon)
