@@ -55,8 +55,6 @@ public class AttackContainer
 
     private void SingleAttackSearch(SquareCell fromCell, PokemonAttack attack)
     {
-        
-
         Queue<SquareCell> openSet = new Queue<SquareCell>();
         fromCell.Distance = 0;
         openSet.Enqueue(fromCell);
