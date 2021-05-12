@@ -36,8 +36,7 @@ public class SquareCell : MonoBehaviour
     public SquareCoordinates coordinates;
 
     // For procedural generation
-    public SquareCell NextWithSamePriority { get; set; }
-    int searchPhase; // Should be properties?
+    public int SearchPhase; // Should be properties?
     int searchPriority;
     //
 

@@ -265,6 +265,10 @@ public class SquareGrid : MonoBehaviour
         int localZ = z - chunkZ * SquareMetrics.chunkSizeZ;
         chunk.AddCell(localX + localZ * SquareMetrics.chunkSizeX, cell);
     }
+
+    public void Refresh()
+    {
+    }
 }
 
 
