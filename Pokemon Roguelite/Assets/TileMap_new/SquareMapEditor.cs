@@ -5,8 +5,6 @@ public class SquareMapEditor : MonoBehaviour
     public SquareGrid squareGrid;
     int activeElevation;
 
-    SquareCell searchFromCell, searchToCell;
-
     public float[] terrainTypeIndexes;
     float activeTerrainIndex;
 
@@ -34,9 +32,7 @@ public class SquareMapEditor : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            SquareCell currentCell = squareGrid.GetCell(hit.point);
-            EventHandler.current.TileSelected(currentCell);
-            EditCell(currentCell);
+            EditCell(squareGrid.GetCell(hit.point));
         }
     }
 
@@ -54,6 +50,7 @@ public class SquareMapEditor : MonoBehaviour
     public void SetElevation(float elevation)
     {
         activeElevation = (int)elevation;
+      //  Debug.Log(activeElevation);
     }
 
 
