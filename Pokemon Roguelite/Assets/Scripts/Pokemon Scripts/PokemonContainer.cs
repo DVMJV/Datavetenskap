@@ -7,24 +7,31 @@ using UnityEngine.UI;
 
 public class PokemonContainer : MonoBehaviour
 {
-    [SerializeField]
-    public Pokemon pokemon;
-
+    #region Variables
+    #region Public Variables
+    
     public int currentLevel = 5;
     public int currentMovement;
-    private int currentHealth = 5;
-    private bool stunned;
-
-    [SerializeField]
-    private SquareCell currentCell;
-
-    public List<AttackContainer> learnedMoves = new List<AttackContainer>();
-
-    [SerializeField] private PokemonAttack[] temp;
+    
     public bool hasAttacked = false;
+    
+    public List<AttackContainer> learnedMoves = new List<AttackContainer>();
+    [SerializeField] public Pokemon pokemon;
+    #endregion
+
+    #region Private Variables
+    private int currentHealth = 5;
+    
+    private bool stunned;
+    
+    [SerializeField] private SquareCell currentCell;
+    [SerializeField] private PokemonAttack[] temp;
 
     private AttackContainer attackSelected;
+    #endregion
+    #endregion
 
+    #region Properties
     public SquareCell CurrentTile { 
         get => currentCell;
         private set
@@ -38,8 +45,10 @@ public class PokemonContainer : MonoBehaviour
             transform.position = new Vector3(position.x, position.y + currentCell.Elevation, position.z);
         }
     }
+    #endregion
 
-    // Start is called before the first frame update
+    #region Unity Functions
+
     private void Start()
     {
         Destroy(GetComponent<MeshRenderer>());
@@ -61,17 +70,55 @@ public class PokemonContainer : MonoBehaviour
         }
     }
 
-    public bool IsStunned()
-    {
-        return stunned;
-    }
-
     private void Update()
     {
         if (currentHealth <= 0)
             Destroy(gameObject);
     }
 
+    #endregion
+
+    #region Public
+
+    /// <summary>
+    /// Handles ending the turn for the pokemon
+    /// </summary>
+    public void EndTurn()
+    {
+        currentMovement = pokemon.movementSpeed;
+        hasAttacked = false;
+        stunned = false;
+        foreach (AttackContainer attack in learnedMoves)
+            attack.LowerCooldown();
+    }
+    /// <summary>
+    /// Learns a new move.
+    /// </summary>
+    /// <param name="newMove"></param>
+    public void LearnMove(PokemonAttack newMove)
+    {
+        learnedMoves.Add(new AttackContainer(newMove));
+    }
+    
+    /// <summary>
+    /// Returns if the pokemon is currently stunned or not
+    /// </summary>
+    /// <returns></returns>
+    public bool IsStunned()
+    {
+        return stunned;
+    }
+
+    #endregion
+
+    #region Event Listeners
+    
+    /// <summary>
+    /// Checks if the tile the pokemon is standing on was attacked.
+    /// </summary>
+    /// <param name="attackedTile"></param>
+    /// <param name="attack"></param>
+    /// <param name="tag"></param>
     private void TileAttacked(SquareCell attackedTile, PokemonAttack attack, string tag)
     {
         if (attackedTile != currentCell || CompareTag(tag)) return;
@@ -89,7 +136,73 @@ public class PokemonContainer : MonoBehaviour
 
         currentHealth -= CalculateDamage(attack);
     }
+    
+    /// <summary>
+    /// Moves the pokemon following a specific path
+    /// </summary>
+    /// <param name="path"></param>
+    /// <param name="pokemon"></param>
+    private void Move(Stack<SquareCell> path, PokemonContainer pokemon)
+    {
+        if (pokemon == this && attackSelected == null)
+        {
+            StartCoroutine(MoveEnumerator(path));
+        }
+    }
+    
+    /// <summary>
+    /// Selects an attack
+    /// </summary>
+    /// <param name="attack"></param>
+    private void AttackSelected(AttackContainer attack)
+    {
+        if (!learnedMoves.Contains(attack) || hasAttacked || stunned) return;
+        attackSelected = attack;
+        attack.FindAttackableTiles(currentCell);
+        attack.HighlightAttack();
+    }
+    
+    /// <summary>
+    /// Checks if this was the pokemon selected
+    /// </summary>
+    /// <param name="selectedTile"></param>
+    private void PokemonSelected(SquareCell selectedTile)
+    {
+        if(selectedTile == currentCell && gameObject.CompareTag("Friendly"))
+        {
+            EventHandler.current.AllySelected(this);
+        }
+    }
+    
+    /// <summary>
+    /// Attacks a tile
+    /// </summary>
+    /// <param name="selectedTile"></param>
+    private void AttackTile(SquareCell selectedTile)
+    {
+        if (attackSelected == null) return;
+        hasAttacked = true;
+        attackSelected.Attack(currentCell, selectedTile, tag);
+    }
+    
+    /// <summary>
+    /// Unselects the pokemon
+    /// </summary>
+    /// <param name="pokemon"></param>
+    private void Unselect(PokemonContainer pokemon)
+    {
+        attackSelected = null;
+    }
 
+    #endregion
+    
+    #region Private
+
+    /// <summary>
+    /// Calculates the damage taken based on pokemon type and attack type
+    /// </summary>
+    /// <param name="attack"></param>
+    /// <returns></returns>
     private int CalculateDamage(PokemonAttack attack)
     {
         var adjustedDamage = attack.damage;
@@ -128,23 +241,15 @@ public class PokemonContainer : MonoBehaviour
         return adjustedDamage;
     }
 
-    public void EndTurn()
-    {
-        currentMovement = pokemon.movementSpeed;
-        hasAttacked = false;
-        stunned = false;
-        foreach (AttackContainer attack in learnedMoves)
-            attack.LowerCooldown();
-    }
+        #endregion
 
-    private void Move(Stack<SquareCell> path, PokemonContainer pokemon)
-    {
-        if (pokemon == this && attackSelected == null)
-        {
-            StartCoroutine(MoveEnumerator(path));
-        }
-    }
+    #region Enumerators
 
+    /// <summary>
+    /// Slows down how the pokemon moves, when finished it allows the current turn to be ended.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
     IEnumerator MoveEnumerator(Stack<SquareCell> path)
     {
         WaitForSeconds delay = new WaitForSeconds(1 / 10f);
@@ -162,38 +267,7 @@ public class PokemonContainer : MonoBehaviour
         }
         EventHandler.current.AllowedToEndTurn();
     }
+    
 
-
-    private void AttackSelected(AttackContainer attack)
-    {
-        if (!learnedMoves.Contains(attack) || hasAttacked || stunned) return;
-        attackSelected = attack;
-        attack.FindAttackableTiles(currentCell);
-        attack.HighlightAttack();
-    }
-
-    public void LearnMove(PokemonAttack newMove)
-    {
-        learnedMoves.Add(new AttackContainer(newMove));
-    }
-
-    private void PokemonSelected(SquareCell selectedTile)
-    {
-        if(selectedTile == currentCell && gameObject.CompareTag("Friendly"))
-        {
-            EventHandler.current.AllySelected(this);
-        }
-    }
-
-    private void AttackTile(SquareCell selectedTile)
-    {
-        if (attackSelected == null) return;
-        hasAttacked = true;
-        attackSelected.Attack(currentCell, selectedTile, tag);
-    }
-
-    private void Unselect(PokemonContainer pokemon)
-    {
-        attackSelected = null;
-    }
+    #endregion
 }

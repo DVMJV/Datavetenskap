@@ -18,7 +18,6 @@ public class SquareMapEditor : MonoBehaviour
     private void Update()
     {
         HandleInput();
-        
     }
 
     void HandleInput()

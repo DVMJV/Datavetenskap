@@ -4,18 +4,80 @@ using UnityEngine;
 
 public class AttackContainer
 {
-    PokemonAttack attack;
+    #region Variables
+
+    private PokemonAttack attack;
     private int cooldown;
-    List<SquareCell> attackableCells;
+    private List<SquareCell> attackableCells;
+    
+    #endregion
+
+    #region Constructor
+    
+    /// <summary>
+    /// Creates a container for a specific attack that tracks individual cooldown. 
+    /// </summary>
+    /// <param name="attack"></param>
     public AttackContainer(PokemonAttack attack)
     {
         this.attack = attack;
     }
-    public PokemonAttack GetAttack()
-    {
-        return attack;
-    }
 
+    #endregion
+
+    #region Public
+    
+    /// <summary>
+    /// Finds all attackable tiles
+    /// </summary>
+    /// <param name="fromCell"></param>
+    public void FindAttackableTiles(SquareCell fromCell)
+    {
+        attackableCells = new List<SquareCell>();
+        if (attack is PokemonLineAttack)
+            LineAttackSearch(fromCell, attack);
+        else if(attack is PokemonSingleAttack)
+            SingleAttackSearch(fromCell, attack);
+    }
+    
+    /// <summary>
+    /// Highlights all attackable tiles
+    /// </summary>
+    public void HighlightAttack()
+    {
+        foreach(SquareCell cell in attackableCells)
+        {
+            cell.EnableHighlight(Color.red);
+        }
+    }
+    
+    /// <summary>
+    /// Attacks a tile 
+    /// </summary>
+    /// <param name="fromCell"></param>
+    /// <param name="toCell"></param>
+    /// <param name="tag"></param>
+    public void Attack(SquareCell fromCell, SquareCell toCell, string tag)
+    {
+        if(attackableCells.Contains(toCell))
+        {
+            cooldown = attack.cooldown;
+            attack.Attack(fromCell, toCell, tag);
+        }
+    }
+    
+    /// <summary>
+    /// Returns the attack name
+    /// </summary>
+    /// <returns></returns>
+    public string GetName()
+    {
+        return attack.name;
+    }
+    
+    /// <summary>
+    /// Lowers the cooldown
+    /// </summary>
     public void LowerCooldown()
     {
         if (cooldown == 0)
@@ -25,16 +87,25 @@ public class AttackContainer
             cooldown--;
         }
     }
-    public void FindAttackableTiles(SquareCell fromCell)
+    
+    /// <summary>
+    /// Returns the attack
+    /// </summary>
+    /// <returns></returns>
+    public PokemonAttack GetAttack()
     {
-        attackableCells = new List<SquareCell>();
-        if (attack is PokemonLineAttack)
-            LineAttackSearch(fromCell, attack);
-        else if(attack is PokemonSingleAttack)
-            SingleAttackSearch(fromCell, attack);
+        return attack;
     }
+    #endregion
+    
+    #region Private
 
-    void LineAttackSearch(SquareCell fromCell, PokemonAttack attack)
+    /// <summary>
+    /// Searches for attackable tiles for line attacks
+    /// </summary>
+    /// <param name="fromCell"></param>
+    /// <param name="attack"></param>
+    private void LineAttackSearch(SquareCell fromCell, PokemonAttack attack)
     {
         for (SquareDirection direction = SquareDirection.UP; direction <= SquareDirection.LEFT; direction++)
         {
@@ -53,6 +124,11 @@ public class AttackContainer
         }
     }
 
+    /// <summary>
+    /// Searches for attackable tiles for single target attacks
+    /// </summary>
+    /// <param name="fromCell"></param>
+    /// <param name="attack"></param>
     private void SingleAttackSearch(SquareCell fromCell, PokemonAttack attack)
     {
         Queue<SquareCell> openSet = new Queue<SquareCell>();
@@ -86,26 +162,6 @@ public class AttackContainer
             }
         }
     }
-    
-    public void HighlightAttack()
-    {
-        foreach(SquareCell cell in attackableCells)
-        {
-            cell.EnableHighlight(Color.red);
-        }
-    }
 
-    public void Attack(SquareCell fromCell, SquareCell toCell, string tag)
-    {
-        if(attackableCells.Contains(toCell))
-        {
-            cooldown = attack.cooldown;
-            attack.Attack(fromCell, toCell, tag);
-        }
-    }
-
-    public string GetName()
-    {
-        return attack.name;
-    }
+    #endregion
 }
