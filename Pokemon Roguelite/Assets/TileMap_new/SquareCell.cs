@@ -1,43 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SquareCell : MonoBehaviour
 {
     [SerializeField]
     SquareCell[] neighbors;
 
-    public SquareGridChunk chunk;
     public RectTransform uiRect;
-    public SquareCoordinates coordinates;
 
-    // For procedural generation
-    public SquareCell NextWithSamePriority { get; set; }
-    int searchPhase; // Should be properties?
-    int searchPriority;
-    //
+    public SquareCell PathFrom { get; set; }
 
-    float terrainTypeIndex;
-    public float TerrainTypeIndex
+    int distance;
+    public int SearchHeuristic { get; set; }
+
+    public int SearchPriority
     {
-        get { return terrainTypeIndex; }
+        get { return distance + SearchHeuristic; }
+        set { SearchPriority = value; }
+    }
+    public SquareCell NextWithSamePriority { get; set; }
+
+    public int Distance
+    {
+        get { return distance; }
         set
         {
-            if (terrainTypeIndex == value)
-                return;
-
-            terrainTypeIndex = value;
-            Refresh();
+            distance = value;
+            UpdateDistanceLabel();
         }
     }
-    public int Elevation { get { return elevation; } 
-        set
-        {
-            if (elevation == value)
-                return;
 
-            elevation = value;
-    
+    public SquareCoordinates coordinates;
+    public Color color;
+
+    public int Elevation { get { return elevation; } 
+        set { elevation = value;
             Vector3 position = transform.localPosition;
             position.y = value * SquareMetrics.elevationStep;
             transform.localPosition = position;
@@ -45,14 +44,19 @@ public class SquareCell : MonoBehaviour
             Vector3 uiPosition = uiRect.localPosition;
             uiPosition.z = elevation * -SquareMetrics.elevationStep;
             uiRect.localPosition = uiPosition;
-
-            Refresh();
             } }
-    int elevation = 0;
 
+    int elevation;
+    
     public SquareCell GetNeighbor(SquareDirection direction) 
     {
         return neighbors[(int)direction];
+    }
+
+    void UpdateDistanceLabel()
+    {
+        Text label = uiRect.GetComponent<Text>();
+        label.text = distance == int.MaxValue ? "" : distance.ToString();
     }
 
     public void SetNeighbor(SquareDirection direction, SquareCell cell) 
@@ -66,17 +70,16 @@ public class SquareCell : MonoBehaviour
         return neighbors;    
     }
 
-    void Refresh() 
+    public void EnableHighlight(Color color)
     {
-        if (chunk)
-        {
-            chunk.Refresh();
-            for (int i = 0; i < neighbors.Length; i++)
-            {
-                SquareCell neighbor = neighbors[i];
-                if (neighbor != null && neighbor.chunk != chunk)
-                    neighbor.chunk.Refresh();
-            }
-        }
+        Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+        highlight.color = color;
+        highlight.enabled = true;
     }
+    public void DisableHighlight()
+    {
+        Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+        highlight.enabled = false;
+    }
+
 }

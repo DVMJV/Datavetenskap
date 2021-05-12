@@ -1,93 +1,189 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class SquareGrid : MonoBehaviour
 {
-    public int cellCountX = 20, cellCountZ = 15;
-    int chunkCountX, chunkCountZ;
+    public int width = 5;
+    public int height = 5;
 
     public SquareCell cellPrefab;
     SquareCell[] cells;
 
     public Text cellLabelPrefab;
+    Canvas gridCanvas;
 
-    public SquareGridChunk chunkPrefab;
-    SquareGridChunk[] chunks;
-
+    SquareMesh squareMesh;
     MeshCollider meshCollider;
 
-    public float defaultTerrainIndex = 0;
+    public Color defaultColor = Color.white;
+
+    List<SquareCell> walkableTiles = new List<SquareCell>();
 
     private void Awake()
     {
-        CreateMap(cellCountX, cellCountZ);
-    }
-
-    public void ShowUI(bool visible) 
-    {
-        for (int i = 0; i < chunks.Length; i++)
-            chunks[i].ShowUI(visible);
-    }
-
-    void CreateCells() 
-    {
-        cells = new SquareCell[cellCountZ * cellCountX];
-        for (int z = 0, i = 0; z < cellCountZ; z++)
+        int text;
+        gridCanvas = GetComponentInChildren<Canvas>();
+        squareMesh = GetComponentInChildren<SquareMesh>();
+        cells = new SquareCell[height * width];
+        for (int z = 0, i = 0; z < height; z++)
         {
-            for (int x = 0; x < cellCountX; x++)
+            for (int x = 0; x < width; x++)
             {
                 CreateCell(x, z, i++);
             }
         }
     }
 
-    void CreateChunks() 
+    private void ClearHighlights()
     {
-        chunks = new SquareGridChunk[chunkCountX * chunkCountZ];
-
-        for (int z = 0, i = 0; z < chunkCountZ; z++)
+        for (int i = 0; i < cells.Length; i++)
         {
-            for (int x = 0; x < chunkCountX; x++)
+            cells[i].Distance = int.MaxValue;
+            cells[i].DisableHighlight();
+        }
+    }
+
+    private void Start()
+    {
+        squareMesh.Triangulate(cells);
+        EventHandler.current.onAllySelected +=  FindAllPossibleTiles;
+        EventHandler.current.onTurnEnd += ClearHighlights;
+        EventHandler.current.onMovePokemon += FindPath;
+        EventHandler.current.clearHighlights += ClearHighlights;
+    }
+
+    public SquareCell GetCell(Vector3 position, Color color) 
+    {
+        position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
+        SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
+        int index = ((coordinates.X + (coordinates.Z * width)));
+        return cells[index];     
+    }
+
+    public void Refresh() 
+    {
+        squareMesh.Triangulate(cells);
+    }
+
+    public void FindAllPossibleTiles(PokemonContainer selectedPokemon)
+    {
+        SearchForTiles(selectedPokemon.currentMovement, selectedPokemon.CurrentTile);
+    }
+
+    public void FindPath(SquareCell fromCell, PokemonContainer pokemon)
+    {
+        SearchForPath(fromCell, pokemon);
+    }
+
+    void SearchForTiles(int speed, SquareCell currentTile)
+    {
+        for (int i = 0; i < cells.Length; i++)
+        {
+            cells[i].Distance = int.MaxValue;
+            cells[i].DisableHighlight();
+            walkableTiles.Clear();
+        }
+
+        Queue<SquareCell> openSet = new Queue<SquareCell>();
+        currentTile.Distance = 0;
+        openSet.Enqueue(currentTile);
+
+        while(openSet.Count > 0)
+        {
+            SquareCell current = openSet.Dequeue();
+
+            if (current.Distance >= speed && current.Distance != int.MaxValue)
+                continue;
+
+            for(SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
             {
-                SquareGridChunk chunk = chunks[i++] = Instantiate(chunkPrefab);
-                chunk.transform.SetParent(transform);
+                SquareCell neighbor = current.GetNeighbor(d);
+
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1)
+                    continue;
+                else if(neighbor.Distance == int.MaxValue)
+                {
+                    neighbor.Distance = current.Distance + 1;
+                    if (neighbor.Distance > speed)
+                        continue;
+                    else
+                    {
+                        neighbor.EnableHighlight(Color.blue);
+                        openSet.Enqueue(neighbor);
+                        walkableTiles.Add(neighbor);
+                    }
+                }
             }
         }
     }
 
-    public void CreateMap(int x, int z)
+    void SearchForPath(SquareCell toCell, PokemonContainer pokemon)
     {
-        // Clear old data
-        if (chunks!=null)
-            for (int i = 0; i < chunks.Length; i++)
-                Destroy(chunks[i].gameObject);
+        SquareCell fromCell = pokemon.CurrentTile;
+        int speed = pokemon.currentMovement;
 
-        cellCountX = x;
-        cellCountZ = z;
-        chunkCountX = cellCountX / SquareMetrics.chunkSizeX;
-        chunkCountZ = cellCountZ / SquareMetrics.chunkSizeZ;
-        CreateChunks();
-        CreateCells();
+        if (!walkableTiles.Contains(toCell))
+            return;
+
+        for (int i = 0; i < cells.Length; i++)
+        {
+            cells[i].Distance = int.MaxValue;
+        }
+
+        fromCell.Distance = 0;
+
+        SquareCellPriorityQueue openSet = new SquareCellPriorityQueue();
+        openSet.Enqueue(fromCell);
+
+        while(openSet.Count > 0)
+        {
+            SquareCell current = openSet.Dequeue();
+            
+            if (current == toCell)
+            {
+                ConstructPath(toCell, pokemon);
+                break;
+            }
+
+            for(SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
+            {
+                SquareCell neighbor = current.GetNeighbor(d);
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1 || !walkableTiles.Contains(neighbor))
+                    continue;
+
+                else if(neighbor.Distance == int.MaxValue)
+                {
+                    neighbor.Distance = current.Distance + 1;
+                    neighbor.SearchHeuristic = neighbor.coordinates.DistanceTo(toCell.coordinates);
+                    neighbor.PathFrom = current;
+                    openSet.Enqueue(neighbor);
+                }
+                else if(current.Distance + 1 < neighbor.Distance)
+                {
+                    int oldPriority = neighbor.SearchPriority;
+                    neighbor.Distance = current.Distance + 1;
+                    neighbor.PathFrom = current;
+                    openSet.Change(neighbor, oldPriority);
+                }
+            }
+        }
+
     }
 
-    // Different ways to get index.
-    public SquareCell GetCell(Vector3 position) 
+    
+    void ConstructPath(SquareCell toCell, PokemonContainer pokemon)
     {
-        position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
-        SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
-        int index = ((coordinates.X + (coordinates.Z * cellCountX)));
-       // Debug.Log("Hit: " + coordinates.ToString());
-        return cells[index];     
-    }
+        Stack<SquareCell> stack = new Stack<SquareCell>();
+        while (toCell != pokemon.CurrentTile)
+        {
+            stack.Push(toCell);
+            toCell = toCell.PathFrom;
+        }
 
-    public SquareCell GetCell(int xOffset, int zOffset)
-    {
-        return cells[xOffset + zOffset * cellCountX];
-    }
-
-    public SquareCell GetCell(int cellIndex)
-    {
-        return cells[cellIndex];
+        EventHandler.current.PathFound(stack, pokemon);
     }
 
     void CreateCell(int x, int z, int i)
@@ -98,33 +194,23 @@ public class SquareGrid : MonoBehaviour
         position.z = z * 10f;
 
         SquareCell cell = cells[i] = Instantiate<SquareCell>(cellPrefab);
+        cell.transform.SetParent(transform, false);
         cell.transform.localPosition = position;
-        cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z);
-       // cell.TerrainTypeIndex = Random.Range(0, 4); // Use to generate noise to test terrainTypes.
+        cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z); // Create struct with coordinates. Might need adjustment.
+
+        cell.color = defaultColor;
 
         if (x > 0)
             cell.SetNeighbor(SquareDirection.LEFT, cells[i - 1]);
         if (z > 0)
         {
-            cell.SetNeighbor(SquareDirection.DOWN, cells[i - cellCountX]);
+            cell.SetNeighbor(SquareDirection.DOWN, cells[i - width]);
         }
 
         Text label = Instantiate<Text>(cellLabelPrefab);
+        label.rectTransform.SetParent(gridCanvas.transform, false);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
-        label.text = cell.coordinates.ToStringOnSeparateLines();
         cell.uiRect = label.rectTransform;
-        AddCellToChunk(x, z, cell);
-    }
-
-    void AddCellToChunk(int x, int z, SquareCell cell) 
-    {
-        int chunkX = x / SquareMetrics.chunkSizeX;
-        int chunkZ = z / SquareMetrics.chunkSizeZ;
-        SquareGridChunk chunk = chunks[chunkX + chunkZ * chunkCountX];
-      
-        int localX = x - chunkX * SquareMetrics.chunkSizeX;
-        int localZ = z - chunkZ * SquareMetrics.chunkSizeZ;
-        chunk.AddCell(localX + localZ * SquareMetrics.chunkSizeX, cell);
     }
 }
 
