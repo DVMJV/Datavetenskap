@@ -2,22 +2,28 @@ using UnityEngine;
 
 public class SquareMapEditor : MonoBehaviour
 {
-    public Color[] colors;
     public SquareGrid squareGrid;
-    private Color activeColor;
 
     SquareCell searchFromCell, searchToCell;
 
     int activeElevation;
 
+    public float[] terrainTypeIndexes;
+    float activeTerrainIndex;
+
     private void Awake()
     {
-        SelectColor(0);
+        SelectTerrainIndex(0);
     }
 
     private void Update()
     {
         HandleInput();
+    }
+
+    public void ShowUI(bool visible) 
+    {
+        squareGrid.ShowUI(visible);
     }
 
     void HandleInput()
@@ -26,7 +32,7 @@ public class SquareMapEditor : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            SquareCell currentCell = squareGrid.GetCell(hit.point, activeColor);
+            SquareCell currentCell = squareGrid.GetCell(hit.point);
 
             if(Input.GetMouseButtonDown(0))
             {
@@ -38,14 +44,14 @@ public class SquareMapEditor : MonoBehaviour
 
     void EditCell(SquareCell cell)
     {
-        cell.color = activeColor;
+        cell.TerrainTypeIndex = activeTerrainIndex;
         cell.Elevation = activeElevation;
         squareGrid.Refresh();
     }
 
-    public void SelectColor(int index) 
+    public void SelectTerrainIndex(float index)
     {
-        activeColor = colors[index];
+        activeTerrainIndex = terrainTypeIndexes[(int)index];
     }
 
     public void SetElevation(float elevation)

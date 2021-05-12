@@ -6,31 +6,40 @@ using UnityEngine.UI;
 
 public class SquareGrid : MonoBehaviour
 {
-    public int width = 5;
-    public int height = 5;
+    public int cellCountX = 20, cellCountZ = 15;
+    int chunkCountX, chunkCountZ;
 
     public SquareCell cellPrefab;
     SquareCell[] cells;
 
     public Text cellLabelPrefab;
-    Canvas gridCanvas;
 
-    SquareMesh squareMesh;
+    public SquareGridChunk chunkPrefab;
+    SquareGridChunk[] chunks;
+
     MeshCollider meshCollider;
 
-    public Color defaultColor = Color.white;
+    public float defaultTerrainIndex = 0;
 
     List<SquareCell> walkableTiles = new List<SquareCell>();
 
     private void Awake()
     {
-        int text;
-        gridCanvas = GetComponentInChildren<Canvas>();
-        squareMesh = GetComponentInChildren<SquareMesh>();
-        cells = new SquareCell[height * width];
-        for (int z = 0, i = 0; z < height; z++)
+        CreateMap(cellCountX, cellCountZ);
+    }
+
+    public void ShowUI(bool visible) 
+    {
+        for (int i = 0; i < chunks.Length; i++)
+            chunks[i].ShowUI(visible);
+    }
+
+    void CreateCells() 
+    {
+        cells = new SquareCell[cellCountZ * cellCountX];
+        for (int z = 0, i = 0; z < cellCountZ; z++)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < cellCountX; x++)
             {
                 CreateCell(x, z, i++);
             }
@@ -48,24 +57,59 @@ public class SquareGrid : MonoBehaviour
 
     private void Start()
     {
-        squareMesh.Triangulate(cells);
         EventHandler.current.onAllySelected +=  FindAllPossibleTiles;
         EventHandler.current.onTurnEnd += ClearHighlights;
         EventHandler.current.onMovePokemon += FindPath;
         EventHandler.current.clearHighlights += ClearHighlights;
     }
+    
+    void CreateChunks() 
+    {
+        chunks = new SquareGridChunk[chunkCountX * chunkCountZ];
 
-    public SquareCell GetCell(Vector3 position, Color color) 
+        for (int z = 0, i = 0; z < chunkCountZ; z++)
+        {
+            for (int x = 0; x < chunkCountX; x++)
+            {
+                SquareGridChunk chunk = chunks[i++] = Instantiate(chunkPrefab);
+                chunk.transform.SetParent(transform);
+            }
+        }
+    }
+
+    public void CreateMap(int x, int z)
+    {
+        // Clear old data
+        if (chunks!=null)
+            for (int i = 0; i < chunks.Length; i++)
+                Destroy(chunks[i].gameObject);
+
+        cellCountX = x;
+        cellCountZ = z;
+        chunkCountX = cellCountX / SquareMetrics.chunkSizeX;
+        chunkCountZ = cellCountZ / SquareMetrics.chunkSizeZ;
+        CreateChunks();
+        CreateCells();
+    }
+
+    // Different ways to get index.
+    public SquareCell GetCell(Vector3 position) 
     {
         position = transform.worldToLocalMatrix.MultiplyPoint3x4(position); // Bugfix.
         SquareCoordinates coordinates = SquareCoordinates.FromPosition(position);
-        int index = ((coordinates.X + (coordinates.Z * width)));
+        int index = ((coordinates.X + (coordinates.Z * cellCountX)));
+       // Debug.Log("Hit: " + coordinates.ToString());
         return cells[index];     
     }
 
-    public void Refresh() 
+    public SquareCell GetCell(int xOffset, int zOffset)
     {
-        squareMesh.Triangulate(cells);
+        return cells[xOffset + zOffset * cellCountX];
+    }
+
+    public SquareCell GetCell(int cellIndex)
+    {
+        return cells[cellIndex];
     }
 
     public void FindAllPossibleTiles(PokemonContainer selectedPokemon)
@@ -194,23 +238,32 @@ public class SquareGrid : MonoBehaviour
         position.z = z * 10f;
 
         SquareCell cell = cells[i] = Instantiate<SquareCell>(cellPrefab);
-        cell.transform.SetParent(transform, false);
         cell.transform.localPosition = position;
-        cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z); // Create struct with coordinates. Might need adjustment.
-
-        cell.color = defaultColor;
+        cell.coordinates = SquareCoordinates.FromOffsetCoordinates(x, z);
+       // cell.TerrainTypeIndex = Random.Range(0, 4); // Use to generate noise to test terrainTypes.
 
         if (x > 0)
             cell.SetNeighbor(SquareDirection.LEFT, cells[i - 1]);
         if (z > 0)
         {
-            cell.SetNeighbor(SquareDirection.DOWN, cells[i - width]);
+            cell.SetNeighbor(SquareDirection.DOWN, cells[i - cellCountX]);
         }
 
         Text label = Instantiate<Text>(cellLabelPrefab);
-        label.rectTransform.SetParent(gridCanvas.transform, false);
         label.rectTransform.anchoredPosition = new Vector2(position.x, position.z);
         cell.uiRect = label.rectTransform;
+        AddCellToChunk(x, z, cell);
+    }
+
+    void AddCellToChunk(int x, int z, SquareCell cell) 
+    {
+        int chunkX = x / SquareMetrics.chunkSizeX;
+        int chunkZ = z / SquareMetrics.chunkSizeZ;
+        SquareGridChunk chunk = chunks[chunkX + chunkZ * chunkCountX];
+      
+        int localX = x - chunkX * SquareMetrics.chunkSizeX;
+        int localZ = z - chunkZ * SquareMetrics.chunkSizeZ;
+        chunk.AddCell(localX + localZ * SquareMetrics.chunkSizeX, cell);
     }
 }
 
