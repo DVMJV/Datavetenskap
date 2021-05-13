@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -33,6 +35,12 @@ public class Player : MonoBehaviour
         EventHandler.current.OnStart();
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Mouse1))
+            EventHandler.current.AllySelected(null);
+    }
+
 
     void TurnStart(int id)
     {
@@ -57,16 +65,20 @@ public class Player : MonoBehaviour
         }
     }
 
-    void SetSelected(PokemonContainer pokemon)
+    private void SetSelected(PokemonContainer pokemon)
     {
-        if(turn)
+        if (!turn) return;
+        if (selected == pokemon) return;
+        
+        selected = pokemon;
+        
+        if (selected == null)
         {
-            if(selected != pokemon)
-            {
-                selected = pokemon;
-                DisplayAttacks(pokemon);
-            }
+            ClearAttacks();
+            return;
         }
+                
+        DisplayAttacks(pokemon);
     }
 
     void MovePokemon(SquareCell selectedCell)
@@ -100,9 +112,10 @@ public class Player : MonoBehaviour
 
     private void ClearAttacks()
     {
-        while (attackDisplayContainer.transform.childCount != 0)
+        foreach (Transform child in attackDisplayContainer.transform)
         {
-            Destroy(attackDisplayContainer.transform.GetChild(0).gameObject);
+            Destroy(child.gameObject);
         }
     }
 }
+    
