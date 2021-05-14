@@ -33,12 +33,13 @@ public class SquareCell : MonoBehaviour
         }
     }
 
+    public int SearchPhase { get; set; }
+
     public SquareCoordinates coordinates;
 
-    // For procedural generation
-    public int SearchPhase; // Should be properties?
-    int searchPriority;
-    //
+
+
+
 
     float terrainTypeIndex;
     public float TerrainTypeIndex
