@@ -32,6 +32,7 @@ public class SquareMapGenerator : MonoBehaviour
 
 
         CreateLand();
+        SetTerrainType();
         for (int i = 0; i < cellCount; i++)
         {
             grid.GetCell(i).SearchPhase = 0;
@@ -68,7 +69,7 @@ public class SquareMapGenerator : MonoBehaviour
                 if (--budget == 0)
                     break;
             }
-            //current.Elevation = Random.Range(0, 2); // extra
+            current.Elevation++;
             size++;
 
             for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
@@ -85,6 +86,16 @@ public class SquareMapGenerator : MonoBehaviour
         }
         prioQueue.Clear();
         return budget;
+    }
+
+    void SetTerrainType()
+    {
+        for (int i = 0; i < cellCount; i++)
+        {
+            SquareCell cell = grid.GetCell(i);
+            cell.TerrainTypeIndex = cell.Elevation;
+        }
+    
     }
 
     SquareCell GetRandomCell() 
