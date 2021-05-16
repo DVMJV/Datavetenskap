@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum AttackType
+{
+    SingleTarget,
+    LineAttack,
+    StunAttack
+}
 public class AIHandler : MonoBehaviour
 {
     [SerializeField]
@@ -19,6 +25,7 @@ public class AIHandler : MonoBehaviour
     List<PokemonContainer> VisiblePokemon;
 
     bool allowedToEndTurn = false;
+    AttackType chosenAttack;
     void Start()
     {
         VisiblePokemon = new List<PokemonContainer>();
@@ -47,28 +54,20 @@ public class AIHandler : MonoBehaviour
 
             if(VisiblePokemon.Count > 0)
             {
-                PokemonContainer target;
-                foreach (AttackContainer attack in pokemon.learnedMoves)
-                {
-                    if(attack.GetAttack() is PokemonLineAttack)
-                    {
-                        target = LineAttackSearch(pokemon.CurrentTile, attack.GetAttack());
-                        if(target != null)
-                        {
-                            attack.FindAttackableTiles(pokemon.CurrentTile);
-                            attack.Attack(pokemon.CurrentTile, target.CurrentTile, pokemon.gameObject.tag);
-                        }
-                    }
-                }
-                // if(Within Range && HaslineAttack && VisiblePokemon == x/y)
-                // LineAttack
-                // Else
-                // Move
-                // LineAttack?
-                // if(??)
-                // Attack(pokemon)
-                // else
-                //MovePokemon(pokemon, SetPath(pokemon));
+                // Decide Attack Type 
+                DecideAttack(pokemon);
+                // Finns det kill pontetial 0
+                // Finns det 2 i rad 1
+                // Håller jag på att dö? 2
+
+                // Decide Target
+
+                // How to move
+
+                // Attack
+
+               
+                MovePokemon(pokemon, RandomPath(pokemon));
                 VisiblePokemon.Clear();
             }
             else
@@ -80,8 +79,156 @@ public class AIHandler : MonoBehaviour
         StartCoroutine(EndTurn());
     }
 
+    void DecideAttack(PokemonContainer selectedPokemon)
+    {
+        foreach (PokemonContainer pokemon in VisiblePokemon)
+        {
+            foreach (AttackContainer move in selectedPokemon.learnedMoves)
+            {
+                if (Distance(selectedPokemon.CurrentTile, pokemon.CurrentTile) > move.GetAttack().range + selectedPokemon.currentMovement)
+                {
+                    if (pokemon.CurrentHealth <= pokemon.CalculateDamage(move.GetAttack())){
+                        if (move.GetAttack() is PokemonLineAttack)
+                        {
+                            bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, move.GetAttack(), pokemon);
+                            if (onLine)
+                            {
+                                move.FindAttackableTiles(pokemon.CurrentTile);
+                                move.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.gameObject.tag);
+                            }
+                            else
+                            {
+                                SquareCell moveTarget = FindDirection(selectedPokemon, pokemon, move.GetAttack());
+                                Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
+                                if(path == null)
+                                {
+                                    Debug.LogError("No possible Path");
+                                    return;
+                                }
+                                MovePokemon(selectedPokemon, path);
+                                move.FindAttackableTiles(pokemon.CurrentTile);
+                                move.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.gameObject.tag);
+                            }
+                        }
+                        else
+                        {
+                            //move();
+                            //attack();
+                        }
+                    }
+                }
+            }
+
+
+            if (selectedPokemon.CurrentHealth < selectedPokemon.pokemon.health * 0.25f)
+            {
+                //if (inRange())
+                //{
+                //    //attack;
+                //    // run();
+                //}
+                //else
+                //{
+                //    //run();
+                //}
+            }
+            foreach (PokemonContainer pokemonContainer in VisiblePokemon)
+            {
+                List<PokemonContainer> xlist = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.X == pokemonContainer.CurrentTile.coordinates.X);
+
+                List<PokemonContainer> ylist = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.Y == pokemonContainer.CurrentTile.coordinates.Y);
+
+                if(xlist.Count > 0 || ylist.Count > 0)
+                {
+                    if (xlist.Count > ylist.Count)
+                    {
+                        // Move in X
+                        // Attack
+                    }
+                    else
+                    {
+                        // Move in y
+                        // Attack
+                    }
+                }
+            }
+        }
+        //move;
+        // attack Random;
+
+    }
+
+    Stack<SquareCell> CreatePath(PokemonContainer pokemon, SquareCell toCell)
+    {
+        SquareCell fromCell = pokemon.CurrentTile;
+        int speed = pokemon.currentMovement;
+
+
+        fromCell.Distance = 0;
+
+        SquareCellPriorityQueue openSet = new SquareCellPriorityQueue();
+        openSet.Enqueue(fromCell);
+
+        while (openSet.Count > 0)
+        {
+            SquareCell current = openSet.Dequeue();
+
+            if (current == toCell)
+            {
+                Stack<SquareCell> stack = new Stack<SquareCell>();
+                while (toCell != pokemon.CurrentTile)
+                {
+                    stack.Push(toCell);
+                    toCell = toCell.PathFrom;
+                    return stack;
+                }
+                break;
+            }
+
+            for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
+            {
+                SquareCell neighbor = current.GetNeighbor(d);
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1)
+                    continue;
+
+                else if (neighbor.Distance == int.MaxValue)
+                {
+                    neighbor.Distance = current.Distance + 1;
+                    neighbor.SearchHeuristic = neighbor.coordinates.DistanceTo(toCell.coordinates);
+                    neighbor.PathFrom = current;
+                    openSet.Enqueue(neighbor);
+                }
+                else if (current.Distance + 1 < neighbor.Distance)
+                {
+                    int oldPriority = neighbor.SearchPriority;
+                    neighbor.Distance = current.Distance + 1;
+                    neighbor.PathFrom = current;
+                    openSet.Change(neighbor, oldPriority);
+                }
+            }
+        }
+        return null;
+    }
+
+    SquareCell FindDirection(PokemonContainer selectedPokemon, PokemonContainer pokemon, PokemonAttack attack)
+    {
+        List<SquareCell> possibleTiles = LineTileSearch(pokemon.CurrentTile, attack);
+
+        // Maybe error check
+        return possibleTiles.Find(cell => selectedPokemon.CurrentTile.coordinates.DistanceTo(cell.coordinates) <= selectedPokemon.currentMovement);
+    }
+
     #region Attack
-    PokemonContainer LineAttackSearch(SquareCell fromCell, PokemonAttack attack)
+
+    float Distance(SquareCell fromCell, SquareCell toCell)
+    {
+        int dist = 0;
+        Vector3 diff = fromCell.transform.position - toCell.transform.position;
+        diff /= SquareMetrics.height;
+        dist = Mathf.Abs((int)diff.x) + Mathf.Abs((int)diff.z);
+        return dist;
+    }
+    bool LineAttackSearch(SquareCell fromCell, PokemonAttack attack, PokemonContainer target)
     {
         for (SquareDirection direction = SquareDirection.UP; direction <= SquareDirection.LEFT; direction++)
         {
@@ -93,17 +240,38 @@ public class AIHandler : MonoBehaviour
             {
                 if (neighbor == null)
                     break;
-                foreach(PokemonContainer pokemon in VisiblePokemon)
+                if(target.CurrentTile == neighbor)
                 {
-                    if(pokemon.CurrentTile == neighbor)
-                        return pokemon;
+                    return true;
                 }
                 neighbor = neighbor.GetNeighbor(direction);
                 cost++;
             }
 
         }
-            return null;
+            return false;
+    }
+    List<SquareCell> LineTileSearch(SquareCell fromCell, PokemonAttack attack)
+    {
+        List<SquareCell> possibleTiles = new List<SquareCell>();
+
+        for (SquareDirection direction = SquareDirection.UP; direction <= SquareDirection.LEFT; direction++)
+        {
+            int cost = 0;
+            SquareCell neighbor = fromCell.GetNeighbor(direction);
+            if (neighbor == null)
+                continue;
+            while (cost < attack.range)
+            {
+                if (neighbor == null)
+                    break;
+                possibleTiles.Add(neighbor);
+                neighbor = neighbor.GetNeighbor(direction);
+                cost++;
+            }
+
+        }
+        return possibleTiles;
     }
     #endregion
     Stack<SquareCell> RandomPath(PokemonContainer pokemon)

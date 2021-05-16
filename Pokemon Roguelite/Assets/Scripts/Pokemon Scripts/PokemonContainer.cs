@@ -45,6 +45,11 @@ public class PokemonContainer : MonoBehaviour
             transform.position = new Vector3(position.x, position.y + currentCell.Elevation, position.z);
         }
     }
+
+    public float CurrentHealth
+    {
+        get => currentHealth;
+    }
     #endregion
 
     #region Unity Functions
@@ -108,11 +113,52 @@ public class PokemonContainer : MonoBehaviour
     {
         return stunned;
     }
+    /// <summary>
+    /// Calculates the damage taken based on pokemon type and attack type
+    /// </summary>
+    /// <param name="attack"></param>
+    /// <returns></returns>
+    public int CalculateDamage(PokemonAttack attack)
+    {
+        var adjustedDamage = attack.damage;
+        var attackType = attack.type;
+        switch (attackType)
+        {
+            case Type.NEUTRAL:
+                adjustedDamage = attack.damage;
+                break;
+            case Type.WATER:
+                if (pokemon.type == Type.LIGHTNING)
+                    adjustedDamage = attack.damage / 2;
+                else if (pokemon.type == Type.METAL)
+                    adjustedDamage = attack.damage * 2;
+                else
+                    adjustedDamage = attack.damage;
+                break;
+            case Type.LIGHTNING:
+                if (pokemon.type == Type.WATER)
+                    adjustedDamage = attack.damage * 2;
+                else if (pokemon.type == Type.METAL)
+                    adjustedDamage = attack.damage / 2;
+                else
+                    adjustedDamage = attack.damage;
+                break;
+            case Type.METAL:
+                if (pokemon.type == Type.LIGHTNING)
+                    adjustedDamage = attack.damage / 2;
+                else if (pokemon.type == Type.WATER)
+                    adjustedDamage = attack.damage * 2;
+                else
+                    adjustedDamage = attack.damage;
+                break;
+        }
 
+        return adjustedDamage;
+    }
     #endregion
 
     #region Event Listeners
-    
+
     /// <summary>
     /// Checks if the tile the pokemon is standing on was attacked.
     /// </summary>
@@ -198,48 +244,7 @@ public class PokemonContainer : MonoBehaviour
     
     #region Private
 
-    /// <summary>
-    /// Calculates the damage taken based on pokemon type and attack type
-    /// </summary>
-    /// <param name="attack"></param>
-    /// <returns></returns>
-    private int CalculateDamage(PokemonAttack attack)
-    {
-        var adjustedDamage = attack.damage;
-        var attackType = attack.type;
-        switch (attackType)
-        {
-            case Type.NEUTRAL:
-                adjustedDamage = attack.damage;
-                break;
-            case Type.WATER:
-                if (pokemon.type == Type.LIGHTNING)
-                    adjustedDamage = attack.damage / 2;
-                else if (pokemon.type == Type.METAL)
-                    adjustedDamage = attack.damage * 2;
-                else
-                    adjustedDamage = attack.damage;
-                break;
-            case Type.LIGHTNING:
-                if (pokemon.type == Type.WATER)
-                    adjustedDamage = attack.damage * 2;
-                else if (pokemon.type == Type.METAL)
-                    adjustedDamage = attack.damage / 2;
-                else
-                    adjustedDamage = attack.damage;
-                break;
-            case Type.METAL:
-                if (pokemon.type == Type.LIGHTNING)
-                    adjustedDamage = attack.damage / 2;
-                else if (pokemon.type == Type.WATER)
-                    adjustedDamage = attack.damage * 2;
-                else
-                    adjustedDamage = attack.damage;
-                break;
-        }
 
-        return adjustedDamage;
-    }
 
         #endregion
 
