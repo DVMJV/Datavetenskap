@@ -11,7 +11,7 @@ public class SquareGridChunk : MonoBehaviour
     {
         gridCanvas = GetComponentInChildren<Canvas>();
         cells = new SquareCell[SquareMetrics.chunkSizeX * SquareMetrics.chunkSizeZ];
-        ShowUI(false);
+        ShowUI(true);
     }
 
     private void LateUpdate()
