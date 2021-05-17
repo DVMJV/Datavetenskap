@@ -156,53 +156,6 @@ public class PokemonContainer : MonoBehaviour
         return adjustedDamage;
     }
     #endregion
-    
-    #region Private
-
-    /// <summary>
-    /// Calculates the damage taken based on pokemon type and attack type
-    /// </summary>
-    /// <param name="attack"></param>
-    /// <returns></returns>
-    private int CalculateDamage(PokemonAttack attack)
-    {
-        var adjustedDamage = attack.damage;
-        var attackType = attack.type;
-        switch (attackType)
-        {
-            case Type.NEUTRAL:
-                adjustedDamage = attack.damage;
-                break;
-            case Type.WATER:
-                if (pokemon.type == Type.LIGHTNING)
-                    adjustedDamage = attack.damage / 2;
-                else if (pokemon.type == Type.METAL)
-                    adjustedDamage = attack.damage * 2;
-                else
-                    adjustedDamage = attack.damage;
-                break;
-            case Type.LIGHTNING:
-                if (pokemon.type == Type.WATER)
-                    adjustedDamage = attack.damage * 2;
-                else if (pokemon.type == Type.METAL)
-                    adjustedDamage = attack.damage / 2;
-                else
-                    adjustedDamage = attack.damage;
-                break;
-            case Type.METAL:
-                if (pokemon.type == Type.LIGHTNING)
-                    adjustedDamage = attack.damage / 2;
-                else if (pokemon.type == Type.WATER)
-                    adjustedDamage = attack.damage * 2;
-                else
-                    adjustedDamage = attack.damage;
-                break;
-        }
-
-        return adjustedDamage;
-    }
-
-        #endregion
         
     #region Event Listeners
 
