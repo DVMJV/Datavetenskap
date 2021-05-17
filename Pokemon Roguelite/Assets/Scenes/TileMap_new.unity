@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.17975126, g: 0.22506706, b: 0.30656707, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -781,6 +781,46 @@ MonoBehaviour:
   jitterProbability: 0.25
   chunkSizeMin: 10
   chunkSizeMax: 40
+  landPercentage: 50
+  beachBiome:
+  - {fileID: 3328259032141941191, guid: e9b764420a3fef54eb30192130414cf6, type: 3}
+  - {fileID: 7579836216382803277, guid: 80213645b6843ea47a18873237ac1811, type: 3}
+  - {fileID: 7433817924511367911, guid: e84a66e33789c9f4eb03bdc72e5d9033, type: 3}
+  - {fileID: 1609269475680326572, guid: 4e0b0a1a5f0b3954c8c8373ccf6a0c74, type: 3}
+  - {fileID: 7272535366390009608, guid: e8a4fb1f69b77c841a54a79cfaebb483, type: 3}
+  - {fileID: 4797420845587587292, guid: 2392608320af94a4399889b1dd8507c2, type: 3}
+  - {fileID: 8924850066209502176, guid: 019cd4a7f39f9e64fa7985f97aa2938a, type: 3}
+  - {fileID: 7967562349169699745, guid: a8dc099e8fdef57439eb321be27ba8e5, type: 3}
+  - {fileID: 8238474798473387763, guid: 08001c6755b999840baeda96ac93b18d, type: 3}
+  metalBiome:
+  - {fileID: 4742582732925697295, guid: f1ce0cc3885bf8d47abee752795ce343, type: 3}
+  - {fileID: 4673757033743035208, guid: 3894a1de0daf3284d9d007a405280c4c, type: 3}
+  - {fileID: 5937287052477744448, guid: da461b3d0a81a184e8180c39ad3c269e, type: 3}
+  - {fileID: 2172829609512707778, guid: 385a28bc032f88841b4f4f881657ebe3, type: 3}
+  - {fileID: 844921227815059932, guid: 88b8ee93094c69f4895246b3e1801c05, type: 3}
+  - {fileID: 4531095214607947131, guid: 4fe7007002bc55d49a091f0dc6ecfeb4, type: 3}
+  - {fileID: 8090486137782040666, guid: 3b2c16046d3730e4582eecf9c970b0b5, type: 3}
+  - {fileID: 3655499063243758181, guid: f9617d53b719aa244809185bbd459b6d, type: 3}
+  - {fileID: 8775240119663397379, guid: d4da24fae4216b14389e62ae44b061f7, type: 3}
+  electricBiome:
+  - {fileID: 1534379217231632972, guid: 25dec77c180de294197b8baa40f0811f, type: 3}
+  - {fileID: 4106315695093564305, guid: 76daa24efa0e5a64bbe342ddcbf1dfff, type: 3}
+  - {fileID: 112948778866569963, guid: 1f793c60dc3c7584282c78d72f2b21fa, type: 3}
+  - {fileID: 2603364094913580555, guid: 160826fc43a6525478d0d89ecf43ba43, type: 3}
+  - {fileID: 4490581004083601019, guid: bc4ab40f655803f4c9324378c58fb834, type: 3}
+  - {fileID: 2370137279297512456, guid: 81cd266500664d841a228f71e62196b3, type: 3}
+  - {fileID: 6387132508570309711, guid: a4dddf66d83b455448d1d4e06683561d, type: 3}
+  - {fileID: 6057274364753113163, guid: eb5449fc9735c9e44a7d01c6cd4b233b, type: 3}
+  forestBiome:
+  - {fileID: 2051762685580206318, guid: a6ce698bd1e5a50478bd8f844117e557, type: 3}
+  - {fileID: 2467006062165933233, guid: 8cb16bb975007924dafae99a02d17f2a, type: 3}
+  - {fileID: 3059473481412169147, guid: d4f6ff3228cfceb4d9b85711a8d23826, type: 3}
+  - {fileID: 270964684491909298, guid: a97cb18d731fbcd42b952b451c30ffaf, type: 3}
+  - {fileID: 7812040529691951118, guid: f33dc8803c80bd841a5b0bfbb411290d, type: 3}
+  - {fileID: 3456382433134840073, guid: 313919ceb78795040804d06f378cc6da, type: 3}
+  - {fileID: 2081546464434691013, guid: 587f5e0cdc8e07244829d68b7099e007, type: 3}
+  - {fileID: 6618133300742267213, guid: 9a8fa53b93a5997409abde1a1c659e27, type: 3}
+  - {fileID: 1933174385947780250, guid: 8914ba86eceaaa94aa51c91be401f19b, type: 3}
 --- !u!4 &486420163
 Transform:
   m_ObjectHideFlags: 0
@@ -3127,13 +3167,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2066795174}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.44022584, y: -0.025786562, z: 0.13717297, w: 0.8869723}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 52, y: 7, z: 21}
 --- !u!1 &2123884525
 GameObject:
   m_ObjectHideFlags: 0

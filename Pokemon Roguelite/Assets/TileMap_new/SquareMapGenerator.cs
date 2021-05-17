@@ -22,6 +22,11 @@ public class SquareMapGenerator : MonoBehaviour
     [Range(5, 95)]
     public int landPercentage = 50;
 
+    public List<GameObject> beachBiome;
+    public List<GameObject> metalBiome;
+    public List<GameObject> electricBiome;
+    public List<GameObject> forestBiome;
+
     public void GenerateMap(int x, int z) 
     {
         cellCount = x * z;
@@ -33,15 +38,34 @@ public class SquareMapGenerator : MonoBehaviour
 
         CreateLand();
         SetTerrainType();
+
+
         for (int i = 0; i < cellCount; i++)
         {
-            grid.GetCell(i).SearchPhase = 0;
+            SquareCell cell = grid.GetCell(i);
+            cell.SearchPhase = 0;
+
+            if (cell.Elevation == 0) // Water
+            {
+                // water test               
+                GameObject item = forestBiome[3];
+                item.transform.position = cell.transform.position;
+                item.transform.position += new Vector3(0, 0.5f);
+                Instantiate(item);
+            }
+            // use type.
+
         }
   
     }
 
     void CreateLand() 
     {
+        //beachBiome.Clear();
+        //forestBiome.Clear();
+        //electricBiome.Clear();
+        //metalBiome.Clear();
+     
         int landBudget = Mathf.RoundToInt(cellCount * landPercentage * 0.01f);
         while (landBudget > 0)
         {
@@ -72,6 +96,12 @@ public class SquareMapGenerator : MonoBehaviour
             current.Elevation++;
             size++;
 
+            //current.biomeType++;
+            //if (current.biomeType > 5)
+            //{
+
+            //}
+
             for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
             {
                 SquareCell neighbor = current.GetNeighbor(d);
@@ -94,6 +124,16 @@ public class SquareMapGenerator : MonoBehaviour
         {
             SquareCell cell = grid.GetCell(i);
             cell.TerrainTypeIndex = cell.Elevation;
+           // cell.biomeType = (SquareCell.TYPE)((int)cell.biomeType + cell.TerrainTypeIndex);
+            //if ((int)cell.biomeType > SquareCell.TYPE.c)
+            //{
+
+            //}
+            
+            if (cell.Elevation != 0)
+            {
+                cell.Elevation = 1;
+            }
         }
     
     }

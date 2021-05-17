@@ -37,11 +37,10 @@ public class SquareCell : MonoBehaviour
 
     public SquareCoordinates coordinates;
 
-
-
-
-
     float terrainTypeIndex;
+    public enum TYPE {WATER, BEACH, FOREST, METAL, ELECTRIC}; // todo use this..
+    public TYPE biomeType = TYPE.WATER;
+
     public float TerrainTypeIndex
     {
         get { return terrainTypeIndex; }
