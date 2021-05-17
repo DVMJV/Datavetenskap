@@ -120,7 +120,7 @@ public class AIHandler : MonoBehaviour
             if (selectedPokemon.CurrentHealth < selectedPokemon.pokemon.health * 0.25f)
             {
                 float d = Distance(selectedPokemon.CurrentTile, p.CurrentTile);
-                AttackContainer move1 = selectedPokemon.learnedMoves.Find(x => x.GetAttack().effect == PokemonAttack.SecondaryEffect.Stun || x.GetAttack().effect == PokemonAttack.SecondaryEffect.Knockback)
+                AttackContainer move1 = selectedPokemon.learnedMoves.Find(x => x.GetAttack().effect == PokemonAttack.SecondaryEffect.Stun || x.GetAttack().effect == PokemonAttack.SecondaryEffect.Knockback);
                 
                 if (move1 != null && d <= move1.GetAttack().range)
                 {
