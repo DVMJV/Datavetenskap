@@ -1,0 +1,161 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2051762685580206318
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1671543436376324692}
+  - component: {fileID: 2350131833277494769}
+  - component: {fileID: 538654296301322555}
+  m_Layer: 0
+  m_Name: Daisy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1671543436376324692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051762685580206318}
+  m_LocalRotation: {x: 0.024996556, y: -0.3384451, z: 0.008994103, w: 0.94061106}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1671543436252903808}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 3.045, y: -39.579, z: 0}
+--- !u!33 &2350131833277494769
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051762685580206318}
+  m_Mesh: {fileID: 1368239412487327046, guid: 4f7eb51fe90bdf844893bfaf1a4a3bed, type: 3}
+--- !u!23 &538654296301322555
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051762685580206318}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: ab99a0e21e6f39048bee3224c18068e1, type: 2}
+  - {fileID: 2100000, guid: 5f7690c818f624f4aaeed5d199a57872, type: 2}
+  - {fileID: 2100000, guid: 2fd8f03ac96a0e34aa8bb5eb9d949a06, type: 2}
+  - {fileID: 2100000, guid: 843aaac8cd19dbc4b9c485558a0af6f6, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1001 &4141113874339482504
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1671543436376324692}
+    m_Modifications:
+    - target: {fileID: 2666520663879018674, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_Name
+      value: Daisy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8000002
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.80000025
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.07652949
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.000498908
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.009380209
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.60874325
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.12142518
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7771936
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.10323555
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 64.183
+      objectReference: {fileID: 0}
+    - target: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -15.371
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+--- !u!4 &1671543436252903808 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3335675041354297864, guid: c74f1c1c279febb43be30355dbe79a2a, type: 3}
+  m_PrefabInstance: {fileID: 4141113874339482504}
+  m_PrefabAsset: {fileID: 0}
