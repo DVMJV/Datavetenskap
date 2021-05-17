@@ -54,19 +54,8 @@ public class AIHandler : MonoBehaviour
 
             if(VisiblePokemon.Count > 0)
             {
-                // Decide Attack Type 
-                DecideAttack(pokemon);
-                // Finns det kill pontetial 0
-                // Finns det 2 i rad 1
-                // Håller jag på att dö? 2
+               DecideAttack(pokemon);
 
-                // Decide Target
-
-                // How to move
-
-                // Attack
-
-               
                 MovePokemon(pokemon, RandomPath(pokemon));
                 VisiblePokemon.Clear();
             }
@@ -81,24 +70,24 @@ public class AIHandler : MonoBehaviour
 
     void DecideAttack(PokemonContainer selectedPokemon)
     {
-        foreach (PokemonContainer pokemon in VisiblePokemon)
+        foreach (PokemonContainer p in VisiblePokemon)
         {
-            foreach (AttackContainer move in selectedPokemon.learnedMoves)
+            foreach (AttackContainer m in selectedPokemon.learnedMoves)
             {
-                if (Distance(selectedPokemon.CurrentTile, pokemon.CurrentTile) > move.GetAttack().range + selectedPokemon.currentMovement)
+                if (Distance(selectedPokemon.CurrentTile, p.CurrentTile) > m.GetAttack().range + selectedPokemon.currentMovement)
                 {
-                    if (pokemon.CurrentHealth <= pokemon.CalculateDamage(move.GetAttack())){
-                        if (move.GetAttack() is PokemonLineAttack)
+                    if (p.CurrentHealth <= p.CalculateDamage(m.GetAttack())){
+                        if (m.GetAttack() is PokemonLineAttack)
                         {
-                            bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, move.GetAttack(), pokemon);
+                            bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, m.GetAttack(), p);
                             if (onLine)
                             {
-                                move.FindAttackableTiles(pokemon.CurrentTile);
-                                move.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.gameObject.tag);
+                                m.FindAttackableTiles(p.CurrentTile);
+                                m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
                             }
                             else
                             {
-                                SquareCell moveTarget = FindDirection(selectedPokemon, pokemon, move.GetAttack());
+                                SquareCell moveTarget = FindDirection(selectedPokemon, p, m.GetAttack());
                                 Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
                                 if(path == null)
                                 {
@@ -106,31 +95,44 @@ public class AIHandler : MonoBehaviour
                                     return;
                                 }
                                 MovePokemon(selectedPokemon, path);
-                                move.FindAttackableTiles(pokemon.CurrentTile);
-                                move.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.gameObject.tag);
+                                m.FindAttackableTiles(p.CurrentTile);
+                                m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
                             }
                         }
                         else
                         {
-                            //move();
-                            //attack();
+                            float d = Distance(selectedPokemon.CurrentTile, p.CurrentTile);
+                            if (d <= m.GetAttack().range)
+                            {
+                                m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                            }
+                            else
+                            {
+                                Stack<SquareCell> path = CreatePath(selectedPokemon, p.CurrentTile);
+                                MovePokemon(selectedPokemon, path);
+                                m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                            }
                         }
                     }
                 }
             }
 
-
             if (selectedPokemon.CurrentHealth < selectedPokemon.pokemon.health * 0.25f)
             {
-                //if (inRange())
-                //{
-                //    //attack;
-                //    // run();
-                //}
-                //else
-                //{
-                //    //run();
-                //}
+                float d = Distance(selectedPokemon.CurrentTile, p.CurrentTile);
+                AttackContainer move1 = selectedPokemon.learnedMoves.Find(x => x.GetAttack().effect == PokemonAttack.SecondaryEffect.Stun || x.GetAttack().effect == PokemonAttack.SecondaryEffect.Knockback)
+                
+                if (move1 != null && d <= move1.GetAttack().range)
+                {
+                    move1.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                    Stack<SquareCell> path = FleePath(selectedPokemon, p);
+                    MovePokemon(selectedPokemon, path);
+                }
+                else
+                {
+                    Stack<SquareCell> path = FleePath(selectedPokemon, p);
+                    MovePokemon(selectedPokemon, path);
+                }
             }
             foreach (PokemonContainer pokemonContainer in VisiblePokemon)
             {
@@ -140,22 +142,80 @@ public class AIHandler : MonoBehaviour
 
                 if(xlist.Count > 0 || ylist.Count > 0)
                 {
+                    AttackContainer move2 = selectedPokemon.learnedMoves.Find(x => x.GetAttack() is PokemonLineAttack);
                     if (xlist.Count > ylist.Count)
                     {
-                        // Move in X
-                        // Attack
+                        SquareCell moveTarget = FindDirection(selectedPokemon, p, move2.GetAttack());
+                        Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
+                        if (path == null)
+                        {
+                            Debug.LogError("No possible Path");
+                            return;
+                        }
+                        MovePokemon(selectedPokemon, path);
+                        move2.FindAttackableTiles(p.CurrentTile);
+                        move2.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
                     }
                     else
                     {
-                        // Move in y
-                        // Attack
+                        SquareCell moveTarget = FindDirection(selectedPokemon, p, move2.GetAttack());
+                        Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
+                        if (path == null)
+                        {
+                            Debug.LogError("No possible Path");
+                            return;
+                        }
+                        MovePokemon(selectedPokemon, path);
+
+                        move2.FindAttackableTiles(p.CurrentTile);
+                        move2.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
                     }
                 }
             }
         }
-        //move;
-        // attack Random;
 
+        AttackContainer move3 = selectedPokemon.learnedMoves.Find(x => x.GetAttack() is PokemonSingleAttack);
+        PokemonContainer pokemon = VisiblePokemon[Random.Range(0, VisiblePokemon.Count)];
+        float dist = Distance(selectedPokemon.CurrentTile, pokemon.CurrentTile);
+        if (dist <= move3.GetAttack().range)
+        {
+            move3.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.gameObject.tag);
+        }
+        else
+        {
+            Stack<SquareCell> path = CreatePath(selectedPokemon, pokemon.CurrentTile);
+            MovePokemon(selectedPokemon, path);
+            move3.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.gameObject.tag);
+        }
+
+    }
+
+    Stack<SquareCell> FleePath(PokemonContainer selectedPokemon, PokemonContainer pokemon)
+    {
+        Stack<SquareCell> path = new Stack<SquareCell>();
+        Stack<SquareCell> reversePath = new Stack<SquareCell>();
+        SquareCell nextCell = selectedPokemon.CurrentTile;
+        while(selectedPokemon.currentMovement > 0)
+        {
+            float dist = Distance(nextCell, pokemon.CurrentTile);
+            for (int i = 0; i < 4; i++)
+            {
+                SquareCell neighbor = nextCell.GetNeighbor((SquareDirection)i);
+                if (neighbor == null || Mathf.Abs(neighbor.Elevation - nextCell.Elevation) > 1)
+                    continue;
+                if(dist < Distance(neighbor, pokemon.CurrentTile))
+                {
+                    nextCell = neighbor;
+                    reversePath.Push(nextCell);
+                    break;
+                }
+            }
+        }
+        while(reversePath.Count > 0)
+        {
+            path.Push(reversePath.Pop());
+        }
+        return path;
     }
 
     Stack<SquareCell> CreatePath(PokemonContainer pokemon, SquareCell toCell)
