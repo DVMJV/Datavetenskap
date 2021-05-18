@@ -22,18 +22,45 @@ public class SquareMapGenerator : MonoBehaviour
     [Range(5, 95)]
     public int landPercentage = 50;
 
-    // sub lists obstructable, non obstructable.
-    public List<GameObject> beachBiome;
-    public List<GameObject> metalBiome;
-    public List<GameObject> electricBiome;
-    public List<GameObject> forestBiome;
+    float offsetX;
+    float offsetZ;
+
+    public List<GameObject> beachObstructible;
+    public List<GameObject> beachNonObstructible;
+
+    public List<GameObject> metalObstructible;
+    public List<GameObject> metalNonObstructible;
+
+    public List<GameObject> electricObstructible;
+    public List<GameObject> electricNonObstructible;
+
+    public List<GameObject> forestObstructible;
+    public List<GameObject> forestNonObstructible;
+
     public GameObject waterPrefab;
 
     // obstructionprob, faunaprob.
+    //[Range(0, 100)]
+    //int probabilityLevel = 35;
     [Range(0, 100)]
-    int probabilityLevel = 35;
-    float offsetX;
-    float offsetZ;
+    public int forestObstruct;
+    [Range(0, 100)]
+    public int forestNonObstruct;
+
+    [Range(0, 100)]
+    public int metalObstruct;
+    [Range(0, 100)]
+    public int metalNonObstruct;
+
+    [Range(0, 100)]
+    public int electricObstruct;
+    [Range(0, 100)]
+    public int electricNonObstruct;
+
+    [Range(0, 100)]
+    public int beachObstruct;
+    [Range(0, 100)]
+    public int beachNonObstruct;
 
     public void GenerateMap(int x, int z) 
     {
@@ -51,10 +78,6 @@ public class SquareMapGenerator : MonoBehaviour
             SquareCell cell = grid.GetCell(i);
             cell.SearchPhase = 0;
 
-            offsetX = Random.Range(-3, 3);
-            offsetZ = Random.Range(-3, 3);
-            int probability = Random.Range(0, 100);
-           
             if (cell.biomeType == SquareCell.TYPE.WATER) // Water
             {           
                 GameObject item = waterPrefab;
@@ -63,34 +86,65 @@ public class SquareMapGenerator : MonoBehaviour
                 cell.obstructed = true;
             }
 
-            if (probabilityLevel >= probability)
-            {
+            offsetX = Random.Range(-3, 3);
+            offsetZ = Random.Range(-3, 3);
+            int probability = Random.Range(0, 100);
+            //if (probabilityLevel >= probability)
+            //{
                 if (cell.biomeType == SquareCell.TYPE.BEACH)
                 {
-                    GameObject item = beachBiome[(int)Random.Range(0, beachBiome.Count)];
-                    item.transform.position = cell.transform.position;
-                    Instantiate(item);
+                    if (beachObstruct >= probability)
+                    {
+                         GameObject item = beachObstructible[(int)Random.Range(0, beachObstructible.Count)];
+                         item.transform.position = cell.transform.position;
+                         Instantiate(item);
+                    }
+                    if (beachNonObstruct >= probability)
+                    {
+                        // beach items.
+                    }
                 }
                 if (cell.biomeType == SquareCell.TYPE.FOREST) // gör mer skogig.
                 {
-                    int value = (int)Random.Range(0, forestBiome.Count);
-                    GameObject item = forestBiome[(int)Random.Range(0, forestBiome.Count)];
-                    item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
-                    Instantiate(item);
+                    if (forestObstruct >= probability)
+                    {
+                        GameObject item = forestObstructible[(int)Random.Range(0, forestObstructible.Count)];
+                        item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                        Instantiate(item);
+                    }
+                    if (forestNonObstruct >= probability)
+                    {
+
+                    }
                 }
                 if (cell.biomeType == SquareCell.TYPE.ELECTRIC)
                 {
-                    GameObject item = electricBiome[(int)Random.Range(0, electricBiome.Count)];
-                    item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
-                    Instantiate(item);
+                    if (electricObstruct >= probability)
+                    {
+                        GameObject item = electricObstructible[(int)Random.Range(0, electricObstructible.Count)];
+                        item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                        Instantiate(item);
+                    }
+                    if (electricNonObstruct >= probability)
+                    {
+
+                    }
+             
                 }
                 if (cell.biomeType == SquareCell.TYPE.METAL) // gör mer skogig
                 {
-                    GameObject item = metalBiome[(int)Random.Range(0, metalBiome.Count)];
-                    item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
-                    Instantiate(item);
+                    if (metalObstruct >= probability)
+                    {
+                        GameObject item = metalObstructible[(int)Random.Range(0, metalObstructible.Count)];
+                        item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                        Instantiate(item);
+                    }
+                    if (metalNonObstruct >= probability)
+                    {
+
+                    }
                 }
-            }
+            //}
         }
     }
 
