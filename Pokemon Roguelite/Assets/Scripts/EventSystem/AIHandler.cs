@@ -108,7 +108,7 @@ public class AIHandler : MonoBehaviour
                             }
                             else
                             {
-                                Stack<SquareCell> path = CreatePath(selectedPokemon, p.CurrentTile);
+                                Stack<SquareCell> path = CreatePath(selectedPokemon, p.CurrentTile, false);
                                 MovePokemon(selectedPokemon, path);
                                 m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
                             }
@@ -197,7 +197,8 @@ public class AIHandler : MonoBehaviour
         Stack<SquareCell> path = new Stack<SquareCell>();
         Stack<SquareCell> reversePath = new Stack<SquareCell>();
         SquareCell nextCell = selectedPokemon.CurrentTile;
-        while(selectedPokemon.currentMovement > 0)
+        float speed = selectedPokemon.currentMovement;
+        while(speed > 0)
         {
             float dist = Distance(nextCell, pokemon.CurrentTile);
             for (int i = 0; i < 4; i++)
@@ -209,6 +210,7 @@ public class AIHandler : MonoBehaviour
                 {
                     nextCell = neighbor;
                     reversePath.Push(nextCell);
+                    speed--;
                     break;
                 }
             }
@@ -220,7 +222,7 @@ public class AIHandler : MonoBehaviour
         return path;
     }
 
-    Stack<SquareCell> CreatePath(PokemonContainer pokemon, SquareCell toCell)
+    Stack<SquareCell> CreatePath(PokemonContainer pokemon, SquareCell toCell, bool notExludeToCell = true)
     {
         SquareCell fromCell = pokemon.CurrentTile;
         int speed = pokemon.currentMovement;
@@ -240,9 +242,18 @@ public class AIHandler : MonoBehaviour
                 Stack<SquareCell> stack = new Stack<SquareCell>();
                 while (toCell != pokemon.CurrentTile)
                 {
-                    stack.Push(toCell);
-                    toCell = toCell.PathFrom;
-                    return stack;
+                    if (notExludeToCell)
+                    {
+                        stack.Push(toCell);
+                        toCell = toCell.PathFrom;
+                        return stack;
+                    }
+                    else
+                    {
+                        toCell = toCell.PathFrom;
+                        stack.Push(toCell);
+                        return stack;
+                    }
                 }
                 break;
             }
