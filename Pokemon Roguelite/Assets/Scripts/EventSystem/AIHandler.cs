@@ -38,7 +38,7 @@ public class AIHandler : MonoBehaviour
     {
         if (this.id == id)
         {
-            Debug.Log("AI turn");
+                Debug.Log("AI turn");
             Turn();
         }
     }
@@ -47,14 +47,15 @@ public class AIHandler : MonoBehaviour
     {
         foreach (PokemonContainer pokemon in pokemons)
         {
+            VisiblePokemon.Clear();
             if(pokemon.IsStunned())
                 continue;
-
+            
             CheckForPokemons(pokemon);
 
             if(VisiblePokemon.Count > 0)
             {
-               DecideAttack(pokemon);
+                DecideAttack(pokemon);
 
                 MovePokemon(pokemon, RandomPath(pokemon));
                 VisiblePokemon.Clear();
@@ -74,45 +75,46 @@ public class AIHandler : MonoBehaviour
         {
             foreach (AttackContainer m in selectedPokemon.learnedMoves)
             {
-                if (Distance(selectedPokemon.CurrentTile, p.CurrentTile) > m.GetAttack().range + selectedPokemon.currentMovement)
+                if (!(Distance(selectedPokemon.CurrentTile, p.CurrentTile) <=
+                      m.GetAttack().range + selectedPokemon.currentMovement)) 
+                    continue;
+                if (!(p.CurrentHealth <= p.CalculateDamage(m.GetAttack()))) 
+                    continue;
+                
+                if (m.GetAttack() is PokemonLineAttack)
                 {
-                    if (p.CurrentHealth <= p.CalculateDamage(m.GetAttack())){
-                        if (m.GetAttack() is PokemonLineAttack)
+                    bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, m.GetAttack(), p);
+                    if (onLine)
+                    {
+                        m.FindAttackableTiles(p.CurrentTile);
+                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                    }
+                    else
+                    {
+                        SquareCell moveTarget = FindDirection(selectedPokemon, p, m.GetAttack());
+                        Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
+                        if(path == null)
                         {
-                            bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, m.GetAttack(), p);
-                            if (onLine)
-                            {
-                                m.FindAttackableTiles(p.CurrentTile);
-                                m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
-                            }
-                            else
-                            {
-                                SquareCell moveTarget = FindDirection(selectedPokemon, p, m.GetAttack());
-                                Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
-                                if(path == null)
-                                {
-                                    Debug.LogError("No possible Path");
-                                    return;
-                                }
-                                MovePokemon(selectedPokemon, path);
-                                m.FindAttackableTiles(p.CurrentTile);
-                                m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
-                            }
+                            Debug.LogError("No possible Path");
+                            return;
                         }
-                        else
-                        {
-                            float d = Distance(selectedPokemon.CurrentTile, p.CurrentTile);
-                            if (d <= m.GetAttack().range)
-                            {
-                                m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
-                            }
-                            else
-                            {
-                                Stack<SquareCell> path = CreatePath(selectedPokemon, p.CurrentTile, false);
-                                MovePokemon(selectedPokemon, path);
-                                m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
-                            }
-                        }
+                        MovePokemon(selectedPokemon, path);
+                        m.FindAttackableTiles(p.CurrentTile);
+                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                    }
+                }
+                else
+                {
+                    float d = Distance(selectedPokemon.CurrentTile, p.CurrentTile);
+                    if (d <= m.GetAttack().range)
+                    {
+                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                    }
+                    else
+                    {
+                        Stack<SquareCell> path = CreatePath(selectedPokemon, p.CurrentTile, false);
+                        MovePokemon(selectedPokemon, path);
+                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
                     }
                 }
             }
@@ -136,47 +138,54 @@ public class AIHandler : MonoBehaviour
                     MovePokemon(selectedPokemon, path);
                 }
             }
-            foreach (PokemonContainer pokemonContainer in VisiblePokemon)
+            
+            
+            List<PokemonContainer> xlist = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.X == selectedPokemon.CurrentTile.coordinates.X);
+
+            List<PokemonContainer> ylist = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.Y == selectedPokemon.CurrentTile.coordinates.Y);
+
+            if (xlist.Count <= 0 && ylist.Count <= 0) 
+                continue;
+            
+            AttackContainer move2 = selectedPokemon.learnedMoves.Find(x => x.GetAttack() is PokemonLineAttack);
+            
+            if (move2 == null) 
+                continue;
+            
+            if (xlist.Count > ylist.Count)
             {
-                List<PokemonContainer> xlist = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.X == pokemonContainer.CurrentTile.coordinates.X);
-
-                List<PokemonContainer> ylist = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.Y == pokemonContainer.CurrentTile.coordinates.Y);
-
-                if(xlist.Count > 0 || ylist.Count > 0)
+                SquareCell moveTarget = FindDirection(selectedPokemon, p, move2.GetAttack());
+                Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
+                if (path == null)
                 {
-                    AttackContainer move2 = selectedPokemon.learnedMoves.Find(x => x.GetAttack() is PokemonLineAttack);
-                    if (xlist.Count > ylist.Count)
-                    {
-                        SquareCell moveTarget = FindDirection(selectedPokemon, p, move2.GetAttack());
-                        Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
-                        if (path == null)
-                        {
-                            Debug.LogError("No possible Path");
-                            return;
-                        }
-                        MovePokemon(selectedPokemon, path);
-                        move2.FindAttackableTiles(p.CurrentTile);
-                        move2.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
-                    }
-                    else
-                    {
-                        SquareCell moveTarget = FindDirection(selectedPokemon, p, move2.GetAttack());
-                        Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
-                        if (path == null)
-                        {
-                            Debug.LogError("No possible Path");
-                            return;
-                        }
-                        MovePokemon(selectedPokemon, path);
-
-                        move2.FindAttackableTiles(p.CurrentTile);
-                        move2.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
-                    }
+                    Debug.LogError("No possible Path");
+                    return;
                 }
+                MovePokemon(selectedPokemon, path);
+                move2.FindAttackableTiles(p.CurrentTile);
+                move2.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+            }
+            else
+            {
+                SquareCell moveTarget = FindDirection(selectedPokemon, p, move2.GetAttack());
+                Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
+                if (path == null)
+                {
+                    Debug.LogError("No possible Path");
+                    return;
+                }
+                MovePokemon(selectedPokemon, path);
+
+                move2.FindAttackableTiles(p.CurrentTile);
+                move2.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
             }
         }
 
         AttackContainer move3 = selectedPokemon.learnedMoves.Find(x => x.GetAttack() is PokemonSingleAttack);
+        
+        if (move3 == null)
+            return;
+        
         PokemonContainer pokemon = VisiblePokemon[Random.Range(0, VisiblePokemon.Count)];
         float dist = Distance(selectedPokemon.CurrentTile, pokemon.CurrentTile);
         if (dist <= move3.GetAttack().range)
@@ -392,14 +401,13 @@ public class AIHandler : MonoBehaviour
 
     IEnumerator EndTurn()
     {
+        allowedToEndTurn = false;
         while (true)
         {
             yield return null;
 
-            if(!allowedToEndTurn)
-                yield return null;
-
-            break;
+            if(allowedToEndTurn)
+                break;
         }
         Reset();
         EventHandler.current.EndTurn();
