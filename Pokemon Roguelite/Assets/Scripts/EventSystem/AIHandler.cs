@@ -92,7 +92,10 @@ public class AIHandler : MonoBehaviour
                     bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, m.GetAttack(), p);
                     if (onLine)
                     {
+                        
                         StartCoroutine(AttackWait(selectedPokemon, p, m));
+                        return;
+
                     }
                     else
                     {
@@ -105,6 +108,8 @@ public class AIHandler : MonoBehaviour
                         }
                         MovePokemon(selectedPokemon, path);
                         StartCoroutine(AttackWait(selectedPokemon, p, m));
+                        return;
+
                     }
                 }
                 else
@@ -113,12 +118,16 @@ public class AIHandler : MonoBehaviour
                     if (d <= m.GetAttack().range)
                     {
                         StartCoroutine(AttackWait(selectedPokemon, p, m));
+                        return;
+
                     }
                     else
                     {
                         Stack<SquareCell> path = CreatePath(selectedPokemon, p.CurrentTile, false);
                         MovePokemon(selectedPokemon, path);
                         StartCoroutine(AttackWait(selectedPokemon, p, m));
+                        return;
+
                     }
                 }
             }
@@ -135,11 +144,15 @@ public class AIHandler : MonoBehaviour
                     StartCoroutine(AttackWait(selectedPokemon, p, move1));
                     Stack<SquareCell> path = FleePath(selectedPokemon, p);
                     MovePokemon(selectedPokemon, path);
+                    return;
+
                 }
                 else
                 {
                     Stack<SquareCell> path = FleePath(selectedPokemon, p);
                     MovePokemon(selectedPokemon, path);
+                    return;
+
                 }
             }
             
@@ -166,6 +179,8 @@ public class AIHandler : MonoBehaviour
                 }
                 MovePokemon(selectedPokemon, path);
                 StartCoroutine(AttackWait(selectedPokemon, p, move2));
+                return;
+
             }
             else
             {
@@ -178,6 +193,7 @@ public class AIHandler : MonoBehaviour
                 }
                 MovePokemon(selectedPokemon, path);
                 StartCoroutine(AttackWait(selectedPokemon, p, move2));
+                return;
             }
         }
 
@@ -191,12 +207,15 @@ public class AIHandler : MonoBehaviour
         if (dist <= move3.GetAttack().range)
         {
             StartCoroutine(AttackWait(selectedPokemon, pokemon, move3));
+            return;
         }
         else
         {
             Stack<SquareCell> path = CreatePath(selectedPokemon, pokemon.CurrentTile);
             MovePokemon(selectedPokemon, path);
             StartCoroutine(AttackWait(selectedPokemon, pokemon, move3));
+            return;
+
         }
     }
     
@@ -242,10 +261,10 @@ public class AIHandler : MonoBehaviour
             if (allowedToAttack)
                 break;
         }
-        
+
+        movingPokemon--;
         attack.FindAttackableTiles(target.CurrentTile);
         attack.Attack(selectedPokemon.CurrentTile, target.CurrentTile, selectedPokemon.tag);
-        movingPokemon--;
         
         if(movingPokemon == 0)
             allowedToEndTurn = true;
@@ -262,12 +281,12 @@ public class AIHandler : MonoBehaviour
         while (reset.Count > 0)
         {
             SquareCell tileToReset = reset.Pop();
+            tileToReset.Distance = int.MaxValue;
             for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
             {
                 SquareCell neighbor = tileToReset.GetNeighbor(d);
                 if(neighbor != null && neighbor.Distance != int.MaxValue)
                     reset.Push(neighbor);
-                tileToReset.Distance = int.MaxValue;
             }
         }
 
@@ -288,14 +307,20 @@ public class AIHandler : MonoBehaviour
                 {
                     if (notExludeToCell)
                     {
-                        stack.Push(toCell);
-                        toCell = toCell.PathFrom;
-                        return stack;
+                        while (toCell != fromCell)
+                        {
+                            stack.Push(toCell);
+                            toCell = toCell.PathFrom;
+                        }
+                         return stack;
                     }
                     else
                     {
-                        toCell = toCell.PathFrom;
-                        stack.Push(toCell);
+                        while (toCell != fromCell)
+                        {
+                            toCell = toCell.PathFrom;
+                            stack.Push(toCell);
+                        }
                         return stack;
                     }
                 }
@@ -332,7 +357,7 @@ public class AIHandler : MonoBehaviour
         List<SquareCell> possibleTiles = LineTileSearch(pokemon.CurrentTile, attack);
 
         // Maybe error check
-        return possibleTiles.Find(cell => selectedPokemon.CurrentTile.coordinates.DistanceTo(cell.coordinates) <= selectedPokemon.currentMovement);
+        return possibleTiles.Find(cell => selectedPokemon.CurrentTile.coordinates.DistanceTo(cell.coordinates) <= selectedPokemon.currentMovement && cell != pokemon.CurrentTile);
     }
 
     #region Attack
@@ -351,11 +376,11 @@ public class AIHandler : MonoBehaviour
         {
             int cost = 0;
             SquareCell neighbor = fromCell.GetNeighbor(direction);
-            if (neighbor == null)
+            if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
                 continue;
             while (cost < attack.range)
             {
-                if (neighbor == null)
+                if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
                     break;
                 if(target.CurrentTile == neighbor)
                 {
@@ -376,11 +401,11 @@ public class AIHandler : MonoBehaviour
         {
             int cost = 0;
             SquareCell neighbor = fromCell.GetNeighbor(direction);
-            if (neighbor == null)
+            if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
                 continue;
             while (cost < attack.range)
             {
-                if (neighbor == null)
+                if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
                     break;
                 possibleTiles.Add(neighbor);
                 neighbor = neighbor.GetNeighbor(direction);

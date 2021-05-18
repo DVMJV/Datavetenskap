@@ -59,8 +59,11 @@ public class AttackContainer
     /// <param name="tag"></param>
     public void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
+        Debug.Log("FromCell: " + fromCell.coordinates.ToString() + "\nToCell: " + toCell.coordinates.ToString() + "\nTag: " + tag);
+
         if(attackableCells.Contains(toCell))
         {
+            Debug.Log("FromCell: " + fromCell.coordinates.ToString() + "\nToCell: " + toCell.coordinates.ToString() + "\nTag: " + tag);
             cooldown = attack.cooldown;
             attack.Attack(fromCell, toCell, tag);
         }
