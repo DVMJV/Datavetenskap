@@ -92,8 +92,8 @@ public class AIHandler : MonoBehaviour
                     bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, m.GetAttack(), p);
                     if (onLine)
                     {
-                        
-                        StartCoroutine(AttackWait(selectedPokemon, p, m));
+                        m.FindAttackableTiles(p.CurrentTile);
+                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.tag);
                         return;
 
                     }
@@ -106,6 +106,7 @@ public class AIHandler : MonoBehaviour
                             Debug.LogError("No possible Path");
                             return;
                         }
+                        allowedToAttack = false;
                         MovePokemon(selectedPokemon, path);
                         StartCoroutine(AttackWait(selectedPokemon, p, m));
                         return;
@@ -117,13 +118,15 @@ public class AIHandler : MonoBehaviour
                     float d = Distance(selectedPokemon.CurrentTile, p.CurrentTile);
                     if (d <= m.GetAttack().range)
                     {
-                        StartCoroutine(AttackWait(selectedPokemon, p, m));
+                        m.FindAttackableTiles(selectedPokemon.CurrentTile);
+                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.tag);
                         return;
 
                     }
                     else
                     {
                         Stack<SquareCell> path = CreatePath(selectedPokemon, p.CurrentTile, false);
+                        allowedToAttack = false;
                         MovePokemon(selectedPokemon, path);
                         StartCoroutine(AttackWait(selectedPokemon, p, m));
                         return;
@@ -141,7 +144,8 @@ public class AIHandler : MonoBehaviour
                 
                 if (move1 != null && d <= move1.GetAttack().range)
                 {
-                    StartCoroutine(AttackWait(selectedPokemon, p, move1));
+                    move1.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.tag);
+                    allowedToAttack = false;
                     Stack<SquareCell> path = FleePath(selectedPokemon, p);
                     MovePokemon(selectedPokemon, path);
                     return;
@@ -150,6 +154,7 @@ public class AIHandler : MonoBehaviour
                 else
                 {
                     Stack<SquareCell> path = FleePath(selectedPokemon, p);
+                    allowedToAttack = false;
                     MovePokemon(selectedPokemon, path);
                     return;
 
@@ -177,6 +182,7 @@ public class AIHandler : MonoBehaviour
                     Debug.LogError("No possible Path");
                     return;
                 }
+                allowedToAttack = false;
                 MovePokemon(selectedPokemon, path);
                 StartCoroutine(AttackWait(selectedPokemon, p, move2));
                 return;
@@ -191,6 +197,7 @@ public class AIHandler : MonoBehaviour
                     Debug.LogError("No possible Path");
                     return;
                 }
+                allowedToAttack = false;
                 MovePokemon(selectedPokemon, path);
                 StartCoroutine(AttackWait(selectedPokemon, p, move2));
                 return;
@@ -206,12 +213,14 @@ public class AIHandler : MonoBehaviour
         float dist = Distance(selectedPokemon.CurrentTile, pokemon.CurrentTile);
         if (dist <= move3.GetAttack().range)
         {
-            StartCoroutine(AttackWait(selectedPokemon, pokemon, move3));
+            move3.FindAttackableTiles(selectedPokemon.CurrentTile);
+            move3.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.tag);
             return;
         }
         else
         {
             Stack<SquareCell> path = CreatePath(selectedPokemon, pokemon.CurrentTile);
+            allowedToAttack = false;
             MovePokemon(selectedPokemon, path);
             StartCoroutine(AttackWait(selectedPokemon, pokemon, move3));
             return;
@@ -251,7 +260,6 @@ public class AIHandler : MonoBehaviour
 
     IEnumerator AttackWait(PokemonContainer selectedPokemon, PokemonContainer target, AttackContainer attack)
     {
-        allowedToAttack = false;
         allowedToEndTurn = false;
         movingPokemon++;
         while (true)
@@ -263,7 +271,7 @@ public class AIHandler : MonoBehaviour
         }
 
         movingPokemon--;
-        attack.FindAttackableTiles(target.CurrentTile);
+        attack.FindAttackableTiles(selectedPokemon.CurrentTile);
         attack.Attack(selectedPokemon.CurrentTile, target.CurrentTile, selectedPokemon.tag);
         
         if(movingPokemon == 0)
