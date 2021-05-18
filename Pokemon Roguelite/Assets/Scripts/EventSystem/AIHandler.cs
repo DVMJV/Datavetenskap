@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 enum AttackType
@@ -24,8 +25,10 @@ public class AIHandler : MonoBehaviour
 
     List<PokemonContainer> VisiblePokemon;
 
-    bool allowedToEndTurn = false;
+    bool allowedToEndTurn = true;
+    private bool allowedToAttack = false; 
     AttackType chosenAttack;
+    private int movingPokemon;
     void Start()
     {
         VisiblePokemon = new List<PokemonContainer>();
@@ -38,15 +41,17 @@ public class AIHandler : MonoBehaviour
     {
         if (this.id == id)
         {
-                Debug.Log("AI turn");
+            Debug.Log("AI turn");
             Turn();
         }
     }
 
     void Turn()
     {
+        allowedToEndTurn = true;
         foreach (PokemonContainer pokemon in pokemons)
         {
+            pokemon.currentMovement = pokemon.pokemon.movementSpeed;
             VisiblePokemon.Clear();
             if(pokemon.IsStunned())
                 continue;
@@ -86,8 +91,7 @@ public class AIHandler : MonoBehaviour
                     bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, m.GetAttack(), p);
                     if (onLine)
                     {
-                        m.FindAttackableTiles(p.CurrentTile);
-                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                        StartCoroutine(AttackWait(selectedPokemon, p, m));
                     }
                     else
                     {
@@ -99,8 +103,7 @@ public class AIHandler : MonoBehaviour
                             return;
                         }
                         MovePokemon(selectedPokemon, path);
-                        m.FindAttackableTiles(p.CurrentTile);
-                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                        StartCoroutine(AttackWait(selectedPokemon, p, m));
                     }
                 }
                 else
@@ -108,13 +111,13 @@ public class AIHandler : MonoBehaviour
                     float d = Distance(selectedPokemon.CurrentTile, p.CurrentTile);
                     if (d <= m.GetAttack().range)
                     {
-                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                        StartCoroutine(AttackWait(selectedPokemon, p, m));
                     }
                     else
                     {
                         Stack<SquareCell> path = CreatePath(selectedPokemon, p.CurrentTile, false);
                         MovePokemon(selectedPokemon, path);
-                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                        StartCoroutine(AttackWait(selectedPokemon, p, m));
                     }
                 }
             }
@@ -128,7 +131,7 @@ public class AIHandler : MonoBehaviour
                 
                 if (move1 != null && d <= move1.GetAttack().range)
                 {
-                    move1.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                    StartCoroutine(AttackWait(selectedPokemon, p, move1));
                     Stack<SquareCell> path = FleePath(selectedPokemon, p);
                     MovePokemon(selectedPokemon, path);
                 }
@@ -138,7 +141,6 @@ public class AIHandler : MonoBehaviour
                     MovePokemon(selectedPokemon, path);
                 }
             }
-            
             
             List<PokemonContainer> xlist = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.X == selectedPokemon.CurrentTile.coordinates.X);
 
@@ -162,8 +164,7 @@ public class AIHandler : MonoBehaviour
                     return;
                 }
                 MovePokemon(selectedPokemon, path);
-                move2.FindAttackableTiles(p.CurrentTile);
-                move2.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                StartCoroutine(AttackWait(selectedPokemon, p, move2));
             }
             else
             {
@@ -175,9 +176,7 @@ public class AIHandler : MonoBehaviour
                     return;
                 }
                 MovePokemon(selectedPokemon, path);
-
-                move2.FindAttackableTiles(p.CurrentTile);
-                move2.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.gameObject.tag);
+                StartCoroutine(AttackWait(selectedPokemon, p, move2));
             }
         }
 
@@ -190,17 +189,16 @@ public class AIHandler : MonoBehaviour
         float dist = Distance(selectedPokemon.CurrentTile, pokemon.CurrentTile);
         if (dist <= move3.GetAttack().range)
         {
-            move3.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.gameObject.tag);
+            StartCoroutine(AttackWait(selectedPokemon, pokemon, move3));
         }
         else
         {
             Stack<SquareCell> path = CreatePath(selectedPokemon, pokemon.CurrentTile);
             MovePokemon(selectedPokemon, path);
-            move3.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.gameObject.tag);
+            StartCoroutine(AttackWait(selectedPokemon, pokemon, move3));
         }
-
     }
-
+    
     Stack<SquareCell> FleePath(PokemonContainer selectedPokemon, PokemonContainer pokemon)
     {
         Stack<SquareCell> path = new Stack<SquareCell>();
@@ -229,6 +227,23 @@ public class AIHandler : MonoBehaviour
             path.Push(reversePath.Pop());
         }
         return path;
+    }
+
+    IEnumerator AttackWait(PokemonContainer selectedPokemon, PokemonContainer target, AttackContainer attack)
+    {
+        allowedToEndTurn = false;
+        movingPokemon++;
+        while (!allowedToAttack)
+        {
+            yield return null;
+        }
+        
+        attack.FindAttackableTiles(target.CurrentTile);
+        attack.Attack(selectedPokemon.CurrentTile, target.CurrentTile, selectedPokemon.tag);
+        movingPokemon--;
+        
+        if(movingPokemon == 0)
+            allowedToEndTurn = true;
     }
 
     Stack<SquareCell> CreatePath(PokemonContainer pokemon, SquareCell toCell, bool notExludeToCell = true)
@@ -331,7 +346,7 @@ public class AIHandler : MonoBehaviour
             }
 
         }
-            return false;
+        return false;
     }
     List<SquareCell> LineTileSearch(SquareCell fromCell, PokemonAttack attack)
     {
@@ -383,7 +398,6 @@ public class AIHandler : MonoBehaviour
 
     void MovePokemon(PokemonContainer pokemon, Stack<SquareCell> path)
     {
-        allowedToEndTurn = false;
         EventHandler.current.PathFound(path, pokemon);
     }
     private void CheckForPokemons(PokemonContainer pokemon)
@@ -401,7 +415,6 @@ public class AIHandler : MonoBehaviour
 
     IEnumerator EndTurn()
     {
-        allowedToEndTurn = false;
         while (true)
         {
             yield return null;
@@ -415,7 +428,7 @@ public class AIHandler : MonoBehaviour
 
     void AllowedToEndTurn()
     {
-        allowedToEndTurn = true;
+        allowedToAttack = true;
     }
 
     void Reset()
