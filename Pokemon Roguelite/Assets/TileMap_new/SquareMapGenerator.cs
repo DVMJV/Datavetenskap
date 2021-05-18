@@ -28,8 +28,10 @@ public class SquareMapGenerator : MonoBehaviour
     public List<GameObject> forestBiome;
     public GameObject waterPrefab;
 
-    [Range(0, 50)]
-    int itemBudget = 25;
+    [Range(0, 100)]
+    int probabilityLevel = 35;
+    float offsetX;
+    float offsetZ;
 
     public void GenerateMap(int x, int z) 
     {
@@ -39,23 +41,18 @@ public class SquareMapGenerator : MonoBehaviour
         if (prioQueue == null)
             prioQueue = new SquareCellPriorityQueue();
 
-
         CreateLand();
         SetTerrainType();
-
 
         for (int i = 0; i < cellCount; i++)
         {
             SquareCell cell = grid.GetCell(i);
             cell.SearchPhase = 0;
 
-            float offsetX = Random.Range(-3, 3);
-            float offsetZ = Random.Range(-3, 3);
-
+            offsetX = Random.Range(-3, 3);
+            offsetZ = Random.Range(-3, 3);
             int probability = Random.Range(0, 100);
-            int probabilityLevel = 35;
-
-
+           
             if (cell.biomeType == SquareCell.TYPE.WATER) // Water
             {           
                 GameObject item = waterPrefab;
@@ -71,14 +68,14 @@ public class SquareMapGenerator : MonoBehaviour
                     item.transform.position = cell.transform.position;
                     Instantiate(item);
                 }
-                if (cell.biomeType == SquareCell.TYPE.FOREST) // mer skogig.
+                if (cell.biomeType == SquareCell.TYPE.FOREST) // gör mer skogig.
                 {
                     int value = (int)Random.Range(0, forestBiome.Count);
                     GameObject item = forestBiome[(int)Random.Range(0, forestBiome.Count)];
                     item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
                     Instantiate(item);
                 }
-                if (cell.biomeType == SquareCell.TYPE.METAL) // mer skogig
+                if (cell.biomeType == SquareCell.TYPE.METAL) // gör mer skogig
                 {
                     GameObject item = metalBiome[(int)Random.Range(0, metalBiome.Count)];
                     item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
@@ -91,18 +88,11 @@ public class SquareMapGenerator : MonoBehaviour
                     Instantiate(item);
                 }
             }
-        
         }
-  
     }
 
     void CreateLand() 
-    {
-        //beachBiome.Clear();
-        //forestBiome.Clear();
-        //electricBiome.Clear();
-        //metalBiome.Clear();
-     
+    { 
         int landBudget = Mathf.RoundToInt(cellCount * landPercentage * 0.01f);
         while (landBudget > 0)
         {
@@ -161,7 +151,7 @@ public class SquareMapGenerator : MonoBehaviour
             if ((int)cell.biomeType > (int)SquareCell.TYPE.ELECTRIC)
                 cell.biomeType = SquareCell.TYPE.ELECTRIC;
 
-            // Sqush map elevation.
+            //Sqush map elevation.
             if (cell.Elevation != 0)
                 cell.Elevation = 1;
         }
