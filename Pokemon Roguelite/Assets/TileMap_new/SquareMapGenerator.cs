@@ -78,15 +78,15 @@ public class SquareMapGenerator : MonoBehaviour
                     item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
                     Instantiate(item);
                 }
-                if (cell.biomeType == SquareCell.TYPE.METAL) // gör mer skogig
-                {
-                    GameObject item = metalBiome[(int)Random.Range(0, metalBiome.Count)];
-                    item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
-                    Instantiate(item);
-                }
                 if (cell.biomeType == SquareCell.TYPE.ELECTRIC)
                 {
                     GameObject item = electricBiome[(int)Random.Range(0, electricBiome.Count)];
+                    item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                    Instantiate(item);
+                }
+                if (cell.biomeType == SquareCell.TYPE.METAL) // gör mer skogig
+                {
+                    GameObject item = metalBiome[(int)Random.Range(0, metalBiome.Count)];
                     item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
                     Instantiate(item);
                 }
@@ -151,14 +151,15 @@ public class SquareMapGenerator : MonoBehaviour
             // Get right type on each tile. Clamp to last type.
             cell.TerrainTypeIndex = cell.Elevation;
             cell.biomeType = (SquareCell.TYPE)((int)cell.biomeType + cell.TerrainTypeIndex);
-            if ((int)cell.biomeType > (int)SquareCell.TYPE.ELECTRIC)
-                cell.biomeType = SquareCell.TYPE.ELECTRIC;
+            
+            if ((int)cell.biomeType > (int)SquareCell.TYPE.METAL)
+                cell.biomeType = SquareCell.TYPE.METAL;
 
             //Sqush map elevation.
             if (cell.Elevation != 0)
                 cell.Elevation = 1;
             else
-                cell.Elevation = -3;
+                cell.Elevation = -3; // Move water down.
         }
     
     }

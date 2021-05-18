@@ -778,10 +778,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grid: {fileID: 1054204533}
-  jitterProbability: 0.25
-  chunkSizeMin: 10
-  chunkSizeMax: 40
-  landPercentage: 50
+  jitterProbability: 0.5
+  chunkSizeMin: 70
+  chunkSizeMax: 100
+  landPercentage: 95
   beachBiome:
   - {fileID: 3328259032141941191, guid: e9b764420a3fef54eb30192130414cf6, type: 3}
   - {fileID: 7579836216382803277, guid: 80213645b6843ea47a18873237ac1811, type: 3}
