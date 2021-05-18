@@ -22,12 +22,14 @@ public class SquareMapGenerator : MonoBehaviour
     [Range(5, 95)]
     public int landPercentage = 50;
 
+    // sub lists obstructable, non obstructable.
     public List<GameObject> beachBiome;
     public List<GameObject> metalBiome;
     public List<GameObject> electricBiome;
     public List<GameObject> forestBiome;
     public GameObject waterPrefab;
 
+    // obstructionprob, faunaprob.
     [Range(0, 100)]
     int probabilityLevel = 35;
     float offsetX;
@@ -58,6 +60,7 @@ public class SquareMapGenerator : MonoBehaviour
                 GameObject item = waterPrefab;
                 item.transform.position = cell.transform.position + new Vector3(0, 5f);
                 Instantiate(item);
+                cell.obstructed = true;
             }
 
             if (probabilityLevel >= probability)

@@ -11,6 +11,8 @@ public class SquareCell : MonoBehaviour
     public SquareGridChunk chunk;
     public RectTransform uiRect;
 
+    public bool obstructed = false;
+
     public SquareCell PathFrom { get; set; }
 
     int distance;
