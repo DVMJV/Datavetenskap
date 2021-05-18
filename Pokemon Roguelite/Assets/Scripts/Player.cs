@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
             }
             ClearAttacks();
             selected = null;
+            EventHandler.current.AllySelected(null);
             Debug.Log("My Reset");
         }
     }
