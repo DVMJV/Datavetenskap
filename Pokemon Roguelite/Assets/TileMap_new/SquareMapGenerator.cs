@@ -26,6 +26,10 @@ public class SquareMapGenerator : MonoBehaviour
     public List<GameObject> metalBiome;
     public List<GameObject> electricBiome;
     public List<GameObject> forestBiome;
+    public GameObject waterPrefab;
+
+    [Range(0, 50)]
+    int itemBudget = 25;
 
     public void GenerateMap(int x, int z) 
     {
@@ -45,16 +49,49 @@ public class SquareMapGenerator : MonoBehaviour
             SquareCell cell = grid.GetCell(i);
             cell.SearchPhase = 0;
 
-            if (cell.Elevation == 0) // Water
-            {
-                // water test               
-                GameObject item = forestBiome[3];
-                item.transform.position = cell.transform.position;
-                item.transform.position += new Vector3(0, 0.5f);
+            float offsetX = Random.Range(-3, 3);
+            float offsetZ = Random.Range(-3, 3);
+
+            int probability = Random.Range(0, 100);
+            int probabilityLevel = 35;
+
+
+            if (cell.biomeType == SquareCell.TYPE.WATER) // Water
+            {           
+                GameObject item = waterPrefab;
+                item.transform.position = cell.transform.position + new Vector3(0, 0.5f);
                 Instantiate(item);
             }
-            // use type.
 
+            if (probabilityLevel >= probability)
+            {
+                if (cell.biomeType == SquareCell.TYPE.BEACH)
+                {
+                    GameObject item = beachBiome[(int)Random.Range(0, beachBiome.Count)];
+                    item.transform.position = cell.transform.position;
+                    Instantiate(item);
+                }
+                if (cell.biomeType == SquareCell.TYPE.FOREST) // mer skogig.
+                {
+                    int value = (int)Random.Range(0, forestBiome.Count);
+                    GameObject item = forestBiome[(int)Random.Range(0, forestBiome.Count)];
+                    item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                    Instantiate(item);
+                }
+                if (cell.biomeType == SquareCell.TYPE.METAL) // mer skogig
+                {
+                    GameObject item = metalBiome[(int)Random.Range(0, metalBiome.Count)];
+                    item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                    Instantiate(item);
+                }
+                if (cell.biomeType == SquareCell.TYPE.ELECTRIC)
+                {
+                    GameObject item = electricBiome[(int)Random.Range(0, electricBiome.Count)];
+                    item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                    Instantiate(item);
+                }
+            }
+        
         }
   
     }
@@ -96,12 +133,6 @@ public class SquareMapGenerator : MonoBehaviour
             current.Elevation++;
             size++;
 
-            //current.biomeType++;
-            //if (current.biomeType > 5)
-            //{
-
-            //}
-
             for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
             {
                 SquareCell neighbor = current.GetNeighbor(d);
@@ -123,17 +154,16 @@ public class SquareMapGenerator : MonoBehaviour
         for (int i = 0; i < cellCount; i++)
         {
             SquareCell cell = grid.GetCell(i);
-            cell.TerrainTypeIndex = cell.Elevation;
-           // cell.biomeType = (SquareCell.TYPE)((int)cell.biomeType + cell.TerrainTypeIndex);
-            //if ((int)cell.biomeType > SquareCell.TYPE.c)
-            //{
-
-            //}
             
+            // Get right type on each tile. Clamp to last type.
+            cell.TerrainTypeIndex = cell.Elevation;
+            cell.biomeType = (SquareCell.TYPE)((int)cell.biomeType + cell.TerrainTypeIndex);
+            if ((int)cell.biomeType > (int)SquareCell.TYPE.ELECTRIC)
+                cell.biomeType = SquareCell.TYPE.ELECTRIC;
+
+            // Sqush map elevation.
             if (cell.Elevation != 0)
-            {
                 cell.Elevation = 1;
-            }
         }
     
     }
