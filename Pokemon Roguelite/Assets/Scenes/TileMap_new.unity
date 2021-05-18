@@ -815,12 +815,12 @@ MonoBehaviour:
   - {fileID: 2051762685580206318, guid: a6ce698bd1e5a50478bd8f844117e557, type: 3}
   - {fileID: 2467006062165933233, guid: 8cb16bb975007924dafae99a02d17f2a, type: 3}
   - {fileID: 3059473481412169147, guid: d4f6ff3228cfceb4d9b85711a8d23826, type: 3}
-  - {fileID: 270964684491909298, guid: a97cb18d731fbcd42b952b451c30ffaf, type: 3}
   - {fileID: 7812040529691951118, guid: f33dc8803c80bd841a5b0bfbb411290d, type: 3}
   - {fileID: 3456382433134840073, guid: 313919ceb78795040804d06f378cc6da, type: 3}
   - {fileID: 2081546464434691013, guid: 587f5e0cdc8e07244829d68b7099e007, type: 3}
   - {fileID: 6618133300742267213, guid: 9a8fa53b93a5997409abde1a1c659e27, type: 3}
   - {fileID: 1933174385947780250, guid: 8914ba86eceaaa94aa51c91be401f19b, type: 3}
+  waterPrefab: {fileID: 270964684491909298, guid: a97cb18d731fbcd42b952b451c30ffaf, type: 3}
 --- !u!4 &486420163
 Transform:
   m_ObjectHideFlags: 0
