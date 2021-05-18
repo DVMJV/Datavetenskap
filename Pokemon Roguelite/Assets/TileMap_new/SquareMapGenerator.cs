@@ -56,7 +56,7 @@ public class SquareMapGenerator : MonoBehaviour
             if (cell.biomeType == SquareCell.TYPE.WATER) // Water
             {           
                 GameObject item = waterPrefab;
-                item.transform.position = cell.transform.position + new Vector3(0, 0.5f);
+                item.transform.position = cell.transform.position + new Vector3(0, 5f);
                 Instantiate(item);
             }
 
@@ -154,6 +154,8 @@ public class SquareMapGenerator : MonoBehaviour
             //Sqush map elevation.
             if (cell.Elevation != 0)
                 cell.Elevation = 1;
+            else
+                cell.Elevation = -3;
         }
     
     }
