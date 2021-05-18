@@ -132,6 +132,22 @@ public class AttackContainer
     private void SingleAttackSearch(SquareCell fromCell, PokemonAttack attack)
     {
         Queue<SquareCell> openSet = new Queue<SquareCell>();
+        Stack<SquareCell> reset = new Stack<SquareCell>();
+        reset.Push(fromCell);
+
+        while (reset.Count > 0)
+        {
+            SquareCell tileToReset = reset.Pop();
+            for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
+            {
+                SquareCell neighbor = tileToReset.GetNeighbor(d);
+                if(neighbor != null && neighbor.Distance != int.MaxValue)
+                    reset.Push(neighbor);
+                tileToReset.Distance = int.MaxValue;
+            }
+        }
+        
+        
         fromCell.Distance = 0;
         openSet.Enqueue(fromCell);
 

@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 enum AttackType
 {
@@ -36,7 +38,6 @@ public class AIHandler : MonoBehaviour
         EventHandler.current.onAllowedToEndTurn += AllowedToEndTurn;
     }
 
-
     void TurnStart(int id)
     {
         if (this.id == id)
@@ -62,7 +63,7 @@ public class AIHandler : MonoBehaviour
             {
                 DecideAttack(pokemon);
 
-                MovePokemon(pokemon, RandomPath(pokemon));
+                
                 VisiblePokemon.Clear();
             }
             else
@@ -231,11 +232,15 @@ public class AIHandler : MonoBehaviour
 
     IEnumerator AttackWait(PokemonContainer selectedPokemon, PokemonContainer target, AttackContainer attack)
     {
+        allowedToAttack = false;
         allowedToEndTurn = false;
         movingPokemon++;
-        while (!allowedToAttack)
+        while (true)
         {
             yield return null;
+
+            if (allowedToAttack)
+                break;
         }
         
         attack.FindAttackableTiles(target.CurrentTile);
@@ -251,8 +256,23 @@ public class AIHandler : MonoBehaviour
         SquareCell fromCell = pokemon.CurrentTile;
         int speed = pokemon.currentMovement;
 
+        Stack<SquareCell> reset = new Stack<SquareCell>();
+        reset.Push(fromCell);
+
+        while (reset.Count > 0)
+        {
+            SquareCell tileToReset = reset.Pop();
+            for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
+            {
+                SquareCell neighbor = tileToReset.GetNeighbor(d);
+                if(neighbor != null && neighbor.Distance != int.MaxValue)
+                    reset.Push(neighbor);
+                tileToReset.Distance = int.MaxValue;
+            }
+        }
 
         fromCell.Distance = 0;
+
 
         SquareCellPriorityQueue openSet = new SquareCellPriorityQueue();
         openSet.Enqueue(fromCell);
