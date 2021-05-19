@@ -2503,7 +2503,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1017725207}
-  - component: {fileID: 1017725208}
   m_Layer: 5
   m_Name: Mini Portrait_Right
   m_TagString: Untagged
@@ -2532,19 +2531,6 @@ RectTransform:
   m_AnchoredPosition: {x: -829.9998, y: -331.8745}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1017725208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1017725206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb2e5e31e0a79a4439e58accc2237958, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portrait: {fileID: 0}
 --- !u!1 &1054204532
 GameObject:
   m_ObjectHideFlags: 0
@@ -3802,7 +3788,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1478226765}
-  - component: {fileID: 1478226766}
   m_Layer: 5
   m_Name: Mini Portrait_Middle
   m_TagString: Untagged
@@ -3831,19 +3816,6 @@ RectTransform:
   m_AnchoredPosition: {x: -829.9998, y: -331.8745}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1478226766
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1478226764}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb2e5e31e0a79a4439e58accc2237958, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portrait: {fileID: 0}
 --- !u!1 &1499154176
 GameObject:
   m_ObjectHideFlags: 0
@@ -3977,7 +3949,6 @@ GameObject:
   - component: {fileID: 1519284011}
   - component: {fileID: 1519284010}
   - component: {fileID: 1519284009}
-  - component: {fileID: 1519284012}
   m_Layer: 5
   m_Name: Portrait Button
   m_TagString: Untagged
@@ -4147,20 +4118,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519284007}
   m_CullTransparentMesh: 1
---- !u!114 &1519284012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1519284007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a49845401ef665743a60c533ed6c664b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  portrait: {fileID: 0}
-  pokemonContainer: {fileID: 0}
 --- !u!1 &1539850854
 GameObject:
   m_ObjectHideFlags: 0
