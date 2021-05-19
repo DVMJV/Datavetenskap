@@ -1,14 +1,8 @@
 fileFormatVersion: 2
-guid: d5009857a7b627847893c701e03a3914
+guid: 9d2871c0cdd49cc42a0f8f73a94f5814
 ModelImporter:
   serializedVersion: 20200
-  internalIDToNameTable:
-  - first:
-      74: -9053218550264209998
-    second: Nessie_Shell|CubeAction.003
-  - first:
-      74: 1534461359605127619
-    second: Nessie_Water|CubeAction.001
+  internalIDToNameTable: []
   externalObjects: {}
   materials:
     materialImportMode: 0
