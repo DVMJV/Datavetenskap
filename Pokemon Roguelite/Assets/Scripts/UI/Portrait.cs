@@ -4,27 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Portrait : MonoBehaviour
+public class Portrait : MonoBehaviour, IPointerDownHandler
 {
-    public Image portrait;
     public PokemonContainer pokemonContainer;
 
 
-    
-
-
-    public void SelectMainAlly(PokemonContainer pokeCont)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        pokemonContainer = pokeCont;
-        //portrait.sprite = pokeCont.sprite;
-        portrait.enabled=true;
+        EventHandler.current.AllySelected(pokemonContainer);
+
     }
 
-    public void DeselectAlly()
-    {
-        pokemonContainer = null;
-        //portrait.sprite = null;
-        portrait.enabled = false;
-    }
 
 }
