@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Pokemon Roguelite/Assets/Animation/Face.controller.meta
 guid: 3771fe63c1af7c8478c791246ad49893
+=======
+guid: 7ab43db5c9a2c584293a1c042edbfbb2
+>>>>>>> Tilemap_new_new:Pokemon Roguelite/Assets/TileMap_new/Texture Array_FixedOrder.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 9100000

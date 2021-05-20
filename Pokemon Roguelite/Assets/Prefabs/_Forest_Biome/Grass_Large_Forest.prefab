@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3781771446880482674}
   - component: {fileID: 5139100861948811538}
   m_Layer: 0
-  m_Name: Grass_Large
+  m_Name: Grass_Large_Forest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2467006062165933233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 57, y: 2.5, z: 141}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 0}
