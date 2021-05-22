@@ -7,7 +7,7 @@ public class SceneLoader : MonoBehaviour
 {
     public static void LoadScene(int sceneToUnloadID, int sceneToLoadID)
     {
-        SceneManager.UnloadSceneAsync(sceneToUnloadID);
         SceneManager.LoadSceneAsync(sceneToLoadID, LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(sceneToUnloadID);
     }
 }
