@@ -147,7 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slottedMember: {fileID: 1118037189631538202, guid: cc42b5c1990aeea4ba04a618e45322d0, type: 3}
-  frame: {fileID: 21300000, guid: 4d8789adadcdd9c41a3a67f2d5c9b57a, type: 3}
+  squareFrame: {fileID: 21300000, guid: 4d8789adadcdd9c41a3a67f2d5c9b57a, type: 3}
+  circularFrame: {fileID: 21300000, guid: fa76baaebe070354eaedde589c524474, type: 3}
 --- !u!1 &973382776999232934
 GameObject:
   m_ObjectHideFlags: 0

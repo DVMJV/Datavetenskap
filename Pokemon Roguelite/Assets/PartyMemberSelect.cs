@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class PartyMemberSelect : MonoBehaviour
 {
     [SerializeField] PokemonContainer slottedMember;
-    [SerializeField] Sprite frame;
+    [SerializeField] Sprite squareFrame;
+    [SerializeField] Sprite circularFrame;
 
     bool isActive = false;
 
@@ -34,8 +35,8 @@ public class PartyMemberSelect : MonoBehaviour
             EventHandler.current.AddPokemon(slottedMember);
 
             frameComp.sprite = slottedMember.pokemon.sprite;
-            frameComp.rectTransform.sizeDelta = new Vector2(145, 145);
-            portraitComp.sprite = frame;
+            frameComp.rectTransform.sizeDelta = new Vector2(125, 125);
+            portraitComp.sprite = circularFrame;
 
             isActive = true;
         }
@@ -43,7 +44,7 @@ public class PartyMemberSelect : MonoBehaviour
         {
             EventHandler.current.RemovePokemon(slottedMember);
 
-            frameComp.sprite = frame;
+            frameComp.sprite = squareFrame;
             frameComp.rectTransform.sizeDelta = new Vector2(175, 175);
             portraitComp.sprite = slottedMember.pokemon.sprite;
 
