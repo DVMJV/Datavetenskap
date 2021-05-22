@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8045810923379940370}
+  - component: {fileID: 7193509878730360925}
   m_Layer: 0
   m_Name: StingrayContainer
   m_TagString: Untagged
@@ -31,6 +32,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7193509878730360925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3898901843873733743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7e0cf12d5c05564c8049b236bb7c7e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLevel: 5
+  currentMovement: 0
+  hasAttacked: 0
+  pokemon: {fileID: 11400000, guid: c0cd8c7723b290e4d93c75b228a24b23, type: 2}
+  currentCell: {fileID: 0}
+  temp: []
 --- !u!1 &4185136228253794840
 GameObject:
   m_ObjectHideFlags: 0

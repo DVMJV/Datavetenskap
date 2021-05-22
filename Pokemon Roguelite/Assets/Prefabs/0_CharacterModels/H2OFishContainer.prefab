@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3178210288308626984}
+  - component: {fileID: 1118037189631538202}
   m_Layer: 0
   m_Name: H2OFishContainer
   m_TagString: Untagged
@@ -31,6 +32,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1118037189631538202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2950700503296131212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7e0cf12d5c05564c8049b236bb7c7e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLevel: 5
+  currentMovement: 0
+  hasAttacked: 0
+  pokemon: {fileID: 11400000, guid: c052f7d49c2c2cb4598fc25b0e0f49bb, type: 2}
+  currentCell: {fileID: 0}
+  temp: []
 --- !u!1 &5812057214090029997
 GameObject:
   m_ObjectHideFlags: 0
