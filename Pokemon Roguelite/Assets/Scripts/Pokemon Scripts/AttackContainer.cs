@@ -59,11 +59,8 @@ public class AttackContainer
     /// <param name="tag"></param>
     public void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
-        Debug.Log("FromCell: " + fromCell.coordinates.ToString() + "\nToCell: " + toCell.coordinates.ToString() + "\nTag: " + tag);
-
-        if(attackableCells.Contains(toCell))
+         if(attackableCells.Contains(toCell))
         {
-            Debug.Log("FromCell: " + fromCell.coordinates.ToString() + "\nToCell: " + toCell.coordinates.ToString() + "\nTag: " + tag);
             cooldown = attack.cooldown;
             attack.Attack(fromCell, toCell, tag);
         }
@@ -90,7 +87,18 @@ public class AttackContainer
             cooldown--;
         }
     }
-    
+    public bool OnCooldown()
+    {
+        if(cooldown <= 0)
+        {
+            cooldown = 0;
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
     /// <summary>
     /// Returns the attack
     /// </summary>

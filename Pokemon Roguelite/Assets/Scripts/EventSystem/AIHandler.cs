@@ -5,12 +5,6 @@ using Unity.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-enum AttackType
-{
-    SingleTarget,
-    LineAttack,
-    StunAttack
-}
 public class AIHandler : MonoBehaviour
 {
     [SerializeField]
@@ -29,7 +23,6 @@ public class AIHandler : MonoBehaviour
 
     bool allowedToEndTurn = true;
     private bool allowedToAttack = false; 
-    AttackType chosenAttack;
     private int movingPokemon;
     void Start()
     {
@@ -61,9 +54,13 @@ public class AIHandler : MonoBehaviour
 
             if(VisiblePokemon.Count > 0)
             {
-                DecideAttack(pokemon);
-
-                
+                if (!ChooseAttack(pokemon))
+                {
+                    if (!RandomAttack(pokemon))
+                    {
+                        MovePokemon(pokemon, RandomPath(pokemon));
+                    }
+                }
                 VisiblePokemon.Clear();
             }
             else
@@ -75,157 +72,164 @@ public class AIHandler : MonoBehaviour
         StartCoroutine(EndTurn());
     }
 
-    void DecideAttack(PokemonContainer selectedPokemon)
+    bool RandomAttack(PokemonContainer pokemon)
     {
-        foreach (PokemonContainer p in VisiblePokemon)
+        AttackContainer randomMove = pokemon.learnedMoves[Random.Range(0,pokemon.learnedMoves.Count)];
+
+        if (randomMove != null && randomMove.OnCooldown())
         {
-            foreach (AttackContainer m in selectedPokemon.learnedMoves)
+            PokemonContainer target = VisiblePokemon[Random.Range(0, VisiblePokemon.Count)];
+            float dist = Distance(pokemon.CurrentTile, target.CurrentTile);
+            if (dist <= randomMove.GetAttack().range)
             {
-                if (!(Distance(selectedPokemon.CurrentTile, p.CurrentTile) <=
-                      m.GetAttack().range + selectedPokemon.currentMovement)) 
+                randomMove.FindAttackableTiles(pokemon.CurrentTile);
+                randomMove.Attack(pokemon.CurrentTile, target.CurrentTile, pokemon.tag);
+                return true;
+            }
+            else
+            {
+                Stack<SquareCell> path = CreatePath(pokemon, target.CurrentTile);
+                allowedToAttack = false;
+                MovePokemon(pokemon, path);
+                StartCoroutine(AttackWait(pokemon, target, randomMove));
+                return true;
+
+            }
+        }
+        return false;
+    }
+
+    bool ChooseAttack(PokemonContainer selectedPokemon)
+    {
+        foreach (PokemonContainer target in VisiblePokemon)
+        {
+            float dist = Distance(selectedPokemon.CurrentTile, target.CurrentTile);
+
+            foreach (AttackContainer move in selectedPokemon.learnedMoves)
+            {
+                if (!(dist <= move.GetAttack().range + selectedPokemon.currentMovement)) 
                     continue;
-                if (!(p.CurrentHealth <= p.CalculateDamage(m.GetAttack()))) 
+                if (!(target.CurrentHealth <= target.CalculateDamage(move.GetAttack()))) 
                     continue;
-                
-                if (m.GetAttack() is PokemonLineAttack)
+                if (move.OnCooldown())
+                    continue;
+
+                if (move.GetAttack() is PokemonLineAttack)
                 {
-                    bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, m.GetAttack(), p);
+                    bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, move.GetAttack(), target);
                     if (onLine)
                     {
-                        m.FindAttackableTiles(p.CurrentTile);
-                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.tag);
-                        return;
+                        move.FindAttackableTiles(target.CurrentTile);
+                        move.Attack(selectedPokemon.CurrentTile, target.CurrentTile, selectedPokemon.tag);
+                        return true;
 
                     }
                     else
                     {
-                        SquareCell moveTarget = FindDirection(selectedPokemon, p, m.GetAttack());
+                        SquareCell moveTarget = FindDirection(selectedPokemon, target, move.GetAttack());
                         Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
                         if(path == null)
                         {
                             Debug.LogError("No possible Path");
-                            return;
+                            return false;
                         }
                         allowedToAttack = false;
                         MovePokemon(selectedPokemon, path);
-                        StartCoroutine(AttackWait(selectedPokemon, p, m));
-                        return;
+                        StartCoroutine(AttackWait(selectedPokemon, target, move));
+                        return true;
 
                     }
                 }
                 else
                 {
-                    float d = Distance(selectedPokemon.CurrentTile, p.CurrentTile);
-                    if (d <= m.GetAttack().range)
+                    if (dist <= move.GetAttack().range)
                     {
-                        m.FindAttackableTiles(selectedPokemon.CurrentTile);
-                        m.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.tag);
-                        return;
+                        move.FindAttackableTiles(selectedPokemon.CurrentTile);
+                        move.Attack(selectedPokemon.CurrentTile, target.CurrentTile, selectedPokemon.tag);
+                        return true;
 
                     }
                     else
                     {
-                        Stack<SquareCell> path = CreatePath(selectedPokemon, p.CurrentTile, false);
+                        Stack<SquareCell> path = CreatePath(selectedPokemon, target.CurrentTile, false);
                         allowedToAttack = false;
                         MovePokemon(selectedPokemon, path);
-                        StartCoroutine(AttackWait(selectedPokemon, p, m));
-                        return;
+                        StartCoroutine(AttackWait(selectedPokemon, target, move));
+                        return true;
 
                     }
                 }
             }
 
-            if (selectedPokemon.CurrentHealth < selectedPokemon.pokemon.health * 0.25f)
+            bool lowHealth = selectedPokemon.CurrentHealth <= selectedPokemon.pokemon.health * 0.25f;
+            if (lowHealth)
             {
-                float d = Distance(selectedPokemon.CurrentTile, p.CurrentTile);
-                AttackContainer move1 = selectedPokemon.learnedMoves.Find(x => 
+                AttackContainer stunMove = selectedPokemon.learnedMoves.Find(x => 
                 x.GetAttack().effect == PokemonAttack.SecondaryEffect.Stun ||
                 x.GetAttack().effect == PokemonAttack.SecondaryEffect.Knockback);
                 
-                if (move1 != null && d <= move1.GetAttack().range)
+                if (stunMove != null && dist <= stunMove.GetAttack().range)
                 {
-                    move1.Attack(selectedPokemon.CurrentTile, p.CurrentTile, selectedPokemon.tag);
+                    stunMove.Attack(selectedPokemon.CurrentTile, target.CurrentTile, selectedPokemon.tag);
                     allowedToAttack = false;
-                    Stack<SquareCell> path = FleePath(selectedPokemon, p);
+                    Stack<SquareCell> path = FleePath(selectedPokemon, target);
                     MovePokemon(selectedPokemon, path);
-                    return;
+                    return true;
 
                 }
                 else
                 {
-                    Stack<SquareCell> path = FleePath(selectedPokemon, p);
+                    Stack<SquareCell> path = FleePath(selectedPokemon, target);
                     allowedToAttack = false;
                     MovePokemon(selectedPokemon, path);
-                    return;
+                    return true;
 
                 }
             }
             
-            List<PokemonContainer> xlist = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.X == selectedPokemon.CurrentTile.coordinates.X);
+            List<PokemonContainer> xList = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.X == selectedPokemon.CurrentTile.coordinates.X);
 
-            List<PokemonContainer> ylist = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.Y == selectedPokemon.CurrentTile.coordinates.Y);
+            List<PokemonContainer> yList = VisiblePokemon.FindAll(pokemon => pokemon.CurrentTile.coordinates.Y == selectedPokemon.CurrentTile.coordinates.Y);
 
-            if (xlist.Count <= 0 && ylist.Count <= 0) 
+            if (xList.Count <= 0 && yList.Count <= 0) 
                 continue;
             
-            AttackContainer move2 = selectedPokemon.learnedMoves.Find(x => x.GetAttack() is PokemonLineAttack);
+            AttackContainer lineMove = selectedPokemon.learnedMoves.Find(x => x.GetAttack() is PokemonLineAttack);
             
-            if (move2 == null) 
+            if (lineMove == null) 
                 continue;
             
-            if (xlist.Count > ylist.Count)
+            if (xList.Count > yList.Count)
             {
-                SquareCell moveTarget = FindDirection(selectedPokemon, p, move2.GetAttack());
+                SquareCell moveTarget = FindDirection(selectedPokemon, target, lineMove.GetAttack());
                 Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
                 if (path == null)
                 {
                     Debug.LogError("No possible Path");
-                    return;
+                    return false;
                 }
                 allowedToAttack = false;
                 MovePokemon(selectedPokemon, path);
-                StartCoroutine(AttackWait(selectedPokemon, p, move2));
-                return;
+                StartCoroutine(AttackWait(selectedPokemon, target, lineMove));
+                return true;
 
             }
             else
             {
-                SquareCell moveTarget = FindDirection(selectedPokemon, p, move2.GetAttack());
+                SquareCell moveTarget = FindDirection(selectedPokemon, target, lineMove.GetAttack());
                 Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
                 if (path == null)
                 {
                     Debug.LogError("No possible Path");
-                    return;
+                    return false;
                 }
                 allowedToAttack = false;
                 MovePokemon(selectedPokemon, path);
-                StartCoroutine(AttackWait(selectedPokemon, p, move2));
-                return;
+                StartCoroutine(AttackWait(selectedPokemon, target, lineMove));
+                return true;
             }
         }
-
-        AttackContainer move3 = selectedPokemon.learnedMoves.Find(x => x.GetAttack() is PokemonSingleAttack);
-        
-        if (move3 == null)
-            return;
-        
-        PokemonContainer pokemon = VisiblePokemon[Random.Range(0, VisiblePokemon.Count)];
-        float dist = Distance(selectedPokemon.CurrentTile, pokemon.CurrentTile);
-        if (dist <= move3.GetAttack().range)
-        {
-            move3.FindAttackableTiles(selectedPokemon.CurrentTile);
-            move3.Attack(selectedPokemon.CurrentTile, pokemon.CurrentTile, selectedPokemon.tag);
-            return;
-        }
-        else
-        {
-            Stack<SquareCell> path = CreatePath(selectedPokemon, pokemon.CurrentTile);
-            allowedToAttack = false;
-            MovePokemon(selectedPokemon, path);
-            StartCoroutine(AttackWait(selectedPokemon, pokemon, move3));
-            return;
-
-        }
+        return false;
     }
     
     Stack<SquareCell> FleePath(PokemonContainer selectedPokemon, PokemonContainer pokemon)
@@ -437,7 +441,22 @@ public class AIHandler : MonoBehaviour
             {
                 Direction = Random.Range(0, 4);
                 neighborCell = newCell.GetNeighbor((SquareDirection)Direction);
+
+                PokemonContainer enemyPokemon = VisiblePokemon.Find(x => x.CurrentTile == neighborCell);
+                PokemonContainer friendlyPokemon = pokemons.Find(x => x.CurrentTile == neighborCell);
+
+                bool alreadyOccuptied = enemyPokemon != null || friendlyPokemon != null;
+                while (alreadyOccuptied)
+                {
+                    enemyPokemon = VisiblePokemon.Find(x => x.CurrentTile == neighborCell);
+                    friendlyPokemon = pokemons.Find(x => x.CurrentTile == neighborCell);
+
+                    alreadyOccuptied = enemyPokemon != null || friendlyPokemon != null;
+                    neighborCell = newCell.GetNeighbor((SquareDirection)Random.Range(0, 4));
+                }
+
             }
+
             newCell = neighborCell;
             currentPath.Push(newCell);
         }

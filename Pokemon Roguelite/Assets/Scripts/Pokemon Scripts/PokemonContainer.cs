@@ -20,7 +20,7 @@ public class PokemonContainer : MonoBehaviour
     #endregion
 
     #region Private Variables
-    private int currentHealth = 5;
+    public int currentHealth = 5;
     
     private bool stunned;
     

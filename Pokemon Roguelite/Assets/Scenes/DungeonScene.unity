@@ -1786,12 +1786,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: temp.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: temp.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 8b6a4cabde7e19449b65a73e3f43502c, type: 2}
+    - target: {fileID: 8255725687737187324, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
+      propertyPath: temp.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 40c221af6a48208418dea031d52b380a, type: 2}
     - target: {fileID: 8255725687737187325, guid: 62663922d84d2f04998a4bbf7ce7ca3b, type: 3}
       propertyPath: m_Name
       value: MetalStarter#1
