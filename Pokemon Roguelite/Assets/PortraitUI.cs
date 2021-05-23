@@ -11,7 +11,7 @@ public class PortraitUI : MonoBehaviour
     void Start()
     {
         //EventHandler.current.onAddedPokemon += UpdateMiniPortrait;
-        EventHandler.current.onAllySelected += UpdatePortrait;
+        //EventHandler.current.onAllySelected += UpdatePortrait;
 
         miniPortraits = portraitParent.GetComponentsInChildren<MiniPortrait>();
     }
