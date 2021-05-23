@@ -15,7 +15,7 @@ MonoBehaviour:
   currentLevel: 0
   pokemonName: SpringBunny
   movementSpeed: 0
-  health: 0
+  health: 10
   mesh: {fileID: 0}
   levelToLearnAt: 
   attackToLearn: []

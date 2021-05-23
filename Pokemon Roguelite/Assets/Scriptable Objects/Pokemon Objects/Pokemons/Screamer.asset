@@ -15,6 +15,7 @@ MonoBehaviour:
   currentLevel: 0
   pokemonName: Screamer
   movementSpeed: 10
+  health: 10
   mesh: {fileID: 0}
   levelToLearnAt: 
   attackToLearn:

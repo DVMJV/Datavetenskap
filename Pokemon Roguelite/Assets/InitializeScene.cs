@@ -9,9 +9,14 @@ public class InitializeScene : MonoBehaviour
 
     void Start()
     {
-        //SceneManager.SetActiveScene(SceneManager.GetSceneAt(1));
-        //Debug.Log(SceneManager.GetSceneAt(1).name);
+        StartCoroutine(DelaySpawn());
+    }
 
+    IEnumerator DelaySpawn()
+    {
+        while (!SceneManager.SetActiveScene(SceneManager.GetSceneByName("TileMap_new")) && !SceneManager.GetSceneByName("Hub").isLoaded)
+            yield return new WaitForSeconds(0.1f);
+        
         InstantiatePokemons();
         EventHandler.current.CreatePlayerPokemons(pokemons);
     }
@@ -19,6 +24,7 @@ public class InitializeScene : MonoBehaviour
 
     void InstantiatePokemons()
     {
+        Debug.Log(SceneManager.GetActiveScene().name);
         for (int i = 0; i < PartyMemberManager.selectedParty.Count; i++)
         {
             GameObject go = Instantiate(PartyMemberManager.selectedParty[i]);
