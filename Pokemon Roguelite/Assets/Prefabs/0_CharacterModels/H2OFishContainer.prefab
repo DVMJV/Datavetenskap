@@ -400,7 +400,7 @@ MonoBehaviour:
   currentLevel: 5
   currentMovement: 0
   hasAttacked: 0
-  pokemon: {fileID: 0}
+  pokemon: {fileID: 11400000, guid: 239d446ef60da664196d5578b97500e2, type: 2}
   currentHealth: 5
   currentCell: {fileID: 0}
   temp: []

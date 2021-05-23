@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 public class PartyMemberSelect : MonoBehaviour
 {
-    [SerializeField] PokemonContainer slottedMember;
+    [SerializeField] GameObject slottedMember;
     [SerializeField] Sprite squareFrame;
     [SerializeField] Sprite circularFrame;
 
     bool isActive = false;
 
+    PokemonContainer container;
     Button button;
     Image portraitComp;
     Image frameComp;
@@ -21,8 +22,9 @@ public class PartyMemberSelect : MonoBehaviour
         button = GetComponent<Button>();
         frameComp = transform.GetChild(0).GetComponent<Image>();
         portraitComp = GetComponent<Image>();
+        container = slottedMember.GetComponent<PokemonContainer>();
 
-        button.image.sprite = slottedMember.pokemon.sprite;
+        button.image.sprite = container.pokemon.sprite;
     }
 
     public void UpdateSlot()
@@ -34,7 +36,7 @@ public class PartyMemberSelect : MonoBehaviour
 
             EventHandler.current.AddPokemon(slottedMember);
 
-            frameComp.sprite = slottedMember.pokemon.sprite;
+            frameComp.sprite = container.pokemon.sprite;
             frameComp.rectTransform.sizeDelta = new Vector2(125, 125);
             portraitComp.sprite = circularFrame;
 
@@ -46,11 +48,9 @@ public class PartyMemberSelect : MonoBehaviour
 
             frameComp.sprite = squareFrame;
             frameComp.rectTransform.sizeDelta = new Vector2(175, 175);
-            portraitComp.sprite = slottedMember.pokemon.sprite;
+            portraitComp.sprite = container.pokemon.sprite;
 
             isActive = false;
-        }
-       
-        Debug.Log("Button Clicked");
+        }     
     }
 }

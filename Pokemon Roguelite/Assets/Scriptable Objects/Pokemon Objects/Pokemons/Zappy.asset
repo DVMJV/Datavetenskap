@@ -15,8 +15,9 @@ MonoBehaviour:
   currentLevel: 0
   pokemonName: Zappy
   movementSpeed: 0
+  health: 0
   mesh: {fileID: 0}
   levelToLearnAt: 
   attackToLearn: []
   type: 0
-  sprite: {fileID: 21300000, guid: 7970ce65769c7b846a6e3355dd91e6a6, type: 3}
+  sprite: {fileID: 21300000, guid: f5d66cac07a2f0f4192c8577c5e8caf0, type: 3}

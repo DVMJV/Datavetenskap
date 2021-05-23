@@ -15,8 +15,9 @@ MonoBehaviour:
   currentLevel: 0
   pokemonName: H2O
   movementSpeed: 0
+  health: 0
   mesh: {fileID: 0}
   levelToLearnAt: 
   attackToLearn: []
   type: 1
-  sprite: {fileID: 21300000, guid: 7ab6817e54d83dc4c91668b9b95caf7b, type: 3}
+  sprite: {fileID: 21300000, guid: 3500fe90c031b6348a352a5ae66ce457, type: 3}

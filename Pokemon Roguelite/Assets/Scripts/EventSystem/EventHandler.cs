@@ -102,20 +102,26 @@ public class EventHandler : MonoBehaviour
     #region PokemonSystem
 
     #region PokemonEvents
-    public event Action<PokemonContainer> onAddedPokemon;
-    public event Action<PokemonContainer> onRemovedPokemon;
+    public event Action<GameObject> onAddedPokemon;
+    public event Action<GameObject> onRemovedPokemon;
+    public event Action<List<GameObject>> onCreatePlayerPokemons;
     #endregion
 
     #region PokemonEventCalls
 
-    public void AddPokemon(PokemonContainer pokemonContainer)
+    public void AddPokemon(GameObject go)
     {
-        onAddedPokemon?.Invoke(pokemonContainer);
+        onAddedPokemon?.Invoke(go);
     }
     
-    public void RemovePokemon(PokemonContainer pokemonContainer)
+    public void RemovePokemon(GameObject go)
     {
-        onRemovedPokemon?.Invoke(pokemonContainer);
+        onRemovedPokemon?.Invoke(go);
+    }
+
+    public void CreatePlayerPokemons(List<GameObject> playerPokemons)
+    {
+        onCreatePlayerPokemons?.Invoke(playerPokemons);
     }
 
     #endregion

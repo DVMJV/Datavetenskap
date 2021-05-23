@@ -62,11 +62,11 @@ public class SquareMapGenerator : MonoBehaviour
     [Range(0, 100)]
     public int beachNonObstruct;
 
-    public void GenerateMap(int x, int z) 
+    public void GenerateMap(int x, int z)
     {
         cellCount = x * z;
         grid.CreateMap(x, z);
-        
+
         if (prioQueue == null)
             prioQueue = new SquareCellPriorityQueue();
 
@@ -79,10 +79,10 @@ public class SquareMapGenerator : MonoBehaviour
             cell.SearchPhase = 0;
 
             if (cell.biomeType == SquareCell.TYPE.WATER) // Water
-            {           
+            {
                 GameObject item = waterPrefab;
-                item.transform.position = cell.transform.position + new Vector3(0, 5f);
-                Instantiate(item);
+                GameObject go = Instantiate(item);
+                go.transform.position = cell.transform.position + new Vector3(0, 5f);
                 cell.obstructed = true;
             }
 
@@ -91,65 +91,65 @@ public class SquareMapGenerator : MonoBehaviour
             int probability = Random.Range(0, 100);
             //if (probabilityLevel >= probability)
             //{
-                if (cell.biomeType == SquareCell.TYPE.BEACH)
+            if (cell.biomeType == SquareCell.TYPE.BEACH)
+            {
+                if (beachObstruct >= probability)
                 {
-                    if (beachObstruct >= probability)
-                    {
-                         GameObject item = beachObstructible[(int)Random.Range(0, beachObstructible.Count)];
-                         item.transform.position = cell.transform.position;
-                         Instantiate(item);
-                    }
-                    if (beachNonObstruct >= probability)
-                    {
-                        // beach items.
-                    }
+                    GameObject item = beachObstructible[(int)Random.Range(0, beachObstructible.Count)];
+                    GameObject go = Instantiate(item);
+                    go.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
                 }
-                if (cell.biomeType == SquareCell.TYPE.FOREST) // gör mer skogig.
+                if (beachNonObstruct >= probability)
                 {
-                    if (forestObstruct >= probability)
-                    {
-                        GameObject item = forestObstructible[(int)Random.Range(0, forestObstructible.Count)];
-                        item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
-                        Instantiate(item);
-                    }
-                    if (forestNonObstruct >= probability)
-                    {
+                    // beach items.
+                }
+            }
+            if (cell.biomeType == SquareCell.TYPE.FOREST) // gör mer skogig.
+            {
+                if (forestObstruct >= probability)
+                {
+                    GameObject item = forestObstructible[(int)Random.Range(0, forestObstructible.Count)];
+                    GameObject go = Instantiate(item);
+                    go.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                }
+                if (forestNonObstruct >= probability)
+                {
 
-                    }
                 }
-                if (cell.biomeType == SquareCell.TYPE.ELECTRIC)
+            }
+            if (cell.biomeType == SquareCell.TYPE.ELECTRIC)
+            {
+                if (electricObstruct >= probability)
                 {
-                    if (electricObstruct >= probability)
-                    {
-                        GameObject item = electricObstructible[(int)Random.Range(0, electricObstructible.Count)];
-                        item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
-                        Instantiate(item);
-                    }
-                    if (electricNonObstruct >= probability)
-                    {
-
-                    }
-             
+                    GameObject item = electricObstructible[(int)Random.Range(0, electricObstructible.Count)];
+                    GameObject go = Instantiate(item);
+                    go.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
                 }
-                if (cell.biomeType == SquareCell.TYPE.METAL) // gör mer skogig
+                if (electricNonObstruct >= probability)
                 {
-                    if (metalObstruct >= probability)
-                    {
-                        GameObject item = metalObstructible[(int)Random.Range(0, metalObstructible.Count)];
-                        item.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
-                        Instantiate(item);
-                    }
-                    if (metalNonObstruct >= probability)
-                    {
 
-                    }
                 }
+
+            }
+            if (cell.biomeType == SquareCell.TYPE.METAL) // gör mer skogig
+            {
+                if (metalObstruct >= probability)
+                {
+                    GameObject item = metalObstructible[(int)Random.Range(0, metalObstructible.Count)];
+                    GameObject go = Instantiate(item);
+                    go.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                }
+                if (metalNonObstruct >= probability)
+                {
+
+                }
+            }
             //}
         }
     }
 
-    void CreateLand() 
-    { 
+    void CreateLand()
+    {
         int landBudget = Mathf.RoundToInt(cellCount * landPercentage * 0.01f);
         while (landBudget > 0)
         {
@@ -157,7 +157,7 @@ public class SquareMapGenerator : MonoBehaviour
         }
     }
 
-    int RaiseTerrain(int chunkSize, int budget) 
+    int RaiseTerrain(int chunkSize, int budget)
     {
         searchFrontierPhase += 1;
         SquareCell firstCell = GetRandomCell();
@@ -187,7 +187,7 @@ public class SquareMapGenerator : MonoBehaviour
                 {
                     neighbor.SearchPhase = searchFrontierPhase;
                     neighbor.Distance = neighbor.coordinates.DistanceTo(center);
-                    neighbor.SearchHeuristic = Random.value < jitterProbability ? 1: 0;
+                    neighbor.SearchHeuristic = Random.value < jitterProbability ? 1 : 0;
                     prioQueue.Enqueue(neighbor);
                 }
             }
@@ -201,11 +201,11 @@ public class SquareMapGenerator : MonoBehaviour
         for (int i = 0; i < cellCount; i++)
         {
             SquareCell cell = grid.GetCell(i);
-            
+
             // Get right type on each tile. Clamp to last type.
             cell.TerrainTypeIndex = cell.Elevation;
             cell.biomeType = (SquareCell.TYPE)((int)cell.biomeType + cell.TerrainTypeIndex);
-            
+
             if ((int)cell.biomeType > (int)SquareCell.TYPE.METAL)
                 cell.biomeType = SquareCell.TYPE.METAL;
 
@@ -215,12 +215,12 @@ public class SquareMapGenerator : MonoBehaviour
             else
                 cell.Elevation = -3; // Move water down.
         }
-    
+
     }
 
-    SquareCell GetRandomCell() 
+    SquareCell GetRandomCell()
     {
         return grid.GetCell(Random.Range(0, grid.cellCountX * grid.cellCountZ));
-    
+
     }
 }

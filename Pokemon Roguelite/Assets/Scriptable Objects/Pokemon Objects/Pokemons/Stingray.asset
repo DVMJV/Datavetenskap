@@ -15,8 +15,9 @@ MonoBehaviour:
   currentLevel: 0
   pokemonName: Stingray
   movementSpeed: 0
+  health: 0
   mesh: {fileID: 0}
   levelToLearnAt: 
   attackToLearn: []
   type: 0
-  sprite: {fileID: 21300000, guid: eaee291495ae6224c874703d7a57495f, type: 3}
+  sprite: {fileID: 21300000, guid: 02b15fac9f66f7d4491f47c83e237121, type: 3}

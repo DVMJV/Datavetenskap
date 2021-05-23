@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PartyMemberManager : MonoBehaviour
 {
-    public static List<PokemonContainer> selectedParty = new List<PokemonContainer>();
+    public static List<GameObject> selectedParty = new List<GameObject>();
     public static int maxPartySize = 3;
 
     void Start()
@@ -13,24 +13,14 @@ public class PartyMemberManager : MonoBehaviour
         EventHandler.current.onRemovedPokemon += RemoveFromParty;
     }
 
-    void AddToParty(PokemonContainer pc)
+    void AddToParty(GameObject go)
     {
-        selectedParty.Add(pc);
-
-        foreach (PokemonContainer item in selectedParty)
-        {
-            Debug.Log(item.pokemon.name);
-        }
+        selectedParty.Add(go);
     }
 
-    void RemoveFromParty(PokemonContainer pc)
+    void RemoveFromParty(GameObject go)
     {
-        if (selectedParty.Contains(pc))
-            selectedParty.Remove(pc);
-
-        foreach (PokemonContainer item in selectedParty)
-        {
-            Debug.Log(item.pokemon.name);
-        }
+        if (selectedParty.Contains(go))
+            selectedParty.Remove(go);
     }
 }
