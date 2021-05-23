@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 575523542022393310}
   - component: {fileID: 6579535489271010531}
   m_Layer: 0
-  m_Name: Grass_Large.003_Electric
+  m_Name: Grass_Large.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4490581004083601019}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 78, y: 2.5, z: 98}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 0}

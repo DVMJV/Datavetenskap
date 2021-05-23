@@ -92,6 +92,7 @@ GameObject:
   - component: {fileID: 3525391061992999729}
   - component: {fileID: 523385038396523668}
   - component: {fileID: 2353017154903863390}
+  - component: {fileID: 8538473147000324951}
   m_Layer: 0
   m_Name: Metalhead
   m_TagString: Untagged
@@ -164,3 +165,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &8538473147000324951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4298515224649945483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7e0cf12d5c05564c8049b236bb7c7e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLevel: 5
+  currentMovement: 0
+  hasAttacked: 0
+  pokemon: {fileID: 11400000, guid: 2ac7fa68f23bb4848bcce21588bbb7ff, type: 2}
+  currentCell: {fileID: 0}
+  temp: []

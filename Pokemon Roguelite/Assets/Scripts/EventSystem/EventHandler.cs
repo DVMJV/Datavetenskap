@@ -103,6 +103,7 @@ public class EventHandler : MonoBehaviour
 
     #region PokemonEvents
     public event Action<PokemonContainer> onAddedPokemon;
+    public event Action<PokemonContainer> onRemovedPokemon;
     #endregion
 
     #region PokemonEventCalls
@@ -110,6 +111,11 @@ public class EventHandler : MonoBehaviour
     public void AddPokemon(PokemonContainer pokemonContainer)
     {
         onAddedPokemon?.Invoke(pokemonContainer);
+    }
+    
+    public void RemovePokemon(PokemonContainer pokemonContainer)
+    {
+        onRemovedPokemon?.Invoke(pokemonContainer);
     }
 
     #endregion

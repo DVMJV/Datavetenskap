@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1294144385795911014}
   - component: {fileID: 2763630048801022659}
   - component: {fileID: 125702401275565577}
+  - component: {fileID: 5407072501658683992}
   m_Layer: 0
   m_Name: Pet_rock
   m_TagString: Untagged
@@ -81,3 +82,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5407072501658683992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927094078971721692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e7e0cf12d5c05564c8049b236bb7c7e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLevel: 5
+  currentMovement: 0
+  hasAttacked: 0
+  pokemon: {fileID: 11400000, guid: 7e7ef4ba6d9752748b978e42d755a333, type: 2}
+  currentCell: {fileID: 0}
+  temp: []
