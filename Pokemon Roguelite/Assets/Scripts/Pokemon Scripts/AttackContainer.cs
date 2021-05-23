@@ -59,7 +59,7 @@ public class AttackContainer
     /// <param name="tag"></param>
     public void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
-        if(attackableCells.Contains(toCell))
+         if(attackableCells.Contains(toCell))
         {
             cooldown = attack.cooldown;
             attack.Attack(fromCell, toCell, tag);
@@ -87,7 +87,18 @@ public class AttackContainer
             cooldown--;
         }
     }
-    
+    public bool OnCooldown()
+    {
+        if(cooldown <= 0)
+        {
+            cooldown = 0;
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
     /// <summary>
     /// Returns the attack
     /// </summary>
@@ -132,6 +143,22 @@ public class AttackContainer
     private void SingleAttackSearch(SquareCell fromCell, PokemonAttack attack)
     {
         Queue<SquareCell> openSet = new Queue<SquareCell>();
+        Stack<SquareCell> reset = new Stack<SquareCell>();
+        reset.Push(fromCell);
+
+        while (reset.Count > 0)
+        {
+            SquareCell tileToReset = reset.Pop();
+            for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
+            {
+                SquareCell neighbor = tileToReset.GetNeighbor(d);
+                if(neighbor != null && neighbor.Distance != int.MaxValue)
+                    reset.Push(neighbor);
+                tileToReset.Distance = int.MaxValue;
+            }
+        }
+        
+        
         fromCell.Distance = 0;
         openSet.Enqueue(fromCell);
 

@@ -139,7 +139,6 @@ GameObject:
   - component: {fileID: 6316402743690508729}
   - component: {fileID: 4860729406118940422}
   - component: {fileID: 8943325307524913088}
-  - component: {fileID: 2789599586528516280}
   m_Layer: 6
   m_Name: pSphere3_polySurface2
   m_TagString: Untagged
@@ -210,17 +209,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &2789599586528516280
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5822912025520091461}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -1364152658623853718, guid: c1d22b3e7222b414b995e9d76d2f3199, type: 3}

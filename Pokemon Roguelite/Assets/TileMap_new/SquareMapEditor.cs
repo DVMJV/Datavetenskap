@@ -18,7 +18,10 @@ public class SquareMapEditor : MonoBehaviour
 
     private void Update()
     {
-        HandleInput();
+        if (Input.GetMouseButtonDown(0))
+        {
+            HandleInput();
+        }
     }
 
     public void ShowUI(bool visible) 
@@ -33,12 +36,8 @@ public class SquareMapEditor : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             SquareCell currentCell = squareGrid.GetCell(hit.point);
-
-            if(Input.GetMouseButtonDown(0))
-            {
-                EventHandler.current.TileSelected(currentCell);
-                EditCell(currentCell);
-            }
+            EventHandler.current.TileSelected(currentCell);
+            EditCell(currentCell);
         }
     }
 
