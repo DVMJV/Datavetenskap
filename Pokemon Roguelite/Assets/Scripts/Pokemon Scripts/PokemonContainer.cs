@@ -17,6 +17,7 @@ public class PokemonContainer : MonoBehaviour
     
     public List<AttackContainer> learnedMoves = new List<AttackContainer>();
     [SerializeField] public Pokemon pokemon;
+
     #endregion
 
     #region Private Variables
@@ -26,6 +27,10 @@ public class PokemonContainer : MonoBehaviour
     
     [SerializeField] private SquareCell currentCell;
     [SerializeField] private PokemonAttack[] temp;
+
+    [SerializeField] private Slider slider;
+    [SerializeField] private Gradient gradient;
+    [SerializeField] private Image fill;
 
     private AttackContainer attackSelected;
     #endregion
@@ -68,6 +73,8 @@ public class PokemonContainer : MonoBehaviour
         EventHandler.current.onAttackSelected += AttackSelected;
         EventHandler.current.onAllySelected += Unselect;
         EventHandler.current.onAttackTile += TileAttacked;
+
+        SetMaxHealth();
 
         foreach(PokemonAttack attack in temp)
         {
@@ -156,7 +163,27 @@ public class PokemonContainer : MonoBehaviour
         return adjustedDamage;
     }
     #endregion
-    
+
+    #region Private
+
+    void SetMaxHealth()
+    {
+        currentHealth = pokemon.health;
+        slider.maxValue = pokemon.health;
+        slider.value = pokemon.health;
+
+        fill.color = gradient.Evaluate(1f);
+    }
+
+    void SetHealth()
+    {
+        slider.value = currentHealth;
+
+        fill.color = gradient.Evaluate(slider.normalizedValue);
+    }
+
+    #endregion
+
     #region Event Listeners
 
     /// <summary>
@@ -181,6 +208,7 @@ public class PokemonContainer : MonoBehaviour
         }
 
         currentHealth -= CalculateDamage(attack);
+        SetHealth();
     }
     
     /// <summary>

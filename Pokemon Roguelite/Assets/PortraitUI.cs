@@ -6,14 +6,14 @@ public class PortraitUI : MonoBehaviour
     public Transform portraitParent;
     //TeamManager = teamManager;
 
-    MiniPortrait[] miniPortraits;
+    //MiniPortrait[] miniPortraits;
     Portrait portrait;
     void Start()
     {
         //EventHandler.current.onAddedPokemon += UpdateMiniPortrait;
         //EventHandler.current.onAllySelected += UpdatePortrait;
 
-        miniPortraits = portraitParent.GetComponentsInChildren<MiniPortrait>();
+        //miniPortraits = portraitParent.GetComponentsInChildren<MiniPortrait>();
     }
 
     void Update()
