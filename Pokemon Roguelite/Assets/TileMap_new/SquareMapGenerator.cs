@@ -62,6 +62,8 @@ public class SquareMapGenerator : MonoBehaviour
     [Range(0, 100)]
     public int beachNonObstruct;
 
+    List<SquareCell> spawnCells = new List<SquareCell>();
+
     public void GenerateMap(int x, int z)
     {
         cellCount = x * z;
@@ -145,7 +147,14 @@ public class SquareMapGenerator : MonoBehaviour
                 }
             }
             //}
+
+            if (!cell.obstructed)
+            {
+                spawnCells.Add(cell);
+            }
         }
+
+        EventHandler.current.PlayerSpawnCells(spawnCells);
     }
 
     void CreateLand()

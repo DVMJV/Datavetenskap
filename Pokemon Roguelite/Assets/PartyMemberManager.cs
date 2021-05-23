@@ -13,6 +13,12 @@ public class PartyMemberManager : MonoBehaviour
         EventHandler.current.onRemovedPokemon += RemoveFromParty;
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+            Debug.Log(selectedParty.Count);
+    }
+
     void AddToParty(GameObject go)
     {
         selectedParty.Add(go);

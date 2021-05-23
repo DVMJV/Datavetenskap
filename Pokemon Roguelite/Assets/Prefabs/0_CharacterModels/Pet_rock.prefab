@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2763630048801022659}
   - component: {fileID: 125702401275565577}
   - component: {fileID: 5407072501658683992}
-  m_Layer: 0
+  - component: {fileID: 7263850970184628353}
+  m_Layer: 6
   m_Name: Pet_rock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,6 +134,20 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   fill: {fileID: 3412223470310093817}
+--- !u!64 &7263850970184628353
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1927094078971721692}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 442404029775353477, guid: 6432ab6f1a18d7c43940b65ede3491e7, type: 3}
 --- !u!1 &3412223469046605887
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +159,7 @@ GameObject:
   - component: {fileID: 3412223469046605886}
   - component: {fileID: 3412223469046605884}
   - component: {fileID: 3412223469046605885}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +233,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3412223469498189188}
   - component: {fileID: 3412223469498189187}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -310,7 +325,7 @@ GameObject:
   - component: {fileID: 3412223469883274989}
   - component: {fileID: 3412223469883274990}
   - component: {fileID: 3412223469883274986}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +436,7 @@ GameObject:
   - component: {fileID: 3412223470310093818}
   - component: {fileID: 3412223470310093816}
   - component: {fileID: 3412223470310093817}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}

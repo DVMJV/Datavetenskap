@@ -105,6 +105,7 @@ public class EventHandler : MonoBehaviour
     public event Action<GameObject> onAddedPokemon;
     public event Action<GameObject> onRemovedPokemon;
     public event Action<List<GameObject>> onCreatePlayerPokemons;
+    public event Action<List<SquareCell>> onPlayerSpawnCells;
     #endregion
 
     #region PokemonEventCalls
@@ -122,6 +123,11 @@ public class EventHandler : MonoBehaviour
     public void CreatePlayerPokemons(List<GameObject> playerPokemons)
     {
         onCreatePlayerPokemons?.Invoke(playerPokemons);
+    }
+
+    public void PlayerSpawnCells(List<SquareCell> spawnCells)
+    {
+        onPlayerSpawnCells?.Invoke(spawnCells);
     }
 
     #endregion

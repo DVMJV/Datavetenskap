@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8045810923379940370}
   - component: {fileID: 7193509878730360925}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StingrayContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,8 @@ GameObject:
   - component: {fileID: 4180035533901634307}
   - component: {fileID: 1518984683932808557}
   - component: {fileID: 1289379773437838242}
-  m_Layer: 0
+  - component: {fileID: 1159258550230056947}
+  m_Layer: 6
   m_Name: Screamer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,6 +187,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &1159258550230056947
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4185136228253794840}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6860798101788922852, guid: 9d2871c0cdd49cc42a0f8f73a94f5814, type: 3}
 --- !u!1 &7121017377674573470
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,7 +211,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7121017377674573471}
   - component: {fileID: 7121017377674573464}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,7 +301,7 @@ GameObject:
   - component: {fileID: 7121017378231278373}
   - component: {fileID: 7121017378231278375}
   - component: {fileID: 7121017378231278374}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +376,7 @@ GameObject:
   - component: {fileID: 7121017378955624673}
   - component: {fileID: 7121017378955624675}
   - component: {fileID: 7121017378955624674}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +453,7 @@ GameObject:
   - component: {fileID: 7121017379671852534}
   - component: {fileID: 7121017379671852533}
   - component: {fileID: 7121017379671852529}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5758301025404635553}
   - component: {fileID: 9016827542398415659}
   - component: {fileID: 5435203309580500778}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Boombox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,8 @@ GameObject:
   - component: {fileID: 4660987792768985249}
   - component: {fileID: 7443272582133816427}
   - component: {fileID: 2482043847802756371}
-  m_Layer: 0
+  - component: {fileID: 4085841125326550810}
+  m_Layer: 6
   m_Name: MetalCat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,6 +222,20 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   fill: {fileID: 7397683780669521955}
+--- !u!64 &4085841125326550810
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8956301255287913918}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -235467998123861108, guid: 6cdc7563afe1b5941b2147327dc9e522, type: 3}
 --- !u!1001 &1989262617703265154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -235,6 +250,10 @@ PrefabInstance:
     - target: {fileID: 9021446707595146146, guid: bee840a8e124c4f4e90268b7dc5ef58f, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021446707595146147, guid: bee840a8e124c4f4e90268b7dc5ef58f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 9021446707973633715, guid: bee840a8e124c4f4e90268b7dc5ef58f, type: 3}
       propertyPath: m_Pivot.x
@@ -335,6 +354,18 @@ PrefabInstance:
     - target: {fileID: 9021446707973633719, guid: bee840a8e124c4f4e90268b7dc5ef58f, type: 3}
       propertyPath: m_Name
       value: HPBarCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021446707973633719, guid: bee840a8e124c4f4e90268b7dc5ef58f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021446708394378717, guid: bee840a8e124c4f4e90268b7dc5ef58f, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 9021446708873144423, guid: bee840a8e124c4f4e90268b7dc5ef58f, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bee840a8e124c4f4e90268b7dc5ef58f, type: 3}

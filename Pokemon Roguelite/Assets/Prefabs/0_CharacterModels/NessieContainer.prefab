@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3868696108161813399}
   - component: {fileID: 3448046537223883668}
   - component: {fileID: 2228645966653927311}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Nessie_Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,8 @@ GameObject:
   - component: {fileID: 6532206735523831899}
   - component: {fileID: 7755221876487846826}
   - component: {fileID: 2281738689731759851}
-  m_Layer: 0
+  - component: {fileID: 8398893239189630427}
+  m_Layer: 6
   m_Name: Nessie_Shell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,6 +180,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8398893239189630427
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4927521325617038940}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3943802164428862966, guid: d5009857a7b627847893c701e03a3914, type: 3}
 --- !u!1 &8065910507457943823
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +205,7 @@ GameObject:
   - component: {fileID: 8065910507457943816}
   - component: {fileID: 8065910507457943818}
   - component: {fileID: 8065910507457943817}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rain Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4994,7 +5009,7 @@ GameObject:
   - component: {fileID: 8065910507567344950}
   - component: {fileID: 8065910507567344949}
   - component: {fileID: 8065910507567344948}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Clouds (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9817,7 +9832,7 @@ GameObject:
   - component: {fileID: 8065910507582308291}
   - component: {fileID: 8065910507582308290}
   - component: {fileID: 8065910507582308289}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Clouds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14640,7 +14655,7 @@ GameObject:
   - component: {fileID: 8065910507812399757}
   - component: {fileID: 8065910507812399759}
   - component: {fileID: 8065910507812399758}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rain Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19444,7 +19459,7 @@ GameObject:
   - component: {fileID: 8065910507840720903}
   - component: {fileID: 8065910507840720897}
   - component: {fileID: 8065910507840720896}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rain
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -24249,7 +24264,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8065910507899139176}
   - component: {fileID: 2964581621400628442}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: NessieContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24337,7 +24352,7 @@ GameObject:
   - component: {fileID: 8065910508082902429}
   - component: {fileID: 8065910508082902431}
   - component: {fileID: 8065910508082902430}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rain Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29141,7 +29156,7 @@ GameObject:
   - component: {fileID: 8065910508205293819}
   - component: {fileID: 8065910508205293813}
   - component: {fileID: 8065910508205293812}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rain
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -33947,7 +33962,7 @@ GameObject:
   - component: {fileID: 8065910508562255035}
   - component: {fileID: 8065910508562255029}
   - component: {fileID: 8065910508562255028}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rain
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
@@ -38753,7 +38768,7 @@ GameObject:
   - component: {fileID: 8065910508567272883}
   - component: {fileID: 8065910508567272877}
   - component: {fileID: 8065910508567272876}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rain Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43557,7 +43572,7 @@ GameObject:
   - component: {fileID: 8065910508832634757}
   - component: {fileID: 8065910508832634759}
   - component: {fileID: 8065910508832634758}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rain Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48361,7 +48376,7 @@ GameObject:
   - component: {fileID: 8065910509035459926}
   - component: {fileID: 8065910509035459925}
   - component: {fileID: 8065910509035459924}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Clouds (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53184,7 +53199,7 @@ GameObject:
   - component: {fileID: 8065910509064312663}
   - component: {fileID: 8065910509064312657}
   - component: {fileID: 8065910509064312656}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Rain Sheet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -57988,7 +58003,7 @@ GameObject:
   - component: {fileID: 9204653038491926153}
   - component: {fileID: 9204653038491926155}
   - component: {fileID: 9204653038491926154}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58062,7 +58077,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9204653039153124147}
   - component: {fileID: 9204653039153124148}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58154,7 +58169,7 @@ GameObject:
   - component: {fileID: 9204653039538233434}
   - component: {fileID: 9204653039538233433}
   - component: {fileID: 9204653039538233437}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58265,7 +58280,7 @@ GameObject:
   - component: {fileID: 9204653039914624333}
   - component: {fileID: 9204653039914624335}
   - component: {fileID: 9204653039914624334}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}

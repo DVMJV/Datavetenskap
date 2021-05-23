@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3745339004555229493}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowerArm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1716183008678015117}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 501374771992827786}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 1436563315531921443}
   - component: {fileID: 1775651999670559384}
   - component: {fileID: 1916350386208635024}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SpringBunny
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 91032774653356550}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowerEar.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1448521194289772515}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hand.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2366896014720810916}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: UpperEar.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8609373329011969616}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EarBone.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1065414399364802051}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6854872399045219430}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hand.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +392,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2195052578503493914}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spring_rig_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -423,7 +423,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8993962305734579734}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: UpperArm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3196175523592439014}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -485,7 +485,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 901263890679974151}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -516,7 +516,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4214351412871474086}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowerEar.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +547,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5666360261320183077}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: UpperEar.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -578,7 +578,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3812846640490323793}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shoulder.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +611,8 @@ GameObject:
   - component: {fileID: 6278225752524161700}
   - component: {fileID: 8465430794384523929}
   - component: {fileID: 7974075225089605112}
-  m_Layer: 0
+  - component: {fileID: 7329062606843252011}
+  m_Layer: 6
   m_Name: Spring_geo_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,6 +682,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7329062606843252011
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4264491858548307370}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3908388913646427659, guid: 9846beb826ba94d40a26967de3cacc11, type: 3}
 --- !u!1 &4402861231097127770
 GameObject:
   m_ObjectHideFlags: 0
@@ -690,7 +705,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8177775746722009802}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hand.R_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -720,7 +735,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6389488448893815268}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: UpperArm.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -751,7 +766,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4771137987569042277}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shoulder.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -782,7 +797,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2788746083715706087}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -814,7 +829,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7409080584153271792}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Hand.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -846,7 +861,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7844963946219851321}
   - component: {fileID: 7237665111137751082}
-  m_Layer: 0
+  - component: {fileID: 4399292033043301820}
+  m_Layer: 6
   m_Name: Bunny
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -940,6 +956,20 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00004985719, y: 0.00483586, z: 0.00032497058}
     m_Extent: {x: 0.003747767, y: 0.0056621972, z: 0.0025725584}
   m_DirtyAABB: 0
+--- !u!64 &4399292033043301820
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5170158315505750444}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1595908332228470013, guid: 9846beb826ba94d40a26967de3cacc11, type: 3}
 --- !u!1 &6403976137945806930
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +979,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6618864251201249771}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -980,7 +1010,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9206931871882991072}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EarBone.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,7 +1041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1960934472647397471}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: UpperEar.L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1042,7 +1072,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 848314565012091660}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Root 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1074,7 +1104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6754543469201831921}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LowerArm.R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1107,7 +1137,7 @@ GameObject:
   - component: {fileID: 8047491260935075033}
   - component: {fileID: 8047491260935075035}
   - component: {fileID: 8047491260935075034}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1184,7 +1214,7 @@ GameObject:
   - component: {fileID: 8047491261649236430}
   - component: {fileID: 8047491261649236429}
   - component: {fileID: 8047491261649236425}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1294,7 +1324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8047491261767991975}
   - component: {fileID: 8047491261767991968}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1384,7 +1414,7 @@ GameObject:
   - component: {fileID: 8047491262221856541}
   - component: {fileID: 8047491262221856543}
   - component: {fileID: 8047491262221856542}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1457,7 +1487,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8706051712305789289}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: UpperEar.L_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1487,7 +1517,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8025247322445768893}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}

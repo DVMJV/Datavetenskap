@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     GameObject attackDisplayContainer;
 
     [SerializeField]
-    private List<PokemonContainer> pokemons;
+    private List<PokemonContainer> pokemons = new List<PokemonContainer>();
     bool turn;
     // Start is called before the first frame update
     void Start()
@@ -33,6 +33,24 @@ public class Player : MonoBehaviour
         EventHandler.current.onTurnReset += TurnEnd;
         EventHandler.current.onAllowedToEndTurn += AllowedToEndTurn;
         EventHandler.current.OnStart();
+        EventHandler.current.onCreatePlayerPokemons += GetPokemons;
+        EventHandler.current.onPlayerSpawnCells += SetCells;
+    }
+
+    void GetPokemons(List<GameObject> playerPokemons)
+    {
+        foreach (GameObject g in playerPokemons)
+        {
+            pokemons.Add(g.GetComponent<PokemonContainer>());
+        }
+    }
+
+    void SetCells(List<SquareCell> spawnCells)
+    {
+        for (int i = 0; i < pokemons.Count; i++)
+        {
+            pokemons[i].CurrentTile = spawnCells[i];
+        }
     }
 
     private void Update()

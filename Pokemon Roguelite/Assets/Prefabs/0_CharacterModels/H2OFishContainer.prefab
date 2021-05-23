@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 316232018}
   - component: {fileID: 316232017}
   - component: {fileID: 316232021}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 946377797}
   - component: {fileID: 946377799}
   - component: {fileID: 946377798}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 1287376769}
   - component: {fileID: 1287376771}
   - component: {fileID: 1287376770}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1808605755}
   - component: {fileID: 1808605756}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -362,7 +362,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3178210288308626984}
   - component: {fileID: 1118037189631538202}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: H2OFishContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,7 +447,8 @@ GameObject:
   - component: {fileID: 8743619675451229906}
   - component: {fileID: 3470544369250459054}
   - component: {fileID: 945716733037157584}
-  m_Layer: 0
+  - component: {fileID: 6915491488185036986}
+  m_Layer: 6
   m_Name: H2O_Fish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,3 +539,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!64 &6915491488185036986
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5812057214090029997}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6208413704742325215, guid: 9d2871c0cdd49cc42a0f8f73a94f5814, type: 3}

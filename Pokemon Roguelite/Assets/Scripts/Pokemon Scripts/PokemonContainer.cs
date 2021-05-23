@@ -38,7 +38,7 @@ public class PokemonContainer : MonoBehaviour
     #region Properties
     public SquareCell CurrentTile { 
         get => currentCell;
-        private set
+        set
         {
             if (currentCell == value)
                 return;
@@ -61,8 +61,8 @@ public class PokemonContainer : MonoBehaviour
 
     private void Start()
     {
-        Destroy(GetComponent<MeshRenderer>());
-        GameObject go = Instantiate(pokemon.mesh, transform);
+        //Destroy(GetComponent<MeshRenderer>());
+        //GameObject go = Instantiate(pokemon.mesh, transform);
         CurrentTile = currentCell;
         currentMovement = pokemon.movementSpeed;
 

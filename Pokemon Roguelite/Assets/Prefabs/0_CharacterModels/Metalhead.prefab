@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7035954330336321456}
   - component: {fileID: 2051365534198184493}
   - component: {fileID: 1017602437181514436}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Metal_LiteralHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,8 @@ GameObject:
   - component: {fileID: 523385038396523668}
   - component: {fileID: 2353017154903863390}
   - component: {fileID: 8538473147000324951}
-  m_Layer: 0
+  - component: {fileID: 4959098219665814995}
+  m_Layer: 6
   m_Name: Metalhead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,6 +217,20 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   fill: {fileID: 7780602065790405891}
+--- !u!64 &4959098219665814995
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4298515224649945483}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -3163289491536873060, guid: f04de56328476694ba0b78f138e7963d, type: 3}
 --- !u!1 &7780602063855605445
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +242,7 @@ GameObject:
   - component: {fileID: 7780602063855605444}
   - component: {fileID: 7780602063855605446}
   - component: {fileID: 7780602063855605447}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -301,7 +316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7780602064442112894}
   - component: {fileID: 7780602064442112889}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -393,7 +408,7 @@ GameObject:
   - component: {fileID: 7780602065095116823}
   - component: {fileID: 7780602065095116820}
   - component: {fileID: 7780602065095116816}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: HPBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -417,7 +432,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 4}
   m_SizeDelta: {x: 300, y: 42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7780602065095116822
@@ -504,7 +519,7 @@ GameObject:
   - component: {fileID: 7780602065790405888}
   - component: {fileID: 7780602065790405890}
   - component: {fileID: 7780602065790405891}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
