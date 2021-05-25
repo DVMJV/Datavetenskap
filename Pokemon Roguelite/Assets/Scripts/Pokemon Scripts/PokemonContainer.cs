@@ -42,8 +42,12 @@ public class PokemonContainer : MonoBehaviour
         {
             if (currentCell == value)
                 return;
+            if(currentCell != null)
+                currentCell.obstructed = false;
 
             currentCell = value;
+
+            currentCell.obstructed = true;
 
             var position = currentCell.transform.position;
             transform.position = new Vector3(position.x, position.y + currentCell.Elevation, position.z);
@@ -85,7 +89,10 @@ public class PokemonContainer : MonoBehaviour
     private void Update()
     {
         if (currentHealth <= 0)
+        {
+            currentCell.obstructed = false;
             Destroy(gameObject);
+        }
     }
 
     #endregion

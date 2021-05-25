@@ -2879,6 +2879,7 @@ GameObject:
   - component: {fileID: 1700107229}
   - component: {fileID: 1700107228}
   - component: {fileID: 1700107227}
+  - component: {fileID: 1700107230}
   m_Layer: 5
   m_Name: Turn Button
   m_TagString: Untagged
@@ -2955,6 +2956,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1700107225}
   m_CullTransparentMesh: 1
+--- !u!114 &1700107230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700107225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5f8562c73de1644186f3d895c5ae16e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1754628162
 GameObject:
   m_ObjectHideFlags: 0

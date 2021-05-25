@@ -91,8 +91,7 @@ public class SquareMapGenerator : MonoBehaviour
             offsetX = Random.Range(-3, 3);
             offsetZ = Random.Range(-3, 3);
             int probability = Random.Range(0, 100);
-            //if (probabilityLevel >= probability)
-            //{
+            
             if (cell.biomeType == SquareCell.TYPE.BEACH)
             {
                 if (beachObstruct >= probability)
@@ -100,6 +99,8 @@ public class SquareMapGenerator : MonoBehaviour
                     GameObject item = beachObstructible[(int)Random.Range(0, beachObstructible.Count)];
                     GameObject go = Instantiate(item);
                     go.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                    cell.obstructed = true;
+
                 }
                 if (beachNonObstruct >= probability)
                 {
@@ -113,6 +114,8 @@ public class SquareMapGenerator : MonoBehaviour
                     GameObject item = forestObstructible[(int)Random.Range(0, forestObstructible.Count)];
                     GameObject go = Instantiate(item);
                     go.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                    cell.obstructed = true;
+
                 }
                 if (forestNonObstruct >= probability)
                 {
@@ -126,6 +129,8 @@ public class SquareMapGenerator : MonoBehaviour
                     GameObject item = electricObstructible[(int)Random.Range(0, electricObstructible.Count)];
                     GameObject go = Instantiate(item);
                     go.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                    cell.obstructed = true;
+
                 }
                 if (electricNonObstruct >= probability)
                 {
@@ -140,6 +145,7 @@ public class SquareMapGenerator : MonoBehaviour
                     GameObject item = metalObstructible[(int)Random.Range(0, metalObstructible.Count)];
                     GameObject go = Instantiate(item);
                     go.transform.position = cell.transform.position + new Vector3(offsetX, 0, offsetZ);
+                    cell.obstructed = true;
                 }
                 if (metalNonObstruct >= probability)
                 {
@@ -217,12 +223,15 @@ public class SquareMapGenerator : MonoBehaviour
 
             if ((int)cell.biomeType > (int)SquareCell.TYPE.METAL)
                 cell.biomeType = SquareCell.TYPE.METAL;
-
+/*
             //Sqush map elevation.
             if (cell.Elevation != 0)
                 cell.Elevation = 1;
             else
                 cell.Elevation = -3; // Move water down.
+*/
+            if (cell.Elevation == 0)
+                cell.Elevation = -3;
         }
 
     }
