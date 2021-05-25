@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 5
   pokemonName: Goldfish
-  movementSpeed: 0
+  movementSpeed: 5
   health: 10
   mesh: {fileID: 0}
   levelToLearnAt: 05000000
