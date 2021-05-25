@@ -106,7 +106,7 @@ public class SquareMapGenerator : MonoBehaviour
                     // beach items.
                 }
             }
-            if (cell.biomeType == SquareCell.TYPE.FOREST) // gör mer skogig.
+            if (cell.biomeType == SquareCell.TYPE.FOREST) // gÃ¶r mer skogig.
             {
                 if (forestObstruct >= probability)
                 {
@@ -133,7 +133,7 @@ public class SquareMapGenerator : MonoBehaviour
                 }
 
             }
-            if (cell.biomeType == SquareCell.TYPE.METAL) // gör mer skogig
+            if (cell.biomeType == SquareCell.TYPE.METAL) // gÃ¶r mer skogig
             {
                 if (metalObstruct >= probability)
                 {

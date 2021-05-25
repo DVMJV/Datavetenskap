@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     private List<PokemonContainer> pokemons = new List<PokemonContainer>();
     bool turn;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         turn = true;
         EventHandler.current.onAllySelected += SetSelected;
