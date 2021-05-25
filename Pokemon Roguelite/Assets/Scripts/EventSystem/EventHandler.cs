@@ -21,12 +21,19 @@ public class EventHandler : MonoBehaviour
 
     #region GeneralEvents
     public event Action onStart;
+
+    public event Action onGenerateMap;
     #endregion
 
     #region GeneralEventCalls
     public void OnStart()
     {
         onStart?.Invoke();
+    }
+
+    public void GenerateMap()
+    {
+        onGenerateMap?.Invoke();
     }
     #endregion
 

@@ -151,7 +151,7 @@ public class SquareGrid : MonoBehaviour
             {
                 SquareCell neighbor = current.GetNeighbor(d);
 
-                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1 || neighbor.obstructed)
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 2 || neighbor.obstructed)
                     continue;
                 else if (neighbor.Distance == int.MaxValue)
                 {
@@ -200,8 +200,8 @@ public class SquareGrid : MonoBehaviour
             for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
             {
                 SquareCell neighbor = current.GetNeighbor(d);
-                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1 ||
-                    !walkableTiles.Contains(neighbor))
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 2 ||
+                    !walkableTiles.Contains(neighbor) || neighbor.obstructed)
                     continue;
 
                 else if (neighbor.Distance == int.MaxValue)

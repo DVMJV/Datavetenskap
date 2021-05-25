@@ -10,7 +10,6 @@ public class PlayButton : MonoBehaviour
         if (PartyMemberManager.selectedParty.Count >= PartyMemberManager.maxPartySize)
         {
             int sceneID = SceneManager.GetActiveScene().buildIndex;
-
             SceneLoader.LoadScene(sceneID, ++sceneID); 
         }
     }

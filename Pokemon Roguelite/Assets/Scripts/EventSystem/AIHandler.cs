@@ -377,7 +377,7 @@ public class AIHandler : MonoBehaviour
             for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
             {
                 SquareCell neighbor = current.GetNeighbor(d);
-                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 1  || neighbor.obstructed)
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 2  || neighbor.obstructed)
                     continue;
 
                 else if (neighbor.Distance == int.MaxValue)

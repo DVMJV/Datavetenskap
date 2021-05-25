@@ -49,7 +49,28 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i < pokemons.Count; i++)
         {
-            pokemons[i].CurrentTile = spawnCells[i];
+            foreach (var cell in spawnCells)
+            {
+                if(cell.obstructed)
+                    continue;
+                bool canSpawnAtCell = false;
+
+                for (SquareDirection d = SquareDirection.UP; d < SquareDirection.LEFT; d++)
+                {
+                    SquareCell neighbor = cell.GetNeighbor(d);
+                    if (neighbor != null && !neighbor.obstructed)
+                    {
+                        canSpawnAtCell = true;
+                        break;
+                    }
+                }
+
+                if (canSpawnAtCell)
+                {
+                    pokemons[i].CurrentTile = cell;
+                    break;
+                }
+            }
         }
     }
 

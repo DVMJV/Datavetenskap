@@ -16,9 +16,12 @@ public class InitializeScene : MonoBehaviour
     {
         while (!SceneManager.SetActiveScene(SceneManager.GetSceneByName("TileMap_new")) && !SceneManager.GetSceneByName("Hub").isLoaded)
             yield return new WaitForSeconds(0.1f);
+
         
         InstantiatePokemons();
         EventHandler.current.CreatePlayerPokemons(pokemons);
+        
+        EventHandler.current.GenerateMap();
     }
     //Start coroutine for scene done load check SceneManager.scene.isLoaded;
 

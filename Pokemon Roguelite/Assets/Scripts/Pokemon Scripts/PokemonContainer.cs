@@ -50,7 +50,7 @@ public class PokemonContainer : MonoBehaviour
             currentCell.obstructed = true;
 
             var position = currentCell.transform.position;
-            transform.position = new Vector3(position.x, position.y + currentCell.Elevation, position.z);
+            transform.position = new Vector3(position.x, position.y, position.z);
         }
     }
 
