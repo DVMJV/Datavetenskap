@@ -80,7 +80,7 @@ public class PokemonContainer : MonoBehaviour
 
         SetMaxHealth();
 
-        foreach(PokemonAttack attack in temp)
+        foreach(PokemonAttack attack in pokemon.attackToLearn)
         {
             LearnMove(attack);
         }

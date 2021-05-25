@@ -46,8 +46,6 @@ public class UpdateUpgradeButtons : MonoBehaviour
             upgradeButtons[i].gameObject.SetActive(true);
             upgradeButtons[i].interactable = true;
 
-            if (slottedPokemon.currentLevel < slottedPokemonTemplate.levelToLearnAt[i])
-                upgradeButtons[i].interactable = false;
         }
 
         for (; i < upgradeButtons.Count; i++)
