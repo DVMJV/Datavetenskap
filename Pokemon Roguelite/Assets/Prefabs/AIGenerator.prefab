@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3114643820632262533
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3114643820632262535}
+  - component: {fileID: 3114643820632262534}
+  m_Layer: 0
+  m_Name: AIGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3114643820632262535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114643820632262533}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1083.0554, y: 51.441833, z: 156.76947}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3114643820632262534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3114643820632262533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2942638353bfd46b0b44fdeca60522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  probability: 0.511
+  minimumAmountOfPokemon: 4
+  maxPokemonsPerRegion: 2
+  waterPokemons:
+  - {fileID: 2950700503296131212, guid: cc42b5c1990aeea4ba04a618e45322d0, type: 3}
+  - {fileID: 8065910507899139183, guid: 0d30f1fd54a5048418ce8ad8fab9c968, type: 3}
+  metalPokemons:
+  - {fileID: 4298515224649945483, guid: cfc37ab7599e65f45b8bc3f638495b9c, type: 3}
+  - {fileID: 8956301255287913918, guid: 5fc8cc894b8e3ce448aa129c429e2c01, type: 3}
+  electricPokemons:
+  - {fileID: 3898901843873733743, guid: b040f555ccdb7d8459263a521455d350, type: 3}
+  - {fileID: 3898901843873733743, guid: b040f555ccdb7d8459263a521455d350, type: 3}
+  neutralPokemons:
+  - {fileID: 1927094078971721692, guid: 7259674adb4b16d47bfb671485829428, type: 3}
+  - {fileID: 1775651999670559385, guid: 7dc5025f7cbca3b4f8cd3133d64023de, type: 3}

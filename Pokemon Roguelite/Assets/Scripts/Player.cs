@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
         for (int i = 0; i < selectedPokemon.learnedMoves.Count; i++)
         {
             String name = selectedPokemon.learnedMoves[i].GetName();
-            GameObject go = Instantiate(attackDisplay, new Vector3(attackDisplayContainer.transform.position.x + 50, (attackDisplayContainer.transform.position.y - 30) + ((i * 55) + 1), 0), Quaternion.identity, attackDisplayContainer.transform);
+            GameObject go = Instantiate(attackDisplay, new Vector3(attackDisplayContainer.transform.position.x + 50, (attackDisplayContainer.transform.position.y - 30) + ((i * 80) + 1), 0), Quaternion.identity, attackDisplayContainer.transform);
             go.GetComponentInChildren<TMP_Text>().SetText(name);
             go.GetComponent<AttackDisplay>().SetAttackContainer(selectedPokemon.learnedMoves[i]);
             go.GetComponent<AttackDisplay>().id = i;
