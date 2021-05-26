@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pokemonName: SpringBunny
   movementSpeed: 5
-  health: 10
+  health: 50
   mesh: {fileID: 0}
   attackToLearn:
   - {fileID: 11400000, guid: 74a1028db98b1ea479d908cb7708f8e5, type: 2}

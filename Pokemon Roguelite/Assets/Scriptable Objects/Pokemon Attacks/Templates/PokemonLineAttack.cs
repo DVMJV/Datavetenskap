@@ -34,12 +34,12 @@ public class PokemonLineAttack : PokemonAttack
             {
                 if (neighbor == null)
                     break;
-                neighbor = neighbor.GetNeighbor(direction);
-                cellsToAttack.Add(neighbor);
                 if (neighbor == toCell)
                 {
                     return cellsToAttack;
                 }
+                neighbor = neighbor.GetNeighbor(direction);
+                cellsToAttack.Add(neighbor);
                 cost++;
             }
             cellsToAttack.Clear();

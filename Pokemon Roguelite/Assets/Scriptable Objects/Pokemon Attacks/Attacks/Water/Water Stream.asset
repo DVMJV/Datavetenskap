@@ -15,8 +15,8 @@ MonoBehaviour:
   attackName: Water Stream
   damage: 3
   range: 4
-  type: 0
+  type: 1
   id: 0
   cooldown: 5
-  effect: 0
+  effect: 1
   particle: {fileID: 1127728529481088445, guid: 27a8e6bb415957849af3ba549e519bec, type: 3}

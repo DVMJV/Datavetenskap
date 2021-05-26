@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pokemonName: MetalHead
   movementSpeed: 5
-  health: 10
+  health: 50
   mesh: {fileID: 0}
   attackToLearn:
   - {fileID: 11400000, guid: 306d82c6d3b5cfb408ff20b6864f35dc, type: 2}

@@ -15,8 +15,8 @@ MonoBehaviour:
   attackName: Bubble
   damage: 6
   range: 4
-  type: 0
+  type: 1
   id: 0
   cooldown: 0
-  effect: 0
+  effect: 1
   particle: {fileID: 4103619328700404383, guid: 0c54a1a640e64de4d929525c6b39a9f8, type: 3}

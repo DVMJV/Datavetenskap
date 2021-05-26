@@ -18,5 +18,5 @@ MonoBehaviour:
   type: 2
   id: 0
   cooldown: 0
-  effect: 3
+  effect: 1
   particle: {fileID: 5116583196159048249, guid: 82d4b4dde06ef8d4fb0c8aee7da0f9d3, type: 3}

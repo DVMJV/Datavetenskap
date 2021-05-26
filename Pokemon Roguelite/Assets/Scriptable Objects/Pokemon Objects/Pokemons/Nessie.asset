@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pokemonName: Nessie
   movementSpeed: 5
-  health: 10
+  health: 50
   mesh: {fileID: 0}
   attackToLearn:
   - {fileID: 11400000, guid: 36212dd1a31e63c4a98ac052faf553ed, type: 2}
