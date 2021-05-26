@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21723f59cc07f3b4e92ac3640dd7afc5, type: 3}
   m_Name: Spike
   m_EditorClassIdentifier: 
-  attackName: 
+  attackName: Spike
   damage: 11
-  range: 1
+  range: 4
   type: 2
   id: 0
   cooldown: 0
   effect: 3
-  particle: {fileID: 1727263228597045972, guid: c7139b2d4b67568408f4c1064bda1820, type: 3}
+  particle: {fileID: 5116583196159048249, guid: 82d4b4dde06ef8d4fb0c8aee7da0f9d3, type: 3}

@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8929f20cb4db7a4683ef77e7c0d882e, type: 3}
   m_Name: Water Stream
   m_EditorClassIdentifier: 
-  attackName: 
+  attackName: Water Stream
   damage: 3
-  range: 8
+  range: 4
   type: 0
   id: 0
   cooldown: 5
   effect: 0
-  particle: {fileID: 4200627568414011198, guid: 94f074e13378ee64bbb9e5b918f2bfce, type: 3}
+  particle: {fileID: 1127728529481088445, guid: 27a8e6bb415957849af3ba549e519bec, type: 3}

@@ -185,8 +185,7 @@ public class AIHandler : MonoBehaviour
     private bool RunAway(PokemonContainer selectedPokemon, float dist, PokemonContainer target)
     {
         AttackContainer stunMove = selectedPokemon.learnedMoves.Find(x =>
-            x.GetAttack().effect == PokemonAttack.SecondaryEffect.Stun ||
-            x.GetAttack().effect == PokemonAttack.SecondaryEffect.Knockback);
+            x.GetAttack().effect == PokemonAttack.SecondaryEffect.Stun);
 
         if (stunMove != null && dist <= stunMove.GetAttack().range)
         {

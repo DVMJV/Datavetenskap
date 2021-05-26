@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21723f59cc07f3b4e92ac3640dd7afc5, type: 3}
   m_Name: Bubble
   m_EditorClassIdentifier: 
-  attackName: 
+  attackName: Bubble
   damage: 6
-  range: 3
+  range: 4
   type: 0
   id: 0
   cooldown: 0
   effect: 0
-  particle: {fileID: 6918774058855309177, guid: 9e8a448506e16b945b08db8d237d23ea, type: 3}
+  particle: {fileID: 4103619328700404383, guid: 0c54a1a640e64de4d929525c6b39a9f8, type: 3}

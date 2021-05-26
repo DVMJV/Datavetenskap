@@ -173,7 +173,7 @@ public class AttackContainer
             {
                 SquareCell neighbor = current.GetNeighbor(d);
 
-                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 2  || neighbor.obstructed)
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 2)
                     continue;
                 else if(neighbor.Distance == int.MaxValue)
                 {

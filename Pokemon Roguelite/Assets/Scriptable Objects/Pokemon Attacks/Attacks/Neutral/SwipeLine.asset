@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8929f20cb4db7a4683ef77e7c0d882e, type: 3}
   m_Name: SwipeLine
   m_EditorClassIdentifier: 
-  attackName: 
+  attackName: Big Swipe
   damage: 7
   range: 4
   type: 0
   id: 0
   cooldown: 0
   effect: 3
-  particle: {fileID: 5394804756230680640, guid: 2738b9c11b57c1842a16a7caf021eab8, type: 3}
+  particle: {fileID: 7723991455153828211, guid: 5fb1bf004a8a7eb4c889025033fd6aa6, type: 3}

@@ -9,13 +9,16 @@ public class PokemonLineAttack : PokemonAttack
     public override void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
         GameObject go = Instantiate(particle);
-        SquareDirection d;
-        List<SquareCell> cellsToAttack = ConstructAttackPath(fromCell, toCell, out d);
+        var position = fromCell.transform.position;
+        go.transform.position = position;
+        Vector3 directionVector = toCell.transform.position - position;
+        go.transform.forward = directionVector.normalized;
+        List<SquareCell> cellsToAttack = ConstructAttackPath(fromCell, toCell);
         foreach (SquareCell cell in cellsToAttack)
             EventHandler.current.AttackTile(cell, this, tag);
     }
 
-    private List<SquareCell> ConstructAttackPath(SquareCell fromCell, SquareCell toCell, out SquareDirection d)
+    private List<SquareCell> ConstructAttackPath(SquareCell fromCell, SquareCell toCell)
     {
         List<SquareCell> cellsToAttack = new List<SquareCell>();
 
@@ -35,7 +38,6 @@ public class PokemonLineAttack : PokemonAttack
                 cellsToAttack.Add(neighbor);
                 if (neighbor == toCell)
                 {
-                    d = direction;
                     return cellsToAttack;
                 }
                 cost++;
@@ -43,7 +45,6 @@ public class PokemonLineAttack : PokemonAttack
             cellsToAttack.Clear();
         }
 
-        d = (SquareDirection)5;
         return cellsToAttack;
     }
 

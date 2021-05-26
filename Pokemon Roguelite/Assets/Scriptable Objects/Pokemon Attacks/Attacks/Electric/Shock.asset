@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21723f59cc07f3b4e92ac3640dd7afc5, type: 3}
   m_Name: Shock
   m_EditorClassIdentifier: 
-  attackName: 
+  attackName: Shock
   damage: 10
-  range: 1
+  range: 4
   type: 0
   id: 0
   cooldown: 0
   effect: 0
-  particle: {fileID: 830167512126943878, guid: 3f037350bb5d1d7438d568654486da02, type: 3}
+  particle: {fileID: 6589394987832111030, guid: 9e3902f1ef3da024c9afa40d420ad534, type: 3}

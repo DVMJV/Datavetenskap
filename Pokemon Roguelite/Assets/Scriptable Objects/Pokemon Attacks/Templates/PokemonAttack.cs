@@ -16,8 +16,6 @@ public abstract class PokemonAttack : ScriptableObject
     public enum SecondaryEffect
     {
         Stun,
-        Knockback,
-        Bleed,
         None
     }
 
