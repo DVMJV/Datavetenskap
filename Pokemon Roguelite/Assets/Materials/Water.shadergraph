@@ -2599,8 +2599,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -735.0,
-            "y": -170.0,
+            "x": -874.0001220703125,
+            "y": -37.00001525878906,
             "width": 208.0,
             "height": 302.0
         }
@@ -2635,7 +2635,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Width",
     "m_StageCapability": 3,
-    "m_Value": 5.0,
+    "m_Value": 40.0,
     "m_DefaultValue": 0.5,
     "m_Labels": []
 }
