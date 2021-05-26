@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -35,6 +36,19 @@ public class Player : MonoBehaviour
         EventHandler.current.OnStart();
         EventHandler.current.onCreatePlayerPokemons += GetPokemons;
         EventHandler.current.onPlayerSpawnCells += SetCells;
+        EventHandler.current.onPokemonDestroyed += RemovePokemon;
+    }
+
+    private void OnDestroy()
+    {
+        EventHandler.current.onAllySelected -= SetSelected;
+        EventHandler.current.onTileSelected -= MovePokemon;
+        EventHandler.current.onTurnStart -= TurnStart;
+        EventHandler.current.onTurnReset -= TurnEnd;
+        EventHandler.current.onAllowedToEndTurn -= AllowedToEndTurn;
+        EventHandler.current.onCreatePlayerPokemons -= GetPokemons;
+        EventHandler.current.onPlayerSpawnCells -= SetCells;
+        EventHandler.current.onPokemonDestroyed -= RemovePokemon;
     }
 
     void GetPokemons(List<GameObject> playerPokemons)
@@ -43,6 +57,12 @@ public class Player : MonoBehaviour
         {
             pokemons.Add(g.GetComponent<PokemonContainer>());
         }
+    }
+
+    void RemovePokemon(PokemonContainer container)
+    {
+        if (pokemons.Contains(container))
+            pokemons.Remove(container);
     }
 
     void SetCells(List<SquareCell> spawnCells)
@@ -91,18 +111,30 @@ public class Player : MonoBehaviour
     }
     void TurnEnd(int id)
     {
-        if(this.id == id && allowedToEndTurn)
+        if(this.id == id)
         {
-            turn = false;
-            foreach (PokemonContainer pokemon in pokemons)
-            {
-                pokemon.EndTurn();
-            }
-            ClearAttacks();
-            selected = null;
-            EventHandler.current.AllySelected(null);
-            Debug.Log("My Reset");
+            StartCoroutine(WaitForEndTurn());
         }
+    }
+
+    IEnumerator WaitForEndTurn()
+    {
+        while (true)
+        {
+            if (allowedToEndTurn)
+                break;
+
+            yield return null;
+        }
+        turn = false;
+        foreach (PokemonContainer pokemon in pokemons)
+        {
+            pokemon.EndTurn();
+        }
+        ClearAttacks();
+        selected = null;
+        EventHandler.current.AllySelected(null);
+        Debug.Log("My Reset");
     }
 
     private void SetSelected(PokemonContainer pokemon)
@@ -143,10 +175,13 @@ public class Player : MonoBehaviour
         ClearAttacks();
         for (int i = 0; i < selectedPokemon.learnedMoves.Count; i++)
         {
-            GameObject go = Instantiate(attackDisplay, new Vector3(100 * (i + 1), 100, 0), Quaternion.identity, attackDisplayContainer.transform);
-            go.GetComponentInChildren<Text>().text = selectedPokemon.learnedMoves[i].GetName();
+            String name = selectedPokemon.learnedMoves[i].GetName();
+            GameObject go = Instantiate(attackDisplay, new Vector3(attackDisplayContainer.transform.position.x + 50, (attackDisplayContainer.transform.position.y - 30) + ((i * 80) + 1), 0), Quaternion.identity, attackDisplayContainer.transform);
+            go.GetComponentInChildren<TMP_Text>().SetText(name);
             go.GetComponent<AttackDisplay>().SetAttackContainer(selectedPokemon.learnedMoves[i]);
             go.GetComponent<AttackDisplay>().id = i;
+            
+            
         }
     }
 

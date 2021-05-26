@@ -23,6 +23,8 @@ public class EventHandler : MonoBehaviour
     public event Action onStart;
 
     public event Action onGenerateMap;
+
+    public event Action<SquareCell[]> onMapGenerated;
     #endregion
 
     #region GeneralEventCalls
@@ -34,6 +36,11 @@ public class EventHandler : MonoBehaviour
     public void GenerateMap()
     {
         onGenerateMap?.Invoke();
+    }
+
+    public void MapGenerated(SquareCell[] cells)
+    {
+        onMapGenerated?.Invoke(cells);
     }
     #endregion
 
@@ -110,9 +117,12 @@ public class EventHandler : MonoBehaviour
 
     #region PokemonEvents
     public event Action<GameObject> onAddedPokemon;
+    public event Action<PokemonContainer> onPokemonDestroyed;
     public event Action<GameObject> onRemovedPokemon;
     public event Action<List<GameObject>> onCreatePlayerPokemons;
     public event Action<List<SquareCell>> onPlayerSpawnCells;
+
+    public event Action<PokemonContainer> onAISpawned;
     #endregion
 
     #region PokemonEventCalls
@@ -120,6 +130,11 @@ public class EventHandler : MonoBehaviour
     public void AddPokemon(GameObject go)
     {
         onAddedPokemon?.Invoke(go);
+    }
+    
+    public void PokemonDestroyed(PokemonContainer pokemonContainer)
+    {
+        onPokemonDestroyed?.Invoke(pokemonContainer);
     }
     
     public void RemovePokemon(GameObject go)
@@ -135,6 +150,11 @@ public class EventHandler : MonoBehaviour
     public void PlayerSpawnCells(List<SquareCell> spawnCells)
     {
         onPlayerSpawnCells?.Invoke(spawnCells);
+    }
+
+    public void AISpawned(PokemonContainer pokemon)
+    {
+        onAISpawned?.Invoke(pokemon);
     }
 
     #endregion
@@ -213,4 +233,5 @@ public class EventHandler : MonoBehaviour
     
     #endregion
 
+   
 }

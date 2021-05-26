@@ -11,12 +11,11 @@ public abstract class PokemonAttack : ScriptableObject
     public int id;
     public int cooldown;
     public SecondaryEffect effect;
+    public GameObject particle;
 
     public enum SecondaryEffect
     {
         Stun,
-        Knockback,
-        Bleed,
         None
     }
 

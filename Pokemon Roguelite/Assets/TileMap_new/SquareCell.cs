@@ -31,7 +31,6 @@ public class SquareCell : MonoBehaviour
         set
         {
             distance = value;
-            UpdateDistanceLabel();
         }
     }
 

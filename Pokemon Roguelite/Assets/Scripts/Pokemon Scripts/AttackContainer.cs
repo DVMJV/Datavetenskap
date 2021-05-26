@@ -57,13 +57,18 @@ public class AttackContainer
     /// <param name="fromCell"></param>
     /// <param name="toCell"></param>
     /// <param name="tag"></param>
-    public void Attack(SquareCell fromCell, SquareCell toCell, string tag)
+    public bool Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
          if(attackableCells.Contains(toCell))
         {
             cooldown = attack.cooldown;
             attack.Attack(fromCell, toCell, tag);
+            return true;
         }
+         else
+         {
+             return false;
+         }
     }
     
     /// <summary>
@@ -173,7 +178,7 @@ public class AttackContainer
             {
                 SquareCell neighbor = current.GetNeighbor(d);
 
-                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 2  || neighbor.obstructed)
+                if (neighbor == null || Mathf.Abs(current.Elevation - neighbor.Elevation) > 2)
                     continue;
                 else if(neighbor.Distance == int.MaxValue)
                 {
