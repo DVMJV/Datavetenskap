@@ -117,6 +117,7 @@ public class EventHandler : MonoBehaviour
 
     #region PokemonEvents
     public event Action<GameObject> onAddedPokemon;
+    public event Action<PokemonContainer> onPokemonDestroyed;
     public event Action<GameObject> onRemovedPokemon;
     public event Action<List<GameObject>> onCreatePlayerPokemons;
     public event Action<List<SquareCell>> onPlayerSpawnCells;
@@ -129,6 +130,11 @@ public class EventHandler : MonoBehaviour
     public void AddPokemon(GameObject go)
     {
         onAddedPokemon?.Invoke(go);
+    }
+    
+    public void PokemonDestroyed(PokemonContainer pokemonContainer)
+    {
+        onPokemonDestroyed?.Invoke(pokemonContainer);
     }
     
     public void RemovePokemon(GameObject go)
@@ -227,4 +233,5 @@ public class EventHandler : MonoBehaviour
     
     #endregion
 
+   
 }

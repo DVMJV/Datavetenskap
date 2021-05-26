@@ -7,6 +7,11 @@ public class PokemonSingleAttack : PokemonAttack
 {
     public override void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
+        GameObject go = Instantiate(particle);
+        var position = fromCell.transform.position;
+        go.transform.position = position;
+        Vector3 directionVector = toCell.transform.position - position;
+        go.transform.forward = directionVector.normalized;
         EventHandler.current.AttackTile(toCell, this, tag);
     }
 }

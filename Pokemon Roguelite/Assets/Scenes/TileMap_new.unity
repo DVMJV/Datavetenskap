@@ -266,7 +266,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  pokemons: []
   visionRange: 30
   pokemonLayer:
     serializedVersion: 2
@@ -580,7 +579,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 685571730}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1208,7 +1207,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
-  pokemons: []
   visionRange: 40
   pokemonLayer:
     serializedVersion: 2
@@ -1392,6 +1390,14 @@ PrefabInstance:
     - target: {fileID: 5811121437188660892, guid: 82e57ab01cc3a044b9876847b3480077, type: 3}
       propertyPath: m_Name
       value: Square Grid Label
+      objectReference: {fileID: 0}
+    - target: {fileID: 5811121437188660892, guid: 82e57ab01cc3a044b9876847b3480077, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457803494769579002, guid: 82e57ab01cc3a044b9876847b3480077, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7484045322380616979, guid: 82e57ab01cc3a044b9876847b3480077, type: 3}
       propertyPath: m_Pivot.x

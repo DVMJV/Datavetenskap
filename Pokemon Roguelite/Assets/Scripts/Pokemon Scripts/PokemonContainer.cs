@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -84,6 +85,19 @@ public class PokemonContainer : MonoBehaviour
         {
             LearnMove(attack);
         }
+    }
+
+    private void OnDestroy()
+    {
+        EventHandler.current.onStart -= pokemon.OnStart;
+        EventHandler.current.onTileSelected -= PokemonSelected; 
+        EventHandler.current.onTileSelected -= AttackTile;
+        EventHandler.current.onPathFound -= Move;
+        EventHandler.current.onAttackSelected -= AttackSelected;
+        EventHandler.current.onAllySelected -= Unselect;
+        EventHandler.current.onAttackTile -= TileAttacked;
+
+        EventHandler.current.PokemonDestroyed(this);
     }
 
     private void Update()
@@ -237,8 +251,10 @@ public class PokemonContainer : MonoBehaviour
     /// <param name="attack"></param>
     private void AttackSelected(AttackContainer attack)
     {
-        if (!learnedMoves.Contains(attack) || hasAttacked || stunned) return;
+        if (!learnedMoves.Contains(attack) || hasAttacked || stunned)
+            return;
         attackSelected = attack;
+        Debug.Log("Attack Selected: " + attackSelected.GetName());
         attack.FindAttackableTiles(currentCell);
         attack.HighlightAttack();
     }
@@ -263,8 +279,8 @@ public class PokemonContainer : MonoBehaviour
     private void AttackTile(SquareCell selectedTile)
     {
         if (attackSelected == null) return;
-        hasAttacked = true;
-        attackSelected.Attack(currentCell, selectedTile, tag);
+        hasAttacked = attackSelected.Attack(currentCell, selectedTile, tag);
+        EventHandler.current.AllySelected(null);
     }
     
     /// <summary>
@@ -292,6 +308,9 @@ public class PokemonContainer : MonoBehaviour
         while (path.Count > 0)
         {
             SquareCell moveToCell = path.Pop();
+            Vector3 rotateDirection = moveToCell.transform.position - currentCell.transform.position;
+            rotateDirection.y = 0;
+            transform.forward = rotateDirection.normalized;
             yield return delay;
             currentMovement -= 1;
             CurrentTile = moveToCell;

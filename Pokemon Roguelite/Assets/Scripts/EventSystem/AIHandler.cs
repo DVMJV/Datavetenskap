@@ -30,8 +30,23 @@ public class AIHandler : MonoBehaviour
         EventHandler.current.onTurnStart += TurnStart;
         EventHandler.current.onAllowedToEndTurn += AllowedToEndTurn;
         EventHandler.current.onAISpawned += AddPokemon;
+        EventHandler.current.onPokemonDestroyed += RemovePokemon;
+
     }
 
+    private void OnDestroy()
+    {
+        EventHandler.current.onTurnStart -= TurnStart;
+        EventHandler.current.onAllowedToEndTurn -= AllowedToEndTurn;
+        EventHandler.current.onAISpawned -= AddPokemon;
+        EventHandler.current.onPokemonDestroyed -= RemovePokemon;
+    }
+
+    private void RemovePokemon(PokemonContainer container)
+    {
+        if (pokemons.Contains(container))
+            pokemons.Remove(container);
+    }
     void AddPokemon(PokemonContainer pokemonContainer)
     {
         pokemons.Add(pokemonContainer);
@@ -64,14 +79,18 @@ public class AIHandler : MonoBehaviour
                 {
                     if (!RandomAttack(pokemon))
                     {
-                        MovePokemon(pokemon, RandomPath(pokemon));
+                        Stack<SquareCell> path = RandomPath(pokemon);
+                        if(path.Count > 0)
+                            MovePokemon(pokemon, path);
                     }
                 }
                 VisiblePokemon.Clear();
             }
             else
             {
-                MovePokemon(pokemon, RandomPath(pokemon));
+                Stack<SquareCell> path = RandomPath(pokemon);
+                if(path.Count > 0)
+                    MovePokemon(pokemon, path);
             }
 
         }
@@ -308,6 +327,7 @@ public class AIHandler : MonoBehaviour
         movingPokemon++;
         while (true)
         {
+            Debug.Log("In attack wait");
             yield return null;
 
             if (allowedToAttack)
@@ -429,11 +449,11 @@ public class AIHandler : MonoBehaviour
         {
             int cost = 0;
             SquareCell neighbor = fromCell.GetNeighbor(direction);
-            if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
+            if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 2)
                 continue;
             while (cost < attack.range)
             {
-                if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
+                if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 2)
                     break;
                 if(target.CurrentTile == neighbor)
                 {
@@ -478,16 +498,25 @@ public class AIHandler : MonoBehaviour
         {
             int Direction = Random.Range(0, 4);
             SquareCell neighborCell = newCell.GetNeighbor((SquareDirection)Direction);
-            while (neighborCell == null || Mathf.Abs(newCell.Elevation - neighborCell.Elevation) > 2 || neighborCell.obstructed)
+            int timesTested = 0;
+            while ((neighborCell == null || Mathf.Abs(newCell.Elevation - neighborCell.Elevation) > 2 || neighborCell.obstructed) && timesTested < 10)
             {
                 Direction = Random.Range(0, 4);
                 neighborCell = newCell.GetNeighbor((SquareDirection)Direction);
+                timesTested++;
             }
 
-            newCell = neighborCell;
-            currentPath.Push(newCell);
+            if (timesTested < 10)
+            {
+                newCell.obstructed = false;
+                newCell = neighborCell;
+                newCell.obstructed = true;
+                currentPath.Push(newCell);
+            }
+
         }
 
+        if (currentPath.Count <= 0) return path;
         SquareCell finalCell = currentPath.Peek();
         if (!finalCell.obstructed)
         {

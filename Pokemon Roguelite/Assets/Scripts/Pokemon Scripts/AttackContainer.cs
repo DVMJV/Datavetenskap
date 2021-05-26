@@ -57,13 +57,18 @@ public class AttackContainer
     /// <param name="fromCell"></param>
     /// <param name="toCell"></param>
     /// <param name="tag"></param>
-    public void Attack(SquareCell fromCell, SquareCell toCell, string tag)
+    public bool Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
          if(attackableCells.Contains(toCell))
         {
             cooldown = attack.cooldown;
             attack.Attack(fromCell, toCell, tag);
+            return true;
         }
+         else
+         {
+             return false;
+         }
     }
     
     /// <summary>
