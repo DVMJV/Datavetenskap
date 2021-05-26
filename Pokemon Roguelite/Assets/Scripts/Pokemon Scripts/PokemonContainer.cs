@@ -303,7 +303,7 @@ public class PokemonContainer : MonoBehaviour
     /// <returns></returns>
     IEnumerator MoveEnumerator(Stack<SquareCell> path)
     {
-        WaitForSeconds delay = new WaitForSeconds(1 / 10f);
+        WaitForSeconds delay = new WaitForSeconds(1 / 8f);
 
         while (path.Count > 0)
         {

@@ -84,8 +84,32 @@ public class SquareMapGenerator : MonoBehaviour
             for (SquareDirection d = SquareDirection.UP; d <= SquareDirection.LEFT; d++)
             {
                 SquareCell neighbor = cell.GetNeighbor(d);
-                if (neighbor != null && neighbor.obstructed)
+                if(neighbor == null)
+                    continue;
+                if (neighbor.obstructed)
                     neighborObstructed = true;
+
+                SquareCell neighborNeighbor;
+
+                if (d == SquareDirection.UP || d == SquareDirection.DOWN)
+                {
+                    neighborNeighbor = neighbor.GetNeighbor(SquareDirection.LEFT);
+                    if (neighborNeighbor != null && neighborNeighbor.obstructed)
+                        neighborObstructed = true;
+                    neighborNeighbor = neighbor.GetNeighbor(SquareDirection.RIGHT);
+                    if (neighborNeighbor != null && neighborNeighbor.obstructed)
+                        neighborObstructed = true;
+                }
+                else
+                {
+                    neighborNeighbor = neighbor.GetNeighbor(SquareDirection.DOWN);
+                    if (neighborNeighbor != null && neighborNeighbor.obstructed)
+                        neighborObstructed = true;
+                    neighborNeighbor = neighbor.GetNeighbor(SquareDirection.UP);
+                    if (neighborNeighbor != null && neighborNeighbor.obstructed)
+                        neighborObstructed = true;
+
+                }
             }
             
 
