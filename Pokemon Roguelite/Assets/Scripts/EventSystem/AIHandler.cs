@@ -233,7 +233,7 @@ public class AIHandler : MonoBehaviour
         AttackContainer stunMove = selectedPokemon.learnedMoves.Find(x =>
             x.GetAttack().effect == PokemonAttack.SecondaryEffect.Stun);
 
-        if (stunMove.OnCooldown())
+        if (stunMove == null || stunMove.OnCooldown())
             return false;
         if (stunMove != null && dist <= stunMove.GetAttack().range)
         {

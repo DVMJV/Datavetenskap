@@ -9,6 +9,8 @@ public class PokemonLineAttack : PokemonAttack
     public override void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
         GameObject go = Instantiate(particle);
+        Destroy(go, 2f);
+
         var position = fromCell.transform.position;
         go.transform.position = position;
         Vector3 directionVector = toCell.transform.position - position;

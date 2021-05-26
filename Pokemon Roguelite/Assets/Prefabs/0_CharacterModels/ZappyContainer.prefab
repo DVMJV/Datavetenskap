@@ -29,7 +29,7 @@ RectTransform:
   m_GameObject: {fileID: 124615618320326598}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.006666667, y: 0.006666667, z: 0.006666667}
   m_Children:
   - {fileID: 124615619510709421}
   m_Father: {fileID: 3217951931376045978}
@@ -1027,7 +1027,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: -2.722, y: -0.452, z: -1.507}
-  - {x: 0, y: 0, z: 0.4}
+  - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

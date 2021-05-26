@@ -10,12 +10,12 @@ public class PokemonContainer : MonoBehaviour
 {
     #region Variables
     #region Public Variables
-    
+
     public int currentLevel = 5;
     public int currentMovement;
-    
+
     public bool hasAttacked = false;
-    
+
     public List<AttackContainer> learnedMoves = new List<AttackContainer>();
     [SerializeField] public Pokemon pokemon;
 
@@ -23,9 +23,9 @@ public class PokemonContainer : MonoBehaviour
 
     #region Private Variables
     public int currentHealth = 5;
-    
+
     private bool stunned;
-    
+
     [SerializeField] private SquareCell currentCell;
     [SerializeField] private PokemonAttack[] temp;
 
@@ -35,15 +35,16 @@ public class PokemonContainer : MonoBehaviour
 
     private AttackContainer attackSelected;
     #endregion
-    
+
     #region Properties
-    public SquareCell CurrentTile { 
+    public SquareCell CurrentTile
+    {
         get => currentCell;
         set
         {
             if (currentCell == value)
                 return;
-            if(currentCell != null)
+            if (currentCell != null)
                 currentCell.obstructed = false;
 
             currentCell = value;
@@ -72,7 +73,7 @@ public class PokemonContainer : MonoBehaviour
         currentMovement = pokemon.movementSpeed;
 
         EventHandler.current.onStart += pokemon.OnStart;
-        EventHandler.current.onTileSelected += PokemonSelected; 
+        EventHandler.current.onTileSelected += PokemonSelected;
         EventHandler.current.onTileSelected += AttackTile;
         EventHandler.current.onPathFound += Move;
         EventHandler.current.onAttackSelected += AttackSelected;
@@ -81,7 +82,7 @@ public class PokemonContainer : MonoBehaviour
 
         SetMaxHealth();
 
-        foreach(PokemonAttack attack in pokemon.attackToLearn)
+        foreach (PokemonAttack attack in pokemon.attackToLearn)
         {
             LearnMove(attack);
         }
@@ -90,7 +91,7 @@ public class PokemonContainer : MonoBehaviour
     private void OnDestroy()
     {
         EventHandler.current.onStart -= pokemon.OnStart;
-        EventHandler.current.onTileSelected -= PokemonSelected; 
+        EventHandler.current.onTileSelected -= PokemonSelected;
         EventHandler.current.onTileSelected -= AttackTile;
         EventHandler.current.onPathFound -= Move;
         EventHandler.current.onAttackSelected -= AttackSelected;
@@ -132,7 +133,7 @@ public class PokemonContainer : MonoBehaviour
     {
         learnedMoves.Add(new AttackContainer(newMove));
     }
-    
+
     /// <summary>
     /// Returns if the pokemon is currently stunned or not
     /// </summary>
@@ -231,7 +232,7 @@ public class PokemonContainer : MonoBehaviour
         currentHealth -= CalculateDamage(attack);
         SetHealth();
     }
-    
+
     /// <summary>
     /// Moves the pokemon following a specific path
     /// </summary>
@@ -239,12 +240,15 @@ public class PokemonContainer : MonoBehaviour
     /// <param name="pokemon"></param>
     private void Move(Stack<SquareCell> path, PokemonContainer pokemon)
     {
+        if (attackSelected != null)
+            EventHandler.current.AllowedToEndTurn();
+
         if (pokemon == this && attackSelected == null)
         {
             StartCoroutine(MoveEnumerator(path));
         }
     }
-    
+
     /// <summary>
     /// Selects an attack
     /// </summary>
@@ -258,20 +262,20 @@ public class PokemonContainer : MonoBehaviour
         attack.FindAttackableTiles(currentCell);
         attack.HighlightAttack();
     }
-    
+
     /// <summary>
     /// Checks if this was the pokemon selected
     /// </summary>
     /// <param name="selectedTile"></param>
     private void PokemonSelected(SquareCell selectedTile)
     {
-        if(selectedTile == currentCell && gameObject.CompareTag("Friendly"))
+        if (selectedTile == currentCell && gameObject.CompareTag("Friendly"))
         {
             Debug.Log("Test");
             EventHandler.current.AllySelected(this);
         }
     }
-    
+
     /// <summary>
     /// Attacks a tile
     /// </summary>
@@ -282,7 +286,7 @@ public class PokemonContainer : MonoBehaviour
         hasAttacked = attackSelected.Attack(currentCell, selectedTile, tag);
         EventHandler.current.AllySelected(null);
     }
-    
+
     /// <summary>
     /// Unselects the pokemon
     /// </summary>
@@ -305,23 +309,27 @@ public class PokemonContainer : MonoBehaviour
     {
         WaitForSeconds delay = new WaitForSeconds(1 / 8f);
 
-        while (path.Count > 0)
+        if (path != null)
         {
-            SquareCell moveToCell = path.Pop();
-            Vector3 rotateDirection = moveToCell.transform.position - currentCell.transform.position;
-            rotateDirection.y = 0;
-            transform.forward = rotateDirection.normalized;
-            yield return delay;
-            currentMovement -= 1;
-            CurrentTile = moveToCell;
+            while (path.Count > 0)
+            {
+                SquareCell moveToCell = path.Pop();
+                Vector3 rotateDirection = moveToCell.transform.position - currentCell.transform.position;
+                rotateDirection.y = 0;
+                transform.forward = rotateDirection.normalized;
+                yield return delay;
+                currentMovement -= 1;
+                CurrentTile = moveToCell;
+            }
         }
+
         if (CompareTag("Friendly"))
         {
             EventHandler.current.AllySelected(this);
         }
         EventHandler.current.AllowedToEndTurn();
     }
-    
+
 
     #endregion
 }

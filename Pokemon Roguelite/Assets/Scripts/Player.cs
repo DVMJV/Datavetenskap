@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     int id;
 
-    private bool allowedToEndTurn;
+    private bool allowedToEndTurn = true;
 
     private PokemonContainer selected;
 
@@ -106,6 +106,7 @@ public class Player : MonoBehaviour
         if(this.id == id)
         {
             turn = true;
+
             Debug.Log("My turn");
         }
     }
@@ -141,9 +142,10 @@ public class Player : MonoBehaviour
     {
         if (!turn) return;
         if (selected == pokemon) return;
-        
+
         selected = pokemon;
-        
+        allowedToEndTurn = true;
+
         if (selected == null)
         {
             ClearAttacks();
