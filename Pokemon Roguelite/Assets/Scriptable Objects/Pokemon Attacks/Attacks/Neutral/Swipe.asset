@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Swipe
   m_EditorClassIdentifier: 
   attackName: 
-  damage: 0
-  range: 0
+  damage: 6
+  range: 1
   type: 0
   id: 0
   cooldown: 0
-  effect: 0
-  particle: {fileID: 0}
+  effect: 3
+  particle: {fileID: 1762589830684135191, guid: f1999bfeb6d9948438422837a33b9db6, type: 3}

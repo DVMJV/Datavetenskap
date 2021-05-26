@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: ShockLine
   m_EditorClassIdentifier: 
   attackName: 
-  damage: 0
-  range: 0
+  damage: 3
+  range: 7
   type: 0
   id: 0
-  cooldown: 0
+  cooldown: 5
   effect: 0
-  particle: {fileID: 0}
+  particle: {fileID: 1133618127285278327, guid: 37701d59e7cf9984988e735c68634d48, type: 3}

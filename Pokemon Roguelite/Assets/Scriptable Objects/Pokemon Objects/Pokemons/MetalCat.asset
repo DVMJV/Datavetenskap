@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214e2ace70ad6c5409122ba37bba601b, type: 3}
   m_Name: MetalCat
   m_EditorClassIdentifier: 
-  currentLevel: 0
   pokemonName: MetalCat
   movementSpeed: 5
   health: 10
   mesh: {fileID: 0}
-  levelToLearnAt: 
-  attackToLearn: []
+  attackToLearn:
+  - {fileID: 11400000, guid: 306d82c6d3b5cfb408ff20b6864f35dc, type: 2}
+  - {fileID: 11400000, guid: b1e311f753a41c7469d46f7862597f26, type: 2}
   type: 2
   sprite: {fileID: 21300000, guid: b29a6d713d18c8f4882779dd3e17fc63, type: 3}

@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214e2ace70ad6c5409122ba37bba601b, type: 3}
   m_Name: PetRock
   m_EditorClassIdentifier: 
-  currentLevel: 0
   pokemonName: PetRock
   movementSpeed: 5
   health: 10
   mesh: {fileID: 0}
-  levelToLearnAt: 
-  attackToLearn: []
+  attackToLearn:
+  - {fileID: 11400000, guid: 74a1028db98b1ea479d908cb7708f8e5, type: 2}
+  - {fileID: 11400000, guid: accaeb16acca0ce4c9016fbed24f8ad2, type: 2}
   type: 3
   sprite: {fileID: 21300000, guid: ba195a0d061779d40bd0b5312ca33e8a, type: 3}

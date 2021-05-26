@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21723f59cc07f3b4e92ac3640dd7afc5, type: 3}
-  m_Name: WaterSingle
+  m_Name: Bubble
   m_EditorClassIdentifier: 
   attackName: 
-  damage: 0
-  range: 0
+  damage: 6
+  range: 3
   type: 0
   id: 0
   cooldown: 0
   effect: 0
-  particle: {fileID: 0}
+  particle: {fileID: 6918774058855309177, guid: 9e8a448506e16b945b08db8d237d23ea, type: 3}

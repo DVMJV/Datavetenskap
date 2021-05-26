@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Spike
   m_EditorClassIdentifier: 
   attackName: 
-  damage: 0
-  range: 0
-  type: 0
+  damage: 11
+  range: 1
+  type: 2
   id: 0
   cooldown: 0
-  effect: 0
-  particle: {fileID: 0}
+  effect: 3
+  particle: {fileID: 1727263228597045972, guid: c7139b2d4b67568408f4c1064bda1820, type: 3}

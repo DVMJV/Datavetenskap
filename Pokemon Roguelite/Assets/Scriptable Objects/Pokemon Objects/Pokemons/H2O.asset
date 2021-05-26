@@ -12,16 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214e2ace70ad6c5409122ba37bba601b, type: 3}
   m_Name: H2O
   m_EditorClassIdentifier: 
-  currentLevel: 5
   pokemonName: H2O
   movementSpeed: 5
   health: 10
   mesh: {fileID: 0}
-  levelToLearnAt: 0000000000000000000000000000000000000000
   attackToLearn:
-  - {fileID: 11400000, guid: 71006c00d607bdb419c5650365696413, type: 2}
-  - {fileID: 11400000, guid: 40c221af6a48208418dea031d52b380a, type: 2}
-  - {fileID: 11400000, guid: 8b6a4cabde7e19449b65a73e3f43502c, type: 2}
-  - {fileID: 11400000, guid: bbcf02dc58b76cf49838c35bc64de366, type: 2}
+  - {fileID: 11400000, guid: 36212dd1a31e63c4a98ac052faf553ed, type: 2}
+  - {fileID: 11400000, guid: 5c8de993e67ffa647a07d74b43910a40, type: 2}
   type: 1
   sprite: {fileID: 21300000, guid: 3500fe90c031b6348a352a5ae66ce457, type: 3}

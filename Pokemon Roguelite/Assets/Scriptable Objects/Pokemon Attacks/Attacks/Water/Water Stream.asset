@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Water Stream
   m_EditorClassIdentifier: 
   attackName: 
-  damage: 0
-  range: 0
+  damage: 3
+  range: 8
   type: 0
   id: 0
-  cooldown: 0
+  cooldown: 5
   effect: 0
-  particle: {fileID: 0}
+  particle: {fileID: 4200627568414011198, guid: 94f074e13378ee64bbb9e5b918f2bfce, type: 3}
