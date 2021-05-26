@@ -2426,6 +2426,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: AIGenerator
       objectReference: {fileID: 0}
+    - target: {fileID: 3114643820632262534, guid: 7fb83f2ffe3d2ae4b88c6a748543366a, type: 3}
+      propertyPath: probability
+      value: 0.257
+      objectReference: {fileID: 0}
+    - target: {fileID: 3114643820632262534, guid: 7fb83f2ffe3d2ae4b88c6a748543366a, type: 3}
+      propertyPath: minimumAmountOfPokemon
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3114643820632262535, guid: 7fb83f2ffe3d2ae4b88c6a748543366a, type: 3}
       propertyPath: m_RootOrder
       value: 11

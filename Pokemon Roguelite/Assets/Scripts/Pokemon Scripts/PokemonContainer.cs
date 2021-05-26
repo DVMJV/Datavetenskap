@@ -173,9 +173,9 @@ public class PokemonContainer : MonoBehaviour
                 break;
             case Type.METAL:
                 if (pokemon.type == Type.LIGHTNING)
-                    adjustedDamage = attack.damage / 2;
-                else if (pokemon.type == Type.WATER)
                     adjustedDamage = attack.damage * 2;
+                else if (pokemon.type == Type.WATER)
+                    adjustedDamage = attack.damage / 2;
                 else
                     adjustedDamage = attack.damage;
                 break;
