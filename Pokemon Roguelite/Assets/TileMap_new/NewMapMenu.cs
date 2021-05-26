@@ -7,8 +7,8 @@ public class NewMapMenu : MonoBehaviour
 {
     public SquareGrid squareGrid;
     public SquareMapGenerator mapGenerator;
-    int x = 20;
-    int z = 15;
+    int x = 50;
+    int z = 50;
 
     private void Awake()
     {

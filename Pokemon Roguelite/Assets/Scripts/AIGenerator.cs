@@ -7,9 +7,9 @@ using Random = UnityEngine.Random;
 public class AIGenerator : MonoBehaviour
 {
     [Range(0, 1)] [SerializeField] private float probability;
-    [Range(1, 16)]
+    [Range(1, 32)]
     [SerializeField] private int minimumAmountOfPokemon;
-    [Range(1, 4)]
+    [Range(1, 8)]
     [SerializeField] private int maxPokemonsPerRegion;
     [SerializeField] private List<GameObject> waterPokemons;
     [SerializeField] private List<GameObject> metalPokemons;

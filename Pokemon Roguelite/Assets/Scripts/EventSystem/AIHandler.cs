@@ -180,7 +180,7 @@ public class AIHandler : MonoBehaviour
 
                 if (path == null)
                 {
-                    Debug.LogError("No possible Path");
+                    Debug.Log("No possible Path");
                     {
                         return true;
                     }
@@ -212,7 +212,7 @@ public class AIHandler : MonoBehaviour
                 Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
                 if (path == null)
                 {
-                    Debug.LogError("No possible Path");
+                    Debug.Log("No possible Path");
                     {
                         return true;
                     }
@@ -280,7 +280,7 @@ public class AIHandler : MonoBehaviour
                     Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
                     if (path == null)
                     {
-                        Debug.LogError("No possible Path");
+                        Debug.Log("No possible Path");
                         {
                             return true;
                         }
