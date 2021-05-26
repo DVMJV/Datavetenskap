@@ -45,6 +45,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TulipContainer
       objectReference: {fileID: 0}
+    - target: {fileID: 1933174385947780250, guid: 8914ba86eceaaa94aa51c91be401f19b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5749427213191337824, guid: 8914ba86eceaaa94aa51c91be401f19b, type: 3}
       propertyPath: m_RootOrder
       value: 0
