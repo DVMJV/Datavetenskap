@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21723f59cc07f3b4e92ac3640dd7afc5, type: 3}
-  m_Name: Smack
+  m_Script: {fileID: 11500000, guid: a8929f20cb4db7a4683ef77e7c0d882e, type: 3}
+  m_Name: Water Stream
   m_EditorClassIdentifier: 
-  attackName: Smack
-  damage: 5
-  range: 1
-  type: 3
+  attackName: 
+  damage: 0
+  range: 0
+  type: 0
+  id: 0
+  cooldown: 0
+  effect: 0
+  particle: {fileID: 0}

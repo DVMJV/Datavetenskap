@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,14 @@ public class PokemonLineAttack : PokemonAttack
 {
     public override void Attack(SquareCell fromCell, SquareCell toCell, string tag)
     {
-        List<SquareCell> cellsToAttack = ConstructAttackPath(fromCell, toCell);
+        GameObject go = Instantiate(particle);
+        SquareDirection d;
+        List<SquareCell> cellsToAttack = ConstructAttackPath(fromCell, toCell, out d);
         foreach (SquareCell cell in cellsToAttack)
             EventHandler.current.AttackTile(cell, this, tag);
     }
 
-    private List<SquareCell> ConstructAttackPath(SquareCell fromCell, SquareCell toCell)
+    private List<SquareCell> ConstructAttackPath(SquareCell fromCell, SquareCell toCell, out SquareDirection d)
     {
         List<SquareCell> cellsToAttack = new List<SquareCell>();
 
@@ -31,12 +34,16 @@ public class PokemonLineAttack : PokemonAttack
                 neighbor = neighbor.GetNeighbor(direction);
                 cellsToAttack.Add(neighbor);
                 if (neighbor == toCell)
+                {
+                    d = direction;
                     return cellsToAttack;
+                }
                 cost++;
             }
             cellsToAttack.Clear();
         }
 
+        d = (SquareDirection)5;
         return cellsToAttack;
     }
 
