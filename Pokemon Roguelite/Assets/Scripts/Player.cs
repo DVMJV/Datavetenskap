@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -143,10 +144,13 @@ public class Player : MonoBehaviour
         ClearAttacks();
         for (int i = 0; i < selectedPokemon.learnedMoves.Count; i++)
         {
-            GameObject go = Instantiate(attackDisplay, new Vector3(100 * (i + 1), 100, 0), Quaternion.identity, attackDisplayContainer.transform);
-            go.GetComponentInChildren<Text>().text = selectedPokemon.learnedMoves[i].GetName();
+            String name = selectedPokemon.learnedMoves[i].GetName();
+            GameObject go = Instantiate(attackDisplay, new Vector3(attackDisplayContainer.transform.position.x + 50, (attackDisplayContainer.transform.position.y - 30) + ((i * 55) + 1), 0), Quaternion.identity, attackDisplayContainer.transform);
+            go.GetComponentInChildren<TMP_Text>().SetText(name);
             go.GetComponent<AttackDisplay>().SetAttackContainer(selectedPokemon.learnedMoves[i]);
             go.GetComponent<AttackDisplay>().id = i;
+            
+            
         }
     }
 
