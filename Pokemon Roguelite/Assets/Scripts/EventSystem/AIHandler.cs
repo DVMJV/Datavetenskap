@@ -403,6 +403,7 @@ public class AIHandler : MonoBehaviour
 
             if (current == toCell)
             {
+                toCell.obstructed = true;
                 Stack<SquareCell> stack = new Stack<SquareCell>();
                 while (toCell != pokemon.CurrentTile)
                 {
