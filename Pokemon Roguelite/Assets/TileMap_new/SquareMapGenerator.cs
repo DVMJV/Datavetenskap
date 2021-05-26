@@ -183,6 +183,7 @@ public class SquareMapGenerator : MonoBehaviour
             }
         }
 
+        EventHandler.current.MapGenerated(grid.GetCells());
         EventHandler.current.PlayerSpawnCells(spawnCells);
     }
 

@@ -10,7 +10,6 @@ public class AIHandler : MonoBehaviour
     [SerializeField]
     int id;
 
-    [SerializeField]
     private List<PokemonContainer> pokemons;
 
     [SerializeField]
@@ -24,11 +23,18 @@ public class AIHandler : MonoBehaviour
     bool allowedToEndTurn = true;
     private bool allowedToAttack = false; 
     private int movingPokemon;
-    void Start()
+    void Awake()
     {
+        pokemons = new List<PokemonContainer>();
         VisiblePokemon = new List<PokemonContainer>();
         EventHandler.current.onTurnStart += TurnStart;
         EventHandler.current.onAllowedToEndTurn += AllowedToEndTurn;
+        EventHandler.current.onAISpawned += AddPokemon;
+    }
+
+    void AddPokemon(PokemonContainer pokemonContainer)
+    {
+        pokemons.Add(pokemonContainer);
     }
 
     void TurnStart(int id)
@@ -349,6 +355,7 @@ public class AIHandler : MonoBehaviour
 
             if (current == toCell)
             {
+                toCell.obstructed = true;
                 Stack<SquareCell> stack = new Stack<SquareCell>();
                 while (toCell != pokemon.CurrentTile)
                 {
@@ -472,7 +479,7 @@ public class AIHandler : MonoBehaviour
         {
             int Direction = Random.Range(0, 4);
             SquareCell neighborCell = newCell.GetNeighbor((SquareDirection)Direction);
-            while (neighborCell == null || Mathf.Abs(newCell.Elevation - neighborCell.Elevation) > 1)
+            while (neighborCell == null || Mathf.Abs(newCell.Elevation - neighborCell.Elevation) > 2 || neighborCell.obstructed)
             {
                 Direction = Random.Range(0, 4);
                 neighborCell = newCell.GetNeighbor((SquareDirection)Direction);
@@ -483,12 +490,9 @@ public class AIHandler : MonoBehaviour
         }
 
         SquareCell finalCell = currentPath.Peek();
-        PokemonContainer enemyPokemon = VisiblePokemon.Find(x => x.CurrentTile == finalCell);
-        PokemonContainer friendlyPokemon = pokemons.Find(x => x.CurrentTile == finalCell);
-                
-        bool alreadyOccuptied = enemyPokemon != null || friendlyPokemon != null;
-        if (alreadyOccuptied)
+        if (!finalCell.obstructed)
         {
+            finalCell.obstructed = true;
             currentPath.Pop();
         }
         

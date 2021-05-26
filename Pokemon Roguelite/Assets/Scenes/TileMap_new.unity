@@ -236,6 +236,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &205508176
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 205508178}
+  - component: {fileID: 205508177}
+  m_Layer: 0
+  m_Name: AIHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &205508177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205508176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 181807b166f285f4585d314fcba7abd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1
+  pokemons: []
+  visionRange: 30
+  pokemonLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!4 &205508178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 205508176}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &424261236 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7484045322380616979, guid: 82e57ab01cc3a044b9876847b3480077, type: 3}
@@ -1271,6 +1320,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 52, y: 7, z: 21}
+--- !u!1 &2141653648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2141653650}
+  - component: {fileID: 2141653649}
+  m_Layer: 0
+  m_Name: AIGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2141653649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141653648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2942638353bfd46b0b44fdeca60522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  probability: 0
+  minimumAmountOfPokemon: 4
+  maxPokemonsPerRegion: 2
+  waterPokemons:
+  - {fileID: 2950700503296131212, guid: cc42b5c1990aeea4ba04a618e45322d0, type: 3}
+  - {fileID: 8065910507899139183, guid: 0d30f1fd54a5048418ce8ad8fab9c968, type: 3}
+  metalPokemons:
+  - {fileID: 4298515224649945483, guid: cfc37ab7599e65f45b8bc3f638495b9c, type: 3}
+  - {fileID: 8956301255287913918, guid: 5fc8cc894b8e3ce448aa129c429e2c01, type: 3}
+  electricPokemons:
+  - {fileID: 3898901843873733743, guid: b040f555ccdb7d8459263a521455d350, type: 3}
+  - {fileID: 2547671582926952013, guid: 1251d9af7f87ea049b43de3b62b2c8e4, type: 3}
+  neutralPokemons:
+  - {fileID: 1927094078971721692, guid: 7259674adb4b16d47bfb671485829428, type: 3}
+  - {fileID: 1775651999670559385, guid: 7dc5025f7cbca3b4f8cd3133d64023de, type: 3}
+--- !u!4 &2141653650
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141653648}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &6705733046557222271
 PrefabInstance:
   m_ObjectHideFlags: 0
