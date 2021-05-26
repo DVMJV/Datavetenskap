@@ -10,6 +10,7 @@ public class SquareGridChunk : MonoBehaviour
     private void Awake()
     {
         gridCanvas = GetComponentInChildren<Canvas>();
+        gridCanvas.GetComponent<GraphicRaycaster>().enabled = false;
         cells = new SquareCell[SquareMetrics.chunkSizeX * SquareMetrics.chunkSizeZ];
         ShowUI(true);
     }

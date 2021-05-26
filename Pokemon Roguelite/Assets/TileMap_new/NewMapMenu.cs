@@ -16,7 +16,7 @@ public class NewMapMenu : MonoBehaviour
     }
 
 
-    public void CreateMap() 
+    public void CreateMap()
     {
         mapGenerator.GenerateMap(x, z);
     }

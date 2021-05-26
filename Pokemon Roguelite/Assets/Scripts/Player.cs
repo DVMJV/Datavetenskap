@@ -36,6 +36,19 @@ public class Player : MonoBehaviour
         EventHandler.current.OnStart();
         EventHandler.current.onCreatePlayerPokemons += GetPokemons;
         EventHandler.current.onPlayerSpawnCells += SetCells;
+        EventHandler.current.onPokemonDestroyed += RemovePokemon;
+    }
+
+    private void OnDestroy()
+    {
+        EventHandler.current.onAllySelected -= SetSelected;
+        EventHandler.current.onTileSelected -= MovePokemon;
+        EventHandler.current.onTurnStart -= TurnStart;
+        EventHandler.current.onTurnReset -= TurnEnd;
+        EventHandler.current.onAllowedToEndTurn -= AllowedToEndTurn;
+        EventHandler.current.onCreatePlayerPokemons -= GetPokemons;
+        EventHandler.current.onPlayerSpawnCells -= SetCells;
+        EventHandler.current.onPokemonDestroyed -= RemovePokemon;
     }
 
     void GetPokemons(List<GameObject> playerPokemons)
@@ -44,6 +57,12 @@ public class Player : MonoBehaviour
         {
             pokemons.Add(g.GetComponent<PokemonContainer>());
         }
+    }
+
+    void RemovePokemon(PokemonContainer container)
+    {
+        if (pokemons.Contains(container))
+            pokemons.Remove(container);
     }
 
     void SetCells(List<SquareCell> spawnCells)

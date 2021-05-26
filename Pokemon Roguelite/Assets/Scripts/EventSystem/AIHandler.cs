@@ -10,7 +10,6 @@ public class AIHandler : MonoBehaviour
     [SerializeField]
     int id;
 
-    [SerializeField]
     private List<PokemonContainer> pokemons;
 
     [SerializeField]
@@ -24,11 +23,33 @@ public class AIHandler : MonoBehaviour
     bool allowedToEndTurn = true;
     private bool allowedToAttack = false; 
     private int movingPokemon;
-    void Start()
+    void Awake()
     {
+        pokemons = new List<PokemonContainer>();
         VisiblePokemon = new List<PokemonContainer>();
         EventHandler.current.onTurnStart += TurnStart;
         EventHandler.current.onAllowedToEndTurn += AllowedToEndTurn;
+        EventHandler.current.onAISpawned += AddPokemon;
+        EventHandler.current.onPokemonDestroyed += RemovePokemon;
+
+    }
+
+    private void OnDestroy()
+    {
+        EventHandler.current.onTurnStart -= TurnStart;
+        EventHandler.current.onAllowedToEndTurn -= AllowedToEndTurn;
+        EventHandler.current.onAISpawned -= AddPokemon;
+        EventHandler.current.onPokemonDestroyed -= RemovePokemon;
+    }
+
+    private void RemovePokemon(PokemonContainer container)
+    {
+        if (pokemons.Contains(container))
+            pokemons.Remove(container);
+    }
+    void AddPokemon(PokemonContainer pokemonContainer)
+    {
+        pokemons.Add(pokemonContainer);
     }
 
     void TurnStart(int id)
@@ -58,14 +79,18 @@ public class AIHandler : MonoBehaviour
                 {
                     if (!RandomAttack(pokemon))
                     {
-                        MovePokemon(pokemon, RandomPath(pokemon));
+                        Stack<SquareCell> path = RandomPath(pokemon);
+                        if(path.Count > 0)
+                            MovePokemon(pokemon, path);
                     }
                 }
                 VisiblePokemon.Clear();
             }
             else
             {
-                MovePokemon(pokemon, RandomPath(pokemon));
+                Stack<SquareCell> path = RandomPath(pokemon);
+                if(path.Count > 0)
+                    MovePokemon(pokemon, path);
             }
 
         }
@@ -76,7 +101,7 @@ public class AIHandler : MonoBehaviour
     {
         AttackContainer randomMove = pokemon.learnedMoves[Random.Range(0,pokemon.learnedMoves.Count)];
 
-        if (randomMove != null && randomMove.OnCooldown())
+        if (randomMove != null && !randomMove.OnCooldown())
         {
             PokemonContainer target = VisiblePokemon[Random.Range(0, VisiblePokemon.Count)];
             float dist = Distance(pokemon.CurrentTile, target.CurrentTile);
@@ -138,40 +163,66 @@ public class AIHandler : MonoBehaviour
 
         if (xList.Count > yList.Count)
         {
-            SquareCell moveTarget = FindDirection(selectedPokemon, target, lineMove.GetAttack());
-            Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
-            if (path == null)
+            bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, lineMove.GetAttack(), target);
+
+            if (onLine)
             {
-                Debug.LogError("No possible Path");
+                StartCoroutine(AttackWait(selectedPokemon, target, lineMove));
                 {
                     return true;
                 }
             }
-
-            allowedToAttack = false;
-            MovePokemon(selectedPokemon, path);
-            StartCoroutine(AttackWait(selectedPokemon, target, lineMove));
+            else
             {
-                return true;
+                SquareCell moveTarget = FindDirection(selectedPokemon, target, lineMove.GetAttack());
+                Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
+
+                if (path == null)
+                {
+                    Debug.LogError("No possible Path");
+                    {
+                        return true;
+                    }
+                }
+
+                allowedToAttack = false;
+                MovePokemon(selectedPokemon, path);
+                StartCoroutine(AttackWait(selectedPokemon, target, lineMove));
+                {
+                    return true;
+                }
             }
         }
         else
         {
-            SquareCell moveTarget = FindDirection(selectedPokemon, target, lineMove.GetAttack());
-            Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
-            if (path == null)
+            
+            bool onLine = LineAttackSearch(selectedPokemon.CurrentTile, lineMove.GetAttack(), target);
+
+            if (onLine)
             {
-                Debug.LogError("No possible Path");
+                StartCoroutine(AttackWait(selectedPokemon, target, lineMove));
                 {
                     return true;
                 }
             }
-
-            allowedToAttack = false;
-            MovePokemon(selectedPokemon, path);
-            StartCoroutine(AttackWait(selectedPokemon, target, lineMove));
+            else
             {
-                return true;
+                SquareCell moveTarget = FindDirection(selectedPokemon, target, lineMove.GetAttack());
+                Stack<SquareCell> path = CreatePath(selectedPokemon, moveTarget);
+                if (path == null)
+                {
+                    Debug.LogError("No possible Path");
+                    {
+                        return true;
+                    }
+                }
+
+                allowedToAttack = false;
+                MovePokemon(selectedPokemon, path);
+                StartCoroutine(AttackWait(selectedPokemon, target, lineMove));
+                {
+                    return true;
+                }
             }
         }
     }
@@ -179,8 +230,7 @@ public class AIHandler : MonoBehaviour
     private bool RunAway(PokemonContainer selectedPokemon, float dist, PokemonContainer target)
     {
         AttackContainer stunMove = selectedPokemon.learnedMoves.Find(x =>
-            x.GetAttack().effect == PokemonAttack.SecondaryEffect.Stun ||
-            x.GetAttack().effect == PokemonAttack.SecondaryEffect.Knockback);
+            x.GetAttack().effect == PokemonAttack.SecondaryEffect.Stun);
 
         if (stunMove != null && dist <= stunMove.GetAttack().range)
         {
@@ -303,6 +353,7 @@ public class AIHandler : MonoBehaviour
         movingPokemon++;
         while (true)
         {
+            Debug.Log("In attack wait");
             yield return null;
 
             if (allowedToAttack)
@@ -423,11 +474,11 @@ public class AIHandler : MonoBehaviour
         {
             int cost = 0;
             SquareCell neighbor = fromCell.GetNeighbor(direction);
-            if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
+            if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 2)
                 continue;
             while (cost < attack.range)
             {
-                if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
+                if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 2)
                     break;
                 if(target.CurrentTile == neighbor)
                 {
@@ -448,11 +499,11 @@ public class AIHandler : MonoBehaviour
         {
             int cost = 0;
             SquareCell neighbor = fromCell.GetNeighbor(direction);
-            if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
+            if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 2 || neighbor.obstructed)
                 continue;
             while (cost < attack.range)
             {
-                if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 1)
+                if (neighbor == null || Mathf.Abs(neighbor.Elevation - fromCell.Elevation) > 2 || neighbor.obstructed)
                     break;
                 possibleTiles.Add(neighbor);
                 neighbor = neighbor.GetNeighbor(direction);
@@ -472,23 +523,29 @@ public class AIHandler : MonoBehaviour
         {
             int Direction = Random.Range(0, 4);
             SquareCell neighborCell = newCell.GetNeighbor((SquareDirection)Direction);
-            while (neighborCell == null || Mathf.Abs(newCell.Elevation - neighborCell.Elevation) > 1)
+            int timesTested = 0;
+            while ((neighborCell == null || Mathf.Abs(newCell.Elevation - neighborCell.Elevation) > 2 || neighborCell.obstructed) && timesTested < 10)
             {
                 Direction = Random.Range(0, 4);
                 neighborCell = newCell.GetNeighbor((SquareDirection)Direction);
+                timesTested++;
             }
 
-            newCell = neighborCell;
-            currentPath.Push(newCell);
+            if (timesTested < 10)
+            {
+                newCell.obstructed = false;
+                newCell = neighborCell;
+                newCell.obstructed = true;
+                currentPath.Push(newCell);
+            }
+
         }
 
+        if (currentPath.Count <= 0) return path;
         SquareCell finalCell = currentPath.Peek();
-        PokemonContainer enemyPokemon = VisiblePokemon.Find(x => x.CurrentTile == finalCell);
-        PokemonContainer friendlyPokemon = pokemons.Find(x => x.CurrentTile == finalCell);
-                
-        bool alreadyOccuptied = enemyPokemon != null || friendlyPokemon != null;
-        if (alreadyOccuptied)
+        if (!finalCell.obstructed)
         {
+            finalCell.obstructed = true;
             currentPath.Pop();
         }
         

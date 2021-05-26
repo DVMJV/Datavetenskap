@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 21723f59cc07f3b4e92ac3640dd7afc5, type: 3}
-  m_Name: Cut
+  m_Name: Shock
   m_EditorClassIdentifier: 
-  attackName: Cut
-  damage: 7
-  range: 1
-  type: 3
+  attackName: Shock
+  damage: 10
+  range: 4
+  type: 0
   id: 0
+  cooldown: 0
+  effect: 0
+  particle: {fileID: 6589394987832111030, guid: 9e3902f1ef3da024c9afa40d420ad534, type: 3}
