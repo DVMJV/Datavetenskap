@@ -801,7 +801,7 @@ MonoBehaviour:
   - {fileID: 3286271645187015013, guid: 9e13ccc190bf93e4dacae6f2d2f66757, type: 3}
   - {fileID: 8915454193691171630, guid: e2f5d207b5111ae4a8dd5c1fe393193b, type: 3}
   - {fileID: 873961611026788097, guid: b6682217601321d4ab6bf554af3d2d09, type: 3}
-  waterPrefab: {fileID: 2898854856665214941, guid: 60809ca11aeb9384688cffa035a5665a, type: 3}
+  waterPrefab: {fileID: 270964684491909298, guid: a97cb18d731fbcd42b952b451c30ffaf, type: 3}
   forestObstruct: 25
   forestNonObstruct: 45
   metalObstruct: 20
