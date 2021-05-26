@@ -111,18 +111,30 @@ public class Player : MonoBehaviour
     }
     void TurnEnd(int id)
     {
-        if(this.id == id && allowedToEndTurn)
+        if(this.id == id)
         {
-            turn = false;
-            foreach (PokemonContainer pokemon in pokemons)
-            {
-                pokemon.EndTurn();
-            }
-            ClearAttacks();
-            selected = null;
-            EventHandler.current.AllySelected(null);
-            Debug.Log("My Reset");
+            StartCoroutine(WaitForEndTurn());
         }
+    }
+
+    IEnumerator WaitForEndTurn()
+    {
+        while (true)
+        {
+            if (allowedToEndTurn)
+                break;
+
+            yield return null;
+        }
+        turn = false;
+        foreach (PokemonContainer pokemon in pokemons)
+        {
+            pokemon.EndTurn();
+        }
+        ClearAttacks();
+        selected = null;
+        EventHandler.current.AllySelected(null);
+        Debug.Log("My Reset");
     }
 
     private void SetSelected(PokemonContainer pokemon)
