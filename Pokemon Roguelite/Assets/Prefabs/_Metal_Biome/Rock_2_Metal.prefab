@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2573499641365568722}
   - component: {fileID: 3035357006895870116}
   m_Layer: 0
-  m_Name: Rock_2
+  m_Name: Rock_2_Metal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 4531095214607947131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 3065591992576858889}
   m_Father: {fileID: 0}

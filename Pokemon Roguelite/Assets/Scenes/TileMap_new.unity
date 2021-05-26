@@ -765,57 +765,51 @@ MonoBehaviour:
   chunkSizeMax: 99
   landPercentage: 95
   beachObstructible:
-  - {fileID: 7579836216382803277, guid: 80213645b6843ea47a18873237ac1811, type: 3}
-  - {fileID: 8924850066209502176, guid: 019cd4a7f39f9e64fa7985f97aa2938a, type: 3}
+  - {fileID: 294783266035559502, guid: 334e7f5e8fffc1f4d9ff7c3ab1f1f05b, type: 3}
+  - {fileID: 3846759404626990116, guid: 9e7e9e8fc34c21645aae9d14dc7a20cb, type: 3}
+  - {fileID: 294783266035559502, guid: c1e659e3712c08449a8da9a845c77a50, type: 3}
   beachNonObstructible:
-  - {fileID: 3328259032141941191, guid: e9b764420a3fef54eb30192130414cf6, type: 3}
-  - {fileID: 7433817924511367911, guid: e84a66e33789c9f4eb03bdc72e5d9033, type: 3}
-  - {fileID: 1609269475680326572, guid: 4e0b0a1a5f0b3954c8c8373ccf6a0c74, type: 3}
-  - {fileID: 7272535366390009608, guid: e8a4fb1f69b77c841a54a79cfaebb483, type: 3}
-  - {fileID: 4797420845587587292, guid: 2392608320af94a4399889b1dd8507c2, type: 3}
-  - {fileID: 7967562349169699745, guid: a8dc099e8fdef57439eb321be27ba8e5, type: 3}
-  - {fileID: 8238474798473387763, guid: 08001c6755b999840baeda96ac93b18d, type: 3}
+  - {fileID: 7017719620671083529, guid: e54bbb26c7903104888c0d716574d44a, type: 3}
+  - {fileID: 371990141657123054, guid: 969f2bd0928d83347a1b3c153c1590ba, type: 3}
+  - {fileID: 4901476729446863020, guid: 701ec28aa55e8b045879f84c090022dc, type: 3}
+  - {fileID: 5189501602552271295, guid: 462c5331ea4a80245a95c7fc930e7710, type: 3}
+  - {fileID: 2156591312245716765, guid: a9e750a6d4514b44da2c8e089975192b, type: 3}
   metalObstructible:
-  - {fileID: 8775240119663397379, guid: d4da24fae4216b14389e62ae44b061f7, type: 3}
-  - {fileID: 3655499063243758181, guid: f9617d53b719aa244809185bbd459b6d, type: 3}
-  - {fileID: 8090486137782040666, guid: 3b2c16046d3730e4582eecf9c970b0b5, type: 3}
-  - {fileID: 4673757033743035208, guid: 3894a1de0daf3284d9d007a405280c4c, type: 3}
-  - {fileID: 5937287052477744448, guid: da461b3d0a81a184e8180c39ad3c269e, type: 3}
+  - {fileID: 7306895750750935210, guid: 7909642ea1ee27d48801ddb2f56d304f, type: 3}
+  - {fileID: 6642974581688052929, guid: 5a7edff55ddc83c4d91ec5d1ec6ce2c2, type: 3}
+  - {fileID: 8986236116321361815, guid: 666147c66007beb48828d691359fdeb8, type: 3}
+  - {fileID: 8378696477690816963, guid: d8ec10e96d268754c816d12617422f1f, type: 3}
+  - {fileID: 6356421796450390537, guid: 5cfa9b1e19a2594458842d6d23fdc026, type: 3}
+  - {fileID: 5785113913400717520, guid: bc68fbcda7b94b645971aaaef1a215eb, type: 3}
   metalNonObstructible:
-  - {fileID: 4531095214607947131, guid: 4fe7007002bc55d49a091f0dc6ecfeb4, type: 3}
-  - {fileID: 844921227815059932, guid: 88b8ee93094c69f4895246b3e1801c05, type: 3}
-  - {fileID: 2172829609512707778, guid: 385a28bc032f88841b4f4f881657ebe3, type: 3}
-  - {fileID: 4742582732925697295, guid: f1ce0cc3885bf8d47abee752795ce343, type: 3}
-  - {fileID: 2172829609512707778, guid: 385a28bc032f88841b4f4f881657ebe3, type: 3}
+  - {fileID: 9146470253656305328, guid: 021761306b836844299b21cf9c4bfe4f, type: 3}
+  - {fileID: 5004605129400730888, guid: 4dc577a0b9816384598f9f1dd97534c9, type: 3}
+  - {fileID: 3586336357215169232, guid: e282b1ff81fcb144b828fd1bd74c674a, type: 3}
   electricObstructible:
-  - {fileID: 1534379217231632972, guid: 25dec77c180de294197b8baa40f0811f, type: 3}
-  - {fileID: 4106315695093564305, guid: 76daa24efa0e5a64bbe342ddcbf1dfff, type: 3}
-  - {fileID: 112948778866569963, guid: 1f793c60dc3c7584282c78d72f2b21fa, type: 3}
-  - {fileID: 6057274364753113163, guid: eb5449fc9735c9e44a7d01c6cd4b233b, type: 3}
-  - {fileID: 2603364094913580555, guid: 160826fc43a6525478d0d89ecf43ba43, type: 3}
+  - {fileID: 1047958065147374731, guid: b0d56068fa7e2ad46aeeef5068e2a9c6, type: 3}
+  - {fileID: 9015984780627872832, guid: 852d2c46f7709f34386a5dd1b7951dfd, type: 3}
+  - {fileID: 7972153980260529868, guid: 1a9cb17005cf3e64885e9ae6bd9bc6c2, type: 3}
+  - {fileID: 8349747990077053761, guid: e2b35acd77bad224e82e5fe5674c2bc4, type: 3}
   electricNonObstructible:
-  - {fileID: 6387132508570309711, guid: a4dddf66d83b455448d1d4e06683561d, type: 3}
-  - {fileID: 2370137279297512456, guid: 81cd266500664d841a228f71e62196b3, type: 3}
-  - {fileID: 4490581004083601019, guid: bc4ab40f655803f4c9324378c58fb834, type: 3}
+  - {fileID: 2466099703301173619, guid: fa2e6dc66e3148d458c34ae69814575c, type: 3}
+  - {fileID: 3084486741765506784, guid: a534db64f3c19084abce635ed7c5140b, type: 3}
   forestObstructible:
-  - {fileID: 7812040529691951118, guid: f33dc8803c80bd841a5b0bfbb411290d, type: 3}
-  - {fileID: 3456382433134840073, guid: 313919ceb78795040804d06f378cc6da, type: 3}
+  - {fileID: 7147169479774218056, guid: b71dfe739031ed64e95bd4fa84a1a114, type: 3}
+  - {fileID: 2974230578378647098, guid: af1044a4194ad3f4b9dce127ec20c2ed, type: 3}
   forestNonObstructible:
-  - {fileID: 2051762685580206318, guid: a6ce698bd1e5a50478bd8f844117e557, type: 3}
-  - {fileID: 2467006062165933233, guid: 8cb16bb975007924dafae99a02d17f2a, type: 3}
-  - {fileID: 3059473481412169147, guid: d4f6ff3228cfceb4d9b85711a8d23826, type: 3}
-  - {fileID: 2081546464434691013, guid: 587f5e0cdc8e07244829d68b7099e007, type: 3}
-  - {fileID: 6618133300742267213, guid: 9a8fa53b93a5997409abde1a1c659e27, type: 3}
-  - {fileID: 1933174385947780250, guid: 8914ba86eceaaa94aa51c91be401f19b, type: 3}
-  waterPrefab: {fileID: 270964684491909298, guid: a97cb18d731fbcd42b952b451c30ffaf, type: 3}
-  forestObstruct: 50
-  forestNonObstruct: 75
-  metalObstruct: 50
-  metalNonObstruct: 75
-  electricObstruct: 15
-  electricNonObstruct: 75
-  beachObstruct: 10
-  beachNonObstruct: 75
+  - {fileID: 642534015436627718, guid: 0bd9e727e6cdc624386b10b13be5049b, type: 3}
+  - {fileID: 3286271645187015013, guid: 9e13ccc190bf93e4dacae6f2d2f66757, type: 3}
+  - {fileID: 8915454193691171630, guid: e2f5d207b5111ae4a8dd5c1fe393193b, type: 3}
+  - {fileID: 873961611026788097, guid: b6682217601321d4ab6bf554af3d2d09, type: 3}
+  waterPrefab: {fileID: 2898854856665214941, guid: 60809ca11aeb9384688cffa035a5665a, type: 3}
+  forestObstruct: 25
+  forestNonObstruct: 45
+  metalObstruct: 20
+  metalNonObstruct: 30
+  electricObstruct: 10
+  electricNonObstruct: 20
+  beachObstruct: 15
+  beachNonObstruct: 30
 --- !u!4 &486420163
 Transform:
   m_ObjectHideFlags: 0
