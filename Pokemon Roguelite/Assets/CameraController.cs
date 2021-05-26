@@ -15,7 +15,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] Quaternion newRotation;
     [SerializeField] Vector3 newZoom;
 
-    [SerializeField] Vector2 panLimit;
+    [SerializeField] Vector2 startPanLimit;
+    [SerializeField] Vector2 endPanLimit;
     [SerializeField] float maxZoomAmount;
     Vector3 minZoomLimit;
     Vector3 maxZoomLimit;
@@ -28,9 +29,9 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         cameraTransform = transform.GetChild(0).GetComponent<Transform>();
-        maxZoomLimit = cameraTransform.localPosition + cameraTransform.forward * maxZoomAmount;
-        minZoomLimit = cameraTransform.localPosition + (cameraTransform.forward * -1) * maxZoomAmount;
-        
+        maxZoomLimit = new Vector3(0, cameraTransform.localPosition.y - maxZoomAmount, cameraTransform.localPosition.z + maxZoomAmount);/*cameraTransform.localPosition + cameraTransform.forward * maxZoomAmount;*/
+        minZoomLimit = new Vector3(0, cameraTransform.localPosition.y + maxZoomAmount, cameraTransform.localPosition.z - maxZoomAmount); /*cameraTransform.localPosition + (cameraTransform.forward * -1) * maxZoomAmount;*/
+
         Debug.Log(maxZoomLimit);
         Debug.Log(minZoomLimit);
 
@@ -105,8 +106,8 @@ public class CameraController : MonoBehaviour
             newZoom += Input.GetAxis("Mouse ScrollWheel") * zoomAmount;
         }
 
-        newPosition.x = Mathf.Clamp(newPosition.x, 0, panLimit.x);
-        newPosition.z = Mathf.Clamp(newPosition.z, 0, panLimit.y);
+        newPosition.x = Mathf.Clamp(newPosition.x, startPanLimit.x, endPanLimit.x);
+        newPosition.z = Mathf.Clamp(newPosition.z, startPanLimit.y, endPanLimit.y);
 
         newZoom.z = Mathf.Clamp(newZoom.z, minZoomLimit.z, maxZoomLimit.z);
         newZoom.y = Mathf.Clamp(newZoom.y, maxZoomLimit.y, minZoomLimit.y);

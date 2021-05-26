@@ -774,7 +774,8 @@ MonoBehaviour:
   newPosition: {x: 0, y: 0, z: 0}
   newRotation: {x: 0, y: 0, z: 0, w: 0}
   newZoom: {x: 0, y: 0, z: 0}
-  panLimit: {x: 195, y: 145}
+  startPanLimit: {x: -20, y: -20}
+  endPanLimit: {x: 210, y: 160}
   maxZoomAmount: 200
 --- !u!4 &1506711523
 Transform:
